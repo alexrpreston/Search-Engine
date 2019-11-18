@@ -71,7 +71,7 @@ public:
         for (int i = 0; i < BUCKET; i++) {
           cout << i;
           for (auto x : table[i])
-            cout << " --> " << x;
+            cout << " --> " << x.first << " -> " << x.second.size();
           cout << endl;
         }
     }

@@ -8,6 +8,7 @@ public:
 //    virtual void addWord() = 0;
 //    virtual void addDoc() = 0;
 //    virtual void access() = 0;
+//    virtual void write() = 0;
 };
 
 
