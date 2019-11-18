@@ -5,7 +5,8 @@ using namespace std;
 
 class IndexInterface{
 public:
-//    virtual void add() = 0;
+//    virtual void addWord() = 0;
+//    virtual void addDoc() = 0;
 //    virtual void access() = 0;
 };
 

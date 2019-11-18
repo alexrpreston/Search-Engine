@@ -1,6 +1,10 @@
 #ifndef AVLTREE_H
 #define AVLTREE_H
 
+// obtained via Geeks for Geeks.
+// https://www.geeksforgeeks.org/avl-tree-set-1-insertion/
+// set II for deletion also used **
+
 #include <iostream>
 #include <string>
 #include<cstdio>
@@ -15,7 +19,7 @@ using namespace std;
 
 template<class T>
 struct Node{
-    pair<T,vector<T>> data; // each word has a vector of the docs that contain the worl
+    pair<T,vector<T>> data; // each word has a vector of the docs that contain the word
     Node * left;
     Node * right;
     int height;
@@ -111,16 +115,16 @@ class AVLTree : public IndexInterface {
     // Recursive function to insert a key
     // in the subtree rooted with node and
     // returns the new root of the subtree.
-    Node<T> * insert(Node<T> * node, int key)
+    Node<T> * addWord(Node<T> * node, T data)
     {
         /* 1. Perform the normal BST insertion */
         if (node == NULL)
-            return(newNode(key));
+            return(newNode(data));
 
-        if (key < node->key)
-            node->left = insert(node->left, key);
-        else if (key > node->key)
-            node->right = insert(node->right, key);
+        if (data < node->key)
+            node->left = insert(node->left, data);
+        else if (data > node->key)
+            node->right = insert(node->right, data);
         else // Equal keys are not allowed in BST
             return node;
 
@@ -137,22 +141,22 @@ class AVLTree : public IndexInterface {
         // there are 4 cases
 
         // Left Left Case
-        if (balance > 1 && key < node->left->key)
+        if (balance > 1 && data < node->left->data)
             return rightRotate(node);
 
         // Right Right Case
-        if (balance < -1 && key > node->right->key)
+        if (balance < -1 && data > node->right->data)
             return leftRotate(node);
 
         // Left Right Case
-        if (balance > 1 && key > node->left->key)
+        if (balance > 1 && data > node->left->data)
         {
             node->left = leftRotate(node->left);
             return rightRotate(node);
         }
 
         // Right Left Case
-        if (balance < -1 && key < node->right->key)
+        if (balance < -1 && data < node->right->data)
         {
             node->right = rightRotate(node->right);
             return leftRotate(node);
@@ -175,6 +179,32 @@ class AVLTree : public IndexInterface {
             preOrder(root->right);
         }
     }
+
+    vector<T> access(string data, Node<T> * root){ // return value can be changed for query
+        Node<T> * curr = root;
+
+        if(strcmp(curr->data.first, data) < 0){ //neg if search is larger
+            curr == curr->right;
+            access(data, curr);
+        }
+        else if(strcmp(curr->data.first, data) > 0){ // if search is larger
+            curr == curr->left;
+            access(data, curr);
+        }
+        else if(strcmp(curr->data.first, data) == 0){
+            return curr->data.second;
+        }
+        else{
+            cout << "nothing" << endl;
+        }
+
+    }
+
+    void addDoc(string data, string newDoc, Node<T> * root){
+
+    }
+
+
 };
 
 
