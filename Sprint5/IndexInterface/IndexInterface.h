@@ -4,14 +4,9 @@
 using namespace std;
 
 class IndexInterface{
-private:
-
-
 public:
-
-    virtual void add() = 0;
-    virtual void access() = 0;
-
+//    virtual void add() = 0;
+//    virtual void access() = 0;
 };
 
 

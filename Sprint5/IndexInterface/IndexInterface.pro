@@ -8,4 +8,5 @@ SOURCES += \
 
 HEADERS += \
     AVLTree.h \
+    HashMap.h \
     IndexInterface.h
