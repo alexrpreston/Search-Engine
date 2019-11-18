@@ -201,7 +201,20 @@ class AVLTree : public IndexInterface {
     }
 
     void addDoc(string data, string newDoc, Node<T> * root){
+        Node<T> * curr = root;
 
+        if(strcmp(curr->data.first, data) < 0){ //neg if search is larger
+            curr == curr->right;
+            addDoc(data, newDoc, curr);
+        }
+        else if(strcmp(curr->data.first, data) > 0){ // if search is larger
+            curr == curr->left;
+            addDoc(data, newDoc,  curr);
+        }
+        else if(strcmp(curr->data.first, data) == 0){
+            curr->data.second.push_back(newDoc);
+            return;
+        }
     }
 
 
