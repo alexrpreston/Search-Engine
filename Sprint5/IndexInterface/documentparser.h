@@ -6,10 +6,10 @@ using namespace std;
 class documentParser
 {
 public:
-    documentParser(string test);
+    documentParser(string &testWord);
     bool isStopWord(string &word);
-    string makeLowerCase(string word);
-    string stemWord(string word);
+    void makeLowerCase(string &word);
+    void stemWord(string &word);
     void readDocuments();
     void makeStopWords();
 private:

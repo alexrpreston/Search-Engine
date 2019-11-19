@@ -3,13 +3,12 @@
 #include <string.h>
 #include <iostream>
 #include <stdio.h>
-documentParser::documentParser(string test)
-{
-    cout << "line 8" << endl;
-    makeStopWords();
-    cout << "line 10" << endl;
-    if(isStopWord(test)) cout << "true";
-    else cout << "false";
+#include <algorithm>
+#include <cctype>
+documentParser::documentParser(string &testWord){
+    cout << testWord << endl;
+    makeLowerCase(testWord);
+    cout << testWord << endl;
 }
 
 bool documentParser::isStopWord(string &word){
@@ -31,7 +30,15 @@ bool documentParser::isStopWord(string &word){
                right = middle - 1;
             }
         }
-        return false;
+    return false;
+}
+
+void documentParser::makeLowerCase(string &word){
+    transform(word.begin(), word.end(), word.begin(), ::tolower);
+}
+
+void documentParser::stemWord(string &word){
+
 }
 
 void documentParser::readDocuments(){
