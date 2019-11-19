@@ -19,16 +19,16 @@ class HashMap
     int BUCKET = 2000000000;    // No. of buckets
 
     // Pointer to an array containing buckets
-    list<pair<T,vector<T>>> *table;
+    list<pair<T,vector<T>>> * table; // use array instead of list
 public:
     HashMap(){
-        table = new list<int>[BUCKET];
+        table = new list<pair<T,vector<T>>>[BUCKET];
         srand(5);
     }  // Constructor
 
     HashMap(int V){
         this->BUCKET = V;
-        table = new list<int>[BUCKET];
+        table = new list<pair<T,vector<T>>>[BUCKET];
         srand(5);
     }  // Constructor
 
@@ -37,11 +37,13 @@ public:
         vector<T> tempVec;
         pair<T,vector<T>> temp = make_pair(word, tempVec);
         int index = hashFunction(word);
-        table[index].push_back(word);
+    //    table->front().second.push_back(word); // this works
+        cout << table[0].first << endl;
+     //   table[index].second.push_back(word);  // ???
     }
 
     void addDoc(string doc, string word){
-        table[(hashFunction(word))].second.push_back(doc);
+    //    table[(hashFunction(word))].second.push_back(doc);
     }
 
     // deletes a key from hash table
@@ -63,8 +65,8 @@ public:
     }
 
     // hash function to map values to key
-    int hashFunction(int x) {
-        return (x % (rand()%BUCKET));
+    int hashFunction(string x) {
+        return ((long int)x.c_str() % (rand()%BUCKET));
     }
 
     void displayHash(){

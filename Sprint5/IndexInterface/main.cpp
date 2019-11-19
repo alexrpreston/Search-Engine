@@ -9,8 +9,9 @@ int main(){
 
     cout << "Hello World!" << endl;
     AVLTree<int> avl;
-    HashMap<string> hash;
+    HashMap<string> hash = HashMap<string>();
     hash.addWord("hi");
+    hash.addDoc("hiDoc", "hi");
    // avl.addWord("hi");
     string tester = "std";
     documentParser test(tester);
