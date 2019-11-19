@@ -9,7 +9,6 @@ int main()
 //    AVLTree<int> avl;
 //   // avl.addWord("hi");
     string tester = "std";
-    cout << "hello";
     documentParser test(tester);
 
 

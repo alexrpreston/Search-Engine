@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <algorithm>
 #include <cctype>
+#include "../IndexInterface/OleanderStemmingLibrary/include/olestem/stemming/english_stem.h"
 documentParser::documentParser(string &testWord){
     cout << testWord << endl;
     makeLowerCase(testWord);
