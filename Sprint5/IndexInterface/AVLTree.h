@@ -13,6 +13,8 @@
 #include <utility>
 #include <vector>
 #include <IndexInterface.h>
+#include <string.h>
+#include <stdio.h>
 #define pow2(n) (1 << (n))
 
 using namespace std;
@@ -24,12 +26,15 @@ struct Node{
     Node * right;
     int height;
 };
+
 template<class T>
 class AVLTree : public IndexInterface {
-   public:
+private:
+    Node<string> * root = nullptr;
+
+public:
     // A utility function to get maximum
     // of two integers
-
     // A utility function to get the
     // height of the tree
     int height(Node<T> * N)
@@ -49,10 +54,10 @@ class AVLTree : public IndexInterface {
     /* Helper function that allocates a
        new node with the given key and
        NULL left and right pointers. */
-    Node<T> * newNode(int key)
+    Node<T> * newNode(T key)
     {
         Node<T> * node = new Node<T>();
-        node->key = key;
+        node->data.first = key;
         node->left = NULL;
         node->right = NULL;
         node->height = 1; // new node is initially
@@ -115,16 +120,26 @@ class AVLTree : public IndexInterface {
     // Recursive function to insert a key
     // in the subtree rooted with node and
     // returns the new root of the subtree.
+
+    void addWord(T data){
+        addWord(root, data);
+    }
+
     Node<T> * addWord(Node<T> * node, T data)
     {
         /* 1. Perform the normal BST insertion */
-        if (node == NULL)
-            return(newNode(data));
+        if (node == nullptr){
+            Node<T> * nNode = newNode(data);
+            if(root == nullptr){
+                root = nNode;
+            }
+            return(nNode);
+        }
 
-        if (data < node->key)
-            node->left = insert(node->left, data);
-        else if (data > node->key)
-            node->right = insert(node->right, data);
+        if (data < node->data.first)
+            node->left = addWord(node->left, data);
+        else if (data > node->data.first)
+            node->right = addWord(node->right, data);
         else // Equal keys are not allowed in BST
             return node;
 
@@ -141,22 +156,22 @@ class AVLTree : public IndexInterface {
         // there are 4 cases
 
         // Left Left Case
-        if (balance > 1 && data < node->left->data)
+        if (balance > 1 && data < node->left->data.first)
             return rightRotate(node);
 
         // Right Right Case
-        if (balance < -1 && data > node->right->data)
+        if (balance < -1 && data > node->right->data.first)
             return leftRotate(node);
 
         // Left Right Case
-        if (balance > 1 && data > node->left->data)
+        if (balance > 1 && data > node->left->data.first)
         {
             node->left = leftRotate(node->left);
             return rightRotate(node);
         }
 
         // Right Left Case
-        if (balance < -1 && data < node->right->data)
+        if (balance < -1 && data < node->right->data.first)
         {
             node->right = rightRotate(node->right);
             return leftRotate(node);
@@ -170,28 +185,34 @@ class AVLTree : public IndexInterface {
     // traversal of the tree.
     // The function also prints height
     // of every node
+    void preOrder(){
+        preOrder(root);
+    }
+
     void preOrder(Node<T> * root)
     {
-        if(root != NULL)
+        if(root != nullptr)
         {
-            cout << root->key << " ";
+            cout << root->data.first << endl;
             preOrder(root->left);
             preOrder(root->right);
         }
     }
 
-    vector<T> access(string data, Node<T> * root){ // return value can be changed for query
-        Node<T> * curr = root;
+    vector<T> access(T data){
+        return access(data, root);
+    }
 
-        if(strcmp(curr->data.first, data) < 0){ //neg if search is larger
+    vector<T> access(T data, Node<T> * curr){ // return value can be changed for query
+        if(strcmp(curr->data.first.c_str(), data.c_str()) < 0){ //neg if search is larger
             curr == curr->right;
             access(data, curr);
         }
-        else if(strcmp(curr->data.first, data) > 0){ // if search is larger
+        else if(strcmp(curr->data.first.c_str(), data.c_str()) > 0){ // if search is larger
             curr == curr->left;
             access(data, curr);
         }
-        else if(strcmp(curr->data.first, data) == 0){
+        else if(strcmp(curr->data.first.c_str(), data.c_str()) == 0){
             return curr->data.second;
         }
         else{
@@ -200,21 +221,25 @@ class AVLTree : public IndexInterface {
 
     }
 
-    void addDoc(string data, string newDoc, Node<T> * root){
-        Node<T> * curr = root;
+    void addDoc(T data, T doc){
+        addDoc(data, doc, root);
+    }
 
-        if(strcmp(curr->data.first, data) < 0){ //neg if search is larger
-            curr == curr->right;
+    void addDoc(T data, T newDoc, Node<T> * curr){
+        if(strcmp(curr->data.first.c_str(), data.c_str()) < 0){ //neg if search is larger
+            curr = curr->right;
             addDoc(data, newDoc, curr);
         }
-        else if(strcmp(curr->data.first, data) > 0){ // if search is larger
-            curr == curr->left;
-            addDoc(data, newDoc,  curr);
+        else if(strcmp(curr->data.first.c_str(), data.c_str()) > 0){ // if search is larger
+            curr = curr->left;
+            addDoc(data, newDoc, curr);
         }
-        else if(strcmp(curr->data.first, data) == 0){
+        else if(strcmp(curr->data.first.c_str(), data.c_str()) == 0){
             curr->data.second.push_back(newDoc);
             return;
         }
+        else
+            return;
     }
 
 

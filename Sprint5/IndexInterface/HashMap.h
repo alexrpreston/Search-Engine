@@ -16,13 +16,13 @@ using namespace std ;
 template<class T>
 class HashMap
 {
-    int BUCKET = 2000000000;    // No. of buckets
+    int BUCKET = 200000;    // No. of buckets
 
     // Pointer to an array containing buckets
-    list<pair<T,vector<T>>> * table; // use array instead of list
+    vector<pair<T,vector<T>>> * table; // use array instead of list
 public:
     HashMap(){
-        table = new list<pair<T,vector<T>>>[BUCKET];
+        table = new vector<pair<T,vector<T>>>[BUCKET];
         srand(5);
     }  // Constructor
 
@@ -37,8 +37,7 @@ public:
         vector<T> tempVec;
         pair<T,vector<T>> temp = make_pair(word, tempVec);
         int index = hashFunction(word);
-    //    table->front().second.push_back(word); // this works
-        cout << table[0].first << endl;
+     //    table->front().second.push_back(word); // this works
      //   table[index].second.push_back(word);  // ???
     }
 
