@@ -1,13 +1,17 @@
 #ifndef INDEXINTERFACE_H
 #define INDEXINTERFACE_H
 
+#include <iostream>
+#include <vector>
+
 using namespace std;
 
+//template<class T>
 class IndexInterface{
 public:
-//    virtual void addWord() = 0;
-//    virtual void addDoc() = 0;
-//    virtual void access() = 0;
+    virtual void addFirst(string) = 0;
+    virtual void addSec(string, string) = 0;
+    virtual vector<string> access(string data) = 0;
 //    virtual void write() = 0;
 };
 
