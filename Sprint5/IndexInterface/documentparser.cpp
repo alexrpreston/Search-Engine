@@ -5,12 +5,12 @@
 #include <stdio.h>
 #include <algorithm>
 #include <cctype>
-#include "../../../OleanderStemmingLibrary/include/olestem/stemming/english_stem.h" // un comment me later
-#include "../../../rapidjson/include/rapidjson/document.h"
-#include "../../../rapidjson/include/rapidjson/writer.h"
-#include "../../../rapidjson/include/rapidjson/stringbuffer.h"
-#include "../../../rapidjson/include/rapidjson/filereadstream.h"
-#include "myhtml/api.h"
+#include "../IndexInterface/Libraries/OleanderStemmingLibrary/include/olestem/stemming/english_stem.h" // un comment me later
+#include "../IndexInterface/Libraries/rapidjson/include/rapidjson/document.h"
+#include "../IndexInterface/Libraries/rapidjson/include/rapidjson/writer.h"
+#include "../IndexInterface/Libraries/rapidjson/include/rapidjson/stringbuffer.h"
+#include "../IndexInterface/Libraries/rapidjson/include/rapidjson/filereadstream.h"
+#include "../IndexInterface/Libraries/myhtml/include/myhtml/api.h"
 
 using namespace rapidjson;
 

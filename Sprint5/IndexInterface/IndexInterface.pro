@@ -19,3 +19,10 @@ else:unix: LIBS += -L$$PWD/../../../myhtml/lib/ -lmyhtml
 
 INCLUDEPATH += $$PWD/../../../myhtml/include
 DEPENDPATH += $$PWD/../../../myhtml/include
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/Libraries/myhtml/lib/release/ -lmyhtml
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/Libraries/myhtml/lib/debug/ -lmyhtml
+else:unix: LIBS += -L$$PWD/Libraries/myhtml/lib/ -lmyhtml
+
+INCLUDEPATH += $$PWD/Libraries/myhtml/include
+DEPENDPATH += $$PWD/Libraries/myhtml/include
