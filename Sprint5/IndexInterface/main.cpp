@@ -10,17 +10,19 @@ int main(){
     HashMap<string> hash = HashMap<string>();
     //hash.addWord("hi");
     //hash.addDoc("hiDoc", "hi");
-    avl.addWord("hi");
-    avl.addDoc("hi", "doc1");
-    avl.addWord("word2");
-    avl.addWord("a");
-    avl.addWord("peanuts");
-    avl.addDoc("a", "adoc");
+//    avl.addWord("hi");
+//    avl.addDoc("hi", "doc1");
+//    avl.addWord("word2");
+//    avl.addWord("a");
+//    avl.addWord("peanuts");
+//    avl.addDoc("a", "adoc");
 
-    avl.preOrder();
+//    avl.preOrder();
     //string tester1 = "HeLLo";
     documentParser();
-    //cout << tester1 << endl;;
+    //cout << tester1 << endl;
+
+
 
 
     return 0;

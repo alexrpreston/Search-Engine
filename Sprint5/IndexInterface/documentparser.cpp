@@ -6,13 +6,32 @@
 #include <algorithm>
 #include <cctype>
 #include "../IndexInterface/OleanderStemmingLibrary/include/olestem/stemming/english_stem.h" // un comment me later
-documentParser::documentParser(){
-    string testWord = "tHe";
+#include "../rapidjson/include/rapidjson/document.h"
+#include "../rapidjson/include/rapidjson/writer.h"
+#include "../rapidjson/include/rapidjson/stringbuffer.h"
+#include "../rapidjson/include/rapidjson/filereadstream.h"
 
-    if(!isStopWord(testWord)){
-        stemWord(testWord);
-    }
-    cout << testWord << endl;
+
+using namespace rapidjson;
+
+documentParser::documentParser(){
+//    makeStopWords();
+//    if(!isStopWord(word)){
+//        stemWord(word);
+//    }
+
+    //Gives all HTML data for Opinion
+    FILE * fp = fopen("../../../scotus-small/101310.json", "rb");
+    char readBuffer[65536];
+    FileReadStream is(fp, readBuffer, sizeof(readBuffer));
+    Document d;
+    d.ParseStream(is);
+    Value& s = d["html"];
+    cout << s.GetString();
+    fclose(fp);
+
+
+
 }
 
 bool documentParser::isStopWord(string &word){
@@ -33,7 +52,7 @@ bool documentParser::isStopWord(string &word){
             else {
                right = middle - 1;
             }
-        }
+    }
 
     return false;
 }
