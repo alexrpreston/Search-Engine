@@ -10,14 +10,14 @@ int main(){
     HashMap<string> hash = HashMap<string>();
     //hash.addWord("hi");
     //hash.addDoc("hiDoc", "hi");
-<<<<<<< HEAD
+
     avl.addFirst("hi");
     avl.addSec("hi", "doc1");
     avl.addFirst("word2");
     avl.addFirst("a");
     avl.addFirst("peanuts");
     avl.addSec("a", "adoc");
-=======
+
 //    avl.addWord("hi");
 //    avl.addDoc("hi", "doc1");
 //    avl.addWord("word2");
@@ -30,8 +30,6 @@ int main(){
     documentParser();
     //cout << tester1 << endl;
 
-
->>>>>>> db3b705214425b7d081ed4ad07ba0aeb9db3fe4d
 
 
     return 0;
