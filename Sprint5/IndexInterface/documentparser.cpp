@@ -5,17 +5,20 @@
 #include <stdio.h>
 #include <algorithm>
 #include <cctype>
-//#include "../IndexInterface/OleanderStemmingLibrary/include/olestem/stemming/english_stem.h" // un comment me later
-documentParser::documentParser(string &testWord){
-    cout << testWord << endl;
-    makeLowerCase(testWord);
+#include "../IndexInterface/OleanderStemmingLibrary/include/olestem/stemming/english_stem.h" // un comment me later
+documentParser::documentParser(){
+    string testWord = "tHe";
+
+    if(!isStopWord(testWord)){
+        stemWord(testWord);
+    }
     cout << testWord << endl;
 }
 
 bool documentParser::isStopWord(string &word){
     int left = 0;
     int right = stopWords.size()-1;
-
+    makeLowerCase(word);
     while(left <= right){
             int middle = left + (right - left) / 2;
 
@@ -31,6 +34,7 @@ bool documentParser::isStopWord(string &word){
                right = middle - 1;
             }
         }
+
     return false;
 }
 
@@ -38,7 +42,15 @@ void documentParser::makeLowerCase(string &word){
     transform(word.begin(), word.end(), word.begin(), ::tolower);
 }
 
-void documentParser::stemWord(string &word){
+void documentParser::stemWord(string &unstemmedWord){
+    stemming::english_stem<> StemEnglish;
+    std::wstring stemmedword(L" ");
+    std::string ANSIWord(unstemmedWord);
+    wchar_t* UnicodeTextBuffer = new wchar_t[ANSIWord.length()+1];
+    std::wmemset(UnicodeTextBuffer, 0, ANSIWord.length()+1);
+    std::mbstowcs(UnicodeTextBuffer, ANSIWord.c_str(), ANSIWord.length());
+    stemmedword = UnicodeTextBuffer;
+    StemEnglish(stemmedword);
 
 }
 
