@@ -25,11 +25,16 @@ template<class T>
 class AVLTree : public IndexInterface {
 private:
     Node<string> * root = nullptr;
+    int numNodes = 0;
 
 public:
+    int getNumNodes(){
+        return numNodes;
+    }
+
     int height(Node<T> * N)
     {
-        if (N == NULL)
+        if (N == nullptr)
             return 0;
         return N->height;
     }
@@ -43,49 +48,49 @@ public:
     {
         Node<T> * node = new Node<T>();
         node->data.first = key;
-        node->left = NULL;
-        node->right = NULL;
+        node->left = nullptr;
+        node->right = nullptr;
         node->height = 1; // new node is initially
                           // added at leaf
         return(node);
     }
 
-    Node<T> * rightRotate(Node<T> * y)
+    Node<T> * rightRotate(Node<T> * parent)
     {
-        Node<T> * x = y->left;
+        Node<T> * x = parent->left;
         Node<T> * T2 = x->right;
 
-        x->right = y;
-        y->left = T2;
+        x->right = parent;
+        parent->left = T2;
 
-        y->height = max(height(y->left),
-                        height(y->right)) + 1;
+        parent->height = max(height(parent->left),
+                        height(parent->right)) + 1;
         x->height = max(height(x->left),
                         height(x->right)) + 1;
 
         return x;
     }
 
-    Node<T> * leftRotate(Node<T> * x)
+    Node<T> * leftRotate(Node<T> * parent)
     {
-        Node<T> * y = x->right;
-        Node<T> * T2 = y->left;
+        Node<T> * rChild = parent->right;
+        Node<T> * rlChild = rChild->left;
 
-        y->left = x;
-        x->right = T2;
+        rChild->left = parent;
+        parent->right = rlChild;
 
-        x->height = max(height(x->left),
-                        height(x->right)) + 1;
-        y->height = max(height(y->left),
-                        height(y->right)) + 1;
-        return y;
+        parent->height = max(height(parent->left),
+                        height(parent->right)) + 1;
+        rChild->height = max(height(rChild->left),
+                        height(rChild->right)) + 1;
+        return rChild;
     }
 
-    int getBalance(Node<T> * N)
+    int getBalance(Node<T> * Node)
     {
-        if (N == NULL)
+        if (Node == nullptr)
             return 0;
-        return height(N->left) - height(N->right);
+        return height(Node->left) - height(Node->right);
     }
 
     void addFirst(T data){
@@ -98,15 +103,19 @@ public:
             if(root == nullptr){
                 root = nNode;
             }
+            numNodes++;
             return(nNode);
         }
 
-        if (data < node->data.first)
+        if (data < node->data.first){
             node->left = addFirst(node->left, data);
-        else if (data > node->data.first)
+        }
+        else if (data > node->data.first){
             node->right = addFirst(node->right, data);
-        else
+        }
+        else{
             return node;
+        }
 
         node->height = 1 + max(height(node->left),
                             height(node->right));
