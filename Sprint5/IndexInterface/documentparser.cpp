@@ -5,17 +5,41 @@
 #include <stdio.h>
 #include <algorithm>
 #include <cctype>
-//#include "../IndexInterface/OleanderStemmingLibrary/include/olestem/stemming/english_stem.h" // un comment me later
-documentParser::documentParser(string &testWord){
-    cout << testWord << endl;
-    makeLowerCase(testWord);
-    cout << testWord << endl;
+#include "../../../OleanderStemmingLibrary/include/olestem/stemming/english_stem.h" // un comment me later
+#include "../../../rapidjson/include/rapidjson/document.h"
+#include "../../../rapidjson/include/rapidjson/writer.h"
+#include "../../../rapidjson/include/rapidjson/stringbuffer.h"
+#include "../../../rapidjson/include/rapidjson/filereadstream.h"
+#include "myhtml/api.h"
+
+using namespace rapidjson;
+
+documentParser::documentParser(){
+//    makeStopWords();
+//    if(!isStopWord(word)){
+//        stemWord(word);
+//    }
+
+    //Gives all HTML data for Opinion
+    FILE * fp = fopen("../../../scotus-small/101310.json", "rb");
+    char readBuffer[65536];
+    FileReadStream is(fp, readBuffer, sizeof(readBuffer));
+    Document d;
+    d.ParseStream(is);
+    Value& s = d["html"];
+    cout << s.GetString();
+    fclose(fp);
+
+    string html = s.GetString();
+
+
+
 }
 
 bool documentParser::isStopWord(string &word){
     int left = 0;
     int right = stopWords.size()-1;
-
+    makeLowerCase(word);
     while(left <= right){
             int middle = left + (right - left) / 2;
 
@@ -30,7 +54,8 @@ bool documentParser::isStopWord(string &word){
             else {
                right = middle - 1;
             }
-        }
+    }
+
     return false;
 }
 
@@ -38,7 +63,15 @@ void documentParser::makeLowerCase(string &word){
     transform(word.begin(), word.end(), word.begin(), ::tolower);
 }
 
-void documentParser::stemWord(string &word){
+void documentParser::stemWord(string &unstemmedWord){
+    stemming::english_stem<> StemEnglish;
+    std::wstring stemmedword(L" ");
+    std::string ANSIWord(unstemmedWord);
+    wchar_t* UnicodeTextBuffer = new wchar_t[ANSIWord.length()+1];
+    std::wmemset(UnicodeTextBuffer, 0, ANSIWord.length()+1);
+    std::mbstowcs(UnicodeTextBuffer, ANSIWord.c_str(), ANSIWord.length());
+    stemmedword = UnicodeTextBuffer;
+    StemEnglish(stemmedword);
 
 }
 
