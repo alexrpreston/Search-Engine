@@ -5,12 +5,12 @@
 #include <stdio.h>
 #include <algorithm>
 #include <cctype>
-#include "../IndexInterface/OleanderStemmingLibrary/include/olestem/stemming/english_stem.h" // un comment me later
-#include "../rapidjson/include/rapidjson/document.h"
-#include "../rapidjson/include/rapidjson/writer.h"
-#include "../rapidjson/include/rapidjson/stringbuffer.h"
-#include "../rapidjson/include/rapidjson/filereadstream.h"
-
+#include "../../../OleanderStemmingLibrary/include/olestem/stemming/english_stem.h" // un comment me later
+#include "../../../rapidjson/include/rapidjson/document.h"
+#include "../../../rapidjson/include/rapidjson/writer.h"
+#include "../../../rapidjson/include/rapidjson/stringbuffer.h"
+#include "../../../rapidjson/include/rapidjson/filereadstream.h"
+#include "myhtml/api.h"
 
 using namespace rapidjson;
 
@@ -29,6 +29,8 @@ documentParser::documentParser(){
     Value& s = d["html"];
     cout << s.GetString();
     fclose(fp);
+
+    string html = s.GetString();
 
 
 

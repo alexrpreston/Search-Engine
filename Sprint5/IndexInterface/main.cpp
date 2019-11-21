@@ -2,7 +2,7 @@
 #include <AVLTree.h>
 #include <HashMap.h>
 #include "documentparser.h"
-#include "../IndexInterface/OleanderStemmingLibrary/include/olestem/stemming/english_stem.h"
+#include "../../../OleanderStemmingLibrary/include/olestem/stemming/english_stem.h"
 using namespace std;
 
 int main(){
