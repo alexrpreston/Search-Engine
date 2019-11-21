@@ -2,7 +2,7 @@
 #include <AVLTree.h>
 #include <HashMap.h>
 #include "documentparser.h"
-#include "../../../OleanderStemmingLibrary/include/olestem/stemming/english_stem.h"
+//#include "../../../OleanderStemmingLibrary/include/olestem/stemming/english_stem.h"
 using namespace std;
 
 int main(){
@@ -17,6 +17,7 @@ int main(){
     avl.addFirst("a");
     avl.addFirst("peanuts");
     avl.addSec("a", "adoc");
+    cout << avl.getNumNodes() << endl;
 
 //    avl.addWord("hi");
 //    avl.addDoc("hi", "doc1");
