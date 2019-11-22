@@ -10,27 +10,29 @@
 #include "../IndexInterface/Libraries/rapidjson/include/rapidjson/writer.h"
 #include "../IndexInterface/Libraries/rapidjson/include/rapidjson/stringbuffer.h"
 #include "../IndexInterface/Libraries/rapidjson/include/rapidjson/filereadstream.h"
-#include "../IndexInterface/Libraries/myhtml/include/myhtml/api.h"
+//#include "../IndexInterface/Libraries/myhtml/include/myhtml/api.h"
 
 using namespace rapidjson;
 
-documentParser::documentParser(){
+documentParser::documentParser(char * filePath, string wordToFind){
+    cout << filePath << endl;
+    cout << wordToFind << endl;
 //    makeStopWords();
 //    if(!isStopWord(word)){
 //        stemWord(word);
 //    }
 
     //Gives all HTML data for Opinion
-    FILE * fp = fopen("../../../scotus-small/101310.json", "rb");
-    char readBuffer[65536];
-    FileReadStream is(fp, readBuffer, sizeof(readBuffer));
-    Document d;
-    d.ParseStream(is);
-    Value& s = d["html"];
-    cout << s.GetString();
-    fclose(fp);
+//    FILE * fp = fopen("../../../scotus-small/101310.json", "rb");
+//    char readBuffer[65536];
+//    FileReadStream is(fp, readBuffer, sizeof(readBuffer));
+//    Document d;
+//    d.ParseStream(is);
+//    Value& s = d["html"];
+//    cout << s.GetString();
+//    fclose(fp);
 
-    string html = s.GetString();
+//    string html = s.GetString();
 
 
 

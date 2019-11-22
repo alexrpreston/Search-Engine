@@ -6,7 +6,7 @@ using namespace std;
 class documentParser
 {
 public:
-    documentParser();
+    documentParser(char * filePath, string wordToFind);
     bool isStopWord(string &word);
     void makeLowerCase(string &word);
     void stemWord(string &word);
