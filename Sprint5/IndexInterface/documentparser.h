@@ -13,12 +13,16 @@ public:
     void makeLowerCase(string &word);
     void getFileNames(char * filePath);
     void stemWord(string &word);
-    void readDocuments();
+    void readDocumentsHTMLData(char * filePath);
+    void parseHTMLData();
     void makeStopWords();
+    void removeTags(string &html);
 private:
     string word = "";
     vector<string>stopWords;
     vector<string>FileNames;
+    vector<pair<string, string>>HTMLData;
+    string wordToFind = "";
 };
 
 #endif // DOCUMENTPARSER_H
