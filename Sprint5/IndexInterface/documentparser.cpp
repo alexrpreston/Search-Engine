@@ -24,7 +24,7 @@
 using namespace rapidjson;
 
 documentParser::documentParser(){
-    cout << "Hello" << endl;
+
 }
 
 documentParser::documentParser(char * filePath, string wordToFind){
