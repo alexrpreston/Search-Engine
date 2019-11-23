@@ -132,8 +132,8 @@ void documentParser::readDocumentsHTMLData(char * filePath){
 
 
         fclose(fp);
-        string shortFileName =  FileNames[i].substr(0,6);
-        cout << "Grabbed HTML data of: " << shortFileName << endl;
+        string shortFileName =  FileNames[i];
+        //cout << "Grabbed HTML data of: " << shortFileName << endl;
         string html = s.GetString();
         pair<string,string> fileHtml;
         fileHtml = make_pair(html, shortFileName);
