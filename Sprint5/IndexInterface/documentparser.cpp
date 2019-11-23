@@ -46,7 +46,6 @@ documentParser::documentParser(char * filePath, string wordToFind){
         Document d;
         d.ParseStream(is);
         Value& s = d["html"];
-        //cout << s.GetString();
         cout << "Read JSON data of: " << name << endl;
         fclose(fp);
 
@@ -54,19 +53,6 @@ documentParser::documentParser(char * filePath, string wordToFind){
     }
 
 
-
-
-//    //Gives all HTML data for Opinion
-//    FILE * fp = fopen("../scotus-small/101310.json", "rb");
-//    char readBuffer[6536];
-//    FileReadStream is(fp, readBuffer, sizeof(readBuffer));
-//    Document d;
-//    d.ParseStream(is);
-//    Value& s = d["html"];
-//    cout << s.GetString();
-//    fclose(fp);
-
-//    string html = s.GetString();
 
 
 
@@ -115,7 +101,6 @@ void documentParser::getFileNames(char *filePath){
     while((entry = readdir(dp)) != NULL) {
         lstat(entry->d_name,&statbuf);
         if(S_ISDIR(statbuf.st_mode)) {
-            /* Found a directory, but ignore . and .. */
             if(strcmp(".",entry->d_name) == 0 ||
                 strcmp("..",entry->d_name) == 0)
                 continue;
@@ -123,7 +108,7 @@ void documentParser::getFileNames(char *filePath){
         }
         FileNames.push_back(entry->d_name);
     }
-    //chdir("..");
+    //chdir(".."); //Might have to readd later it just move the current directory up one level, N/A if I use aboslute path
     closedir(dp);
 }
 
