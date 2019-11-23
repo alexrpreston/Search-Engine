@@ -128,12 +128,12 @@ void documentParser::readDocumentsHTMLData(char * filePath){
         FileReadStream is(fp, readBuffer, sizeof(readBuffer));
         Document d;
         d.ParseStream(is);
-        Value& s = d["html"];
+        Value& s = d["html_with_citations"];
 
 
         fclose(fp);
         string shortFileName =  FileNames[i];
-        //cout << "Grabbed HTML data of: " << shortFileName << endl;
+        cout << "Grabbed HTML data of: " << shortFileName << endl;
         string html = s.GetString();
         pair<string,string> fileHtml;
         fileHtml = make_pair(html, shortFileName);
