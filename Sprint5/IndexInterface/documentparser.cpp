@@ -1,30 +1,64 @@
 #include "documentparser.h"
 #include "iomanip"
 #include <string.h>
+#include <stdlib.h>
 #include <iostream>
 #include <stdio.h>
+#include <dirent.h>
 #include <algorithm>
 #include <cctype>
+#include <unistd.h>
+#include <stdio.h>
+#include <dirent.h>
+#include <string.h>
+#include <sys/stat.h>
+#include <stdlib.h>
+#include <cstdio>
 #include "../IndexInterface/Libraries/OleanderStemmingLibrary/include/olestem/stemming/english_stem.h" // un comment me later
 #include "../IndexInterface/Libraries/rapidjson/include/rapidjson/document.h"
 #include "../IndexInterface/Libraries/rapidjson/include/rapidjson/writer.h"
 #include "../IndexInterface/Libraries/rapidjson/include/rapidjson/stringbuffer.h"
 #include "../IndexInterface/Libraries/rapidjson/include/rapidjson/filereadstream.h"
-//#include "../IndexInterface/Libraries/myhtml/include/myhtml/api.h"
+#include "../IndexInterface/Libraries/myhtml/include/myhtml/api.h"
 
 using namespace rapidjson;
+
+documentParser::documentParser(){
+
+}
 
 documentParser::documentParser(char * filePath, string wordToFind){
     cout << filePath << endl;
     cout << wordToFind << endl;
-//    makeStopWords();
-//    if(!isStopWord(word)){
-//        stemWord(word);
-//    }
+    getFileNames(filePath);
+    makeStopWords();
+    if(!isStopWord(word)){
+        stemWord(word);
+    }
 
-    //Gives all HTML data for Opinion
-//    FILE * fp = fopen("../../../scotus-small/101310.json", "rb");
-//    char readBuffer[65536];
+
+    for(int i = 0; i < FileNames.size(); i++){
+        //Gives all HTML data for Opinion
+        string name = filePath+FileNames[i];
+        FILE * fp = fopen(name.c_str(), "rb");
+        char readBuffer[6553666];
+        FileReadStream is(fp, readBuffer, sizeof(readBuffer));
+        Document d;
+        d.ParseStream(is);
+        Value& s = d["html"];
+        //cout << s.GetString();
+        cout << "Read JSON data of: " << name << endl;
+        fclose(fp);
+
+        string html = s.GetString();
+    }
+
+
+
+
+//    //Gives all HTML data for Opinion
+//    FILE * fp = fopen("../scotus-small/101310.json", "rb");
+//    char readBuffer[6536];
 //    FileReadStream is(fp, readBuffer, sizeof(readBuffer));
 //    Document d;
 //    d.ParseStream(is);
@@ -37,6 +71,9 @@ documentParser::documentParser(char * filePath, string wordToFind){
 
 
 }
+
+
+
 
 bool documentParser::isStopWord(string &word){
     int left = 0;
@@ -63,6 +100,31 @@ bool documentParser::isStopWord(string &word){
 
 void documentParser::makeLowerCase(string &word){
     transform(word.begin(), word.end(), word.begin(), ::tolower);
+}
+
+void documentParser::getFileNames(char *filePath){
+    char * dir = filePath;
+
+    DIR *dp;
+    struct dirent *entry;
+    struct stat statbuf;
+    if((dp = opendir(dir)) == NULL) {
+        return;
+    }
+    chdir(dir);
+    while((entry = readdir(dp)) != NULL) {
+        lstat(entry->d_name,&statbuf);
+        if(S_ISDIR(statbuf.st_mode)) {
+            /* Found a directory, but ignore . and .. */
+            if(strcmp(".",entry->d_name) == 0 ||
+                strcmp("..",entry->d_name) == 0)
+                continue;
+            FileNames.push_back(entry->d_name);
+        }
+        FileNames.push_back(entry->d_name);
+    }
+    //chdir("..");
+    closedir(dp);
 }
 
 void documentParser::stemWord(string &unstemmedWord){
