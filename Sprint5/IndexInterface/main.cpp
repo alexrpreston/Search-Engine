@@ -2,11 +2,8 @@
 #include <AVLTree.h>
 #include <HashMap.h>
 #include "documentparser.h"
-<<<<<<< HEAD
 #include "../IndexInterface/Libraries/OleanderStemmingLibrary/include/olestem/stemming/english_stem.h"
-=======
 //#include "../../../OleanderStemmingLibrary/include/olestem/stemming/english_stem.h"
->>>>>>> 12598a757527e3f21fc2e047cbdc3f170ce428e3
 using namespace std;
 
 int main(){
@@ -21,11 +18,7 @@ int main(){
     avl.addFirst("a");
     avl.addFirst("peanuts");
     avl.addSec("a", "adoc");
-<<<<<<< HEAD
-=======
     cout << avl.getNumNodes() << endl;
->>>>>>> 12598a757527e3f21fc2e047cbdc3f170ce428e3
-
 //    avl.addWord("hi");
 //    avl.addDoc("hi", "doc1");
 //    avl.addWord("word2");
@@ -37,13 +30,6 @@ int main(){
     //string tester1 = "HeLLo";
     documentParser();
     //cout << tester1 << endl;
-
-
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 12598a757527e3f21fc2e047cbdc3f170ce428e3
 
     return 0;
 }
