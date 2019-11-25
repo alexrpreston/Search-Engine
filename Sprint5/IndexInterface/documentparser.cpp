@@ -182,7 +182,7 @@ void documentParser::parseHTMLData(){
                        //cout << "Word: " << word << endl;
                        //cout << HTMLData[i].second << endl;
                        string ID = HTMLData[i].second;
-                       //tree.addSec(word, ID);
+                       tree.addSec(word, ID);
                    }
                }
 
@@ -193,7 +193,7 @@ void documentParser::parseHTMLData(){
                appearsInDoc = false;
            }
     //cout << "Parsed: " << HTMLData[i].second << endl;
-    //tree.preOrder();
+   // tree.preOrder();
     }
 
 
@@ -215,6 +215,8 @@ void documentParser::makeStopWords(){
 
 void documentParser::removeTags(string &html){
     while(html.find("<") != html.npos){
+        //find starts at beginning so is linear everytime
+        //If I start at the end of the string it is alot faster.
         int openBracket = html.find("<");
         int closeBracket = html.find(">") + 1;
 
