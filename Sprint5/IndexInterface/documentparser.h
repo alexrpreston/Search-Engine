@@ -22,7 +22,7 @@ private:
     string word = "";
     vector<string>stopWords;
     vector<string>FileNames;
-    vector<pair<string, string>>HTMLData;
+    vector<pair<string, string>> HTMLData;
     string wordToFind = "";
     int wordToFindTotalOccurances = 0;
     int wordToFindDocumentOccurances = 0;

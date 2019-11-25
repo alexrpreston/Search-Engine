@@ -21,7 +21,6 @@
 #include "../IndexInterface/Libraries/rapidjson/include/rapidjson/writer.h"
 #include "../IndexInterface/Libraries/rapidjson/include/rapidjson/stringbuffer.h"
 #include "../IndexInterface/Libraries/rapidjson/include/rapidjson/filereadstream.h"
-//#include "../IndexInterface/Libraries/myhtml/include/myhtml/api.h"
 
 using namespace rapidjson;
 
@@ -159,7 +158,6 @@ void documentParser::parseHTMLData(){
         removeTags(html);
         char sentence[656565];
         strcpy(sentence, html.c_str());
-        //cout << html << "\n\n\n\n\n";
         char * token = strtok(sentence, " ");
 
            while(token != NULL){
@@ -182,7 +180,7 @@ void documentParser::parseHTMLData(){
                        //cout << "Word: " << word << endl;
                        //cout << HTMLData[i].second << endl;
                        string ID = HTMLData[i].second;
-                       tree.addSec(word, ID);
+                       //tree.addSec(word, ID);
                    }
                }
 
