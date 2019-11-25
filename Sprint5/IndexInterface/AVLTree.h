@@ -98,11 +98,12 @@ public:
     }
 
     Node<T> * addFirst(Node<T> * node, T data){
-        if (node == nullptr){
+        if(root == nullptr){
             Node<T> * nNode = newNode(data);
-            if(root == nullptr){
-                root = nNode;
-            }
+            root = nNode;
+        }
+        if (node == nullptr){
+            Node<T> * nNode = newNode(data);           
             numNodes++;
             return(nNode);
         }

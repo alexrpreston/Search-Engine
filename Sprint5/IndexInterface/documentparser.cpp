@@ -131,7 +131,7 @@ void documentParser::readDocumentsHTMLData(char * filePath){
 
         fclose(fp);
         string shortFileName =  FileNames[i].substr(0, FileNames[i].size()-5);
-        cout << "Grabbed HTML data of: " << shortFileName << endl;
+        //cout << "Grabbed HTML data of: " << shortFileName << endl;
         string html = s.GetString();
         pair<string,string> fileHtml;
         fileHtml = make_pair(html, shortFileName);
@@ -141,12 +141,25 @@ void documentParser::readDocumentsHTMLData(char * filePath){
 }
 
 void documentParser::parseHTMLData(){
+    int progressBarTotal = HTMLData.size() / 10;
+    cout << "Parsing Progress [          ] 0%" << endl;
+    int percent = 0;
+    string bar = "";
+    string barSpaces = "          ";
+    int j = 9;
     for(int i = 0; i < HTMLData.size(); i++){
+        if(i%progressBarTotal == 0){
+            percent += 10;
+            bar += "=";
+            barSpaces = barSpaces.substr(0,j);
+            j--;
+            cout << "Parsing Progress [" << bar << barSpaces << "] " << percent << "%" << endl;
+        }
         string html = HTMLData[i].first;
         removeTags(html);
         char sentence[656565];
         strcpy(sentence, html.c_str());
-        cout << html << "\n\n\n\n\n";
+        //cout << html << "\n\n\n\n\n";
         char * token = strtok(sentence, " ");
 
            while(token != NULL){
@@ -166,8 +179,10 @@ void documentParser::parseHTMLData(){
                    if(!isStopWord(word)){
                        stemWord(word);
                        tree.addFirst(word);
-                       cout << "Word: " << word << endl;
-                       //tree.addSec(word, HTMLData[i].second);
+                       //cout << "Word: " << word << endl;
+                       //cout << HTMLData[i].second << endl;
+                       string ID = HTMLData[i].second;
+                       //tree.addSec(word, ID);
                    }
                }
 
@@ -177,7 +192,8 @@ void documentParser::parseHTMLData(){
                wordToFindDocumentOccurances++;
                appearsInDoc = false;
            }
-    cout << "Parsed: " << HTMLData[i].second << endl;
+    //cout << "Parsed: " << HTMLData[i].second << endl;
+    //tree.preOrder();
     }
 
 
