@@ -182,7 +182,7 @@ void documentParser::parseHTMLData(){
                        //cout << "Word: " << word << endl;
                        //cout << HTMLData[i].second << endl;
                        string ID = HTMLData[i].second;
-                       tree.addSec(word, ID);
+                       //tree.addSec(word, ID);
                    }
                }
 

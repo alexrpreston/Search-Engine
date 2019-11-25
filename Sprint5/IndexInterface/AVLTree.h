@@ -16,9 +16,9 @@ using namespace std;
 template<class T>
 struct Node{
     pair<T,vector<T>> data; // each word has a vector of the docs that contain the word
-    Node * left;
-    Node * right;
-    int height;
+    Node * left = nullptr;
+    Node * right = nullptr;
+    int height = 0;
 };
 
 template<class T>
