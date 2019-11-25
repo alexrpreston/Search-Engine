@@ -55,7 +55,7 @@ public:
         return(node);
     }
 
-    Node<T> * rRotate(Node<T> * parent){
+    Node<T> * llRotate(Node<T> * parent){
         Node<T> * k1 = parent->left;
         parent->left = k1->right;
         k1->right = parent;
@@ -64,7 +64,7 @@ public:
         return k1;
     }
 
-    Node<T> * lRotate(Node<T> * parent){
+    Node<T> * rrRotate(Node<T> * parent){
         Node<T> * k1 = parent->right;
         parent->right = k1->left;
         k1->left = parent;
@@ -73,35 +73,17 @@ public:
         return k1;
     }
 
-    Node<T> * rightRotate(Node<T> * parent)
-    {
-        Node<T> * x = parent->left;
-        Node<T> * T2 = x->right;
-
-        x->right = parent;
-        parent->left = T2;
-
-        parent->height = max(height(parent->left),
-                        height(parent->right)) + 1;
-        x->height = max(height(x->left),
-                        height(x->right)) + 1;
-
-        return x;
+    Node<T> * rlRotate(Node<T> * parent){
+        Node<T> * k = parent->right;
+        parent->right = llRotate(k);
+        return llRotate(parent);
     }
 
-    Node<T> * leftRotate(Node<T> * parent)
-    {
-        Node<T> * rChild = parent->right;
-        Node<T> * rlChild = rChild->left;
+    Node<T> * lrRotate(Node<T> * parent){
+        Node<T> * k = parent->left;
+        parent->left = llRotate(k);
+        return rrRotate(parent);
 
-        rChild->left = parent;
-        parent->right = rlChild;
-
-        parent->height = max(height(parent->left),
-                        height(parent->right)) + 1;
-        rChild->height = max(height(rChild->left),
-                        height(rChild->right)) + 1;
-        return rChild;
     }
 
     int getBalance(Node<T> * Node)
@@ -117,19 +99,11 @@ public:
 
     Node<T> * addFirst(Node<T> * node, T data){
         if(root == nullptr){
-<<<<<<< HEAD
             Node<T> * nNode = newNode(data);
             root = nNode;
         }
         if (node == nullptr){
             Node<T> * nNode = newNode(data);
-=======
-            Node<T> * nNode = newNode(data);
-            root = nNode;
-        }
-        if (node == nullptr){
-            Node<T> * nNode = newNode(data);           
->>>>>>> 3bfe1007c8da7eb7e94a9fa91de5b596417e2cb6
             numNodes++;
             return(nNode);
         }
@@ -150,21 +124,19 @@ public:
         int balance = getBalance(node);
 
         if (balance > 1 && data < node->left->data.first) // ll
-            return rRotate(node);
+            return llRotate(node);
 
         if (balance < -1 && data > node->right->data.first) // rr
-            return lRotate(node);
+            return rrRotate(node);
 
         if (balance > 1 && data > node->left->data.first) // lr
         {
-            node = lRotate(node->left);
-            return rRotate(node);
+            return lrRotate(node);
         }
 
         if (balance < -1 && data < node->right->data.first)  // rl
         {
-            rRotate(node->right);
-            return leftRotate(node);
+            return rlRotate(node);
         }
 
         return node;
