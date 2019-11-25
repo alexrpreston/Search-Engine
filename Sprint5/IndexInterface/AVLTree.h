@@ -28,6 +28,17 @@ private:
     int numNodes = 0;
 
 public:
+    ~AVLTree(){
+        destroy(root);
+    }
+    void destroy(Node<T> * node){
+        if(node){
+            destroy(node->left);
+            destroy(node->right);
+            delete node;
+        }
+    }
+
     int getNumNodes(){
         return numNodes;
     }
