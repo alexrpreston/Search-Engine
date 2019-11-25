@@ -117,11 +117,19 @@ public:
 
     Node<T> * addFirst(Node<T> * node, T data){
         if(root == nullptr){
+<<<<<<< HEAD
             Node<T> * nNode = newNode(data);
             root = nNode;
         }
         if (node == nullptr){
             Node<T> * nNode = newNode(data);
+=======
+            Node<T> * nNode = newNode(data);
+            root = nNode;
+        }
+        if (node == nullptr){
+            Node<T> * nNode = newNode(data);           
+>>>>>>> 3bfe1007c8da7eb7e94a9fa91de5b596417e2cb6
             numNodes++;
             return(nNode);
         }

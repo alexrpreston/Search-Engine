@@ -21,7 +21,7 @@
 #include "../IndexInterface/Libraries/rapidjson/include/rapidjson/writer.h"
 #include "../IndexInterface/Libraries/rapidjson/include/rapidjson/stringbuffer.h"
 #include "../IndexInterface/Libraries/rapidjson/include/rapidjson/filereadstream.h"
-#include "../IndexInterface/Libraries/myhtml/include/myhtml/api.h"
+//#include "../IndexInterface/Libraries/myhtml/include/myhtml/api.h"
 
 using namespace rapidjson;
 
@@ -37,7 +37,8 @@ documentParser::documentParser(char * filePath, string wordToFind){
     getFileNames(filePath);
     readDocumentsHTMLData(filePath);
     parseHTMLData();
-
+    cout << "Total occurances of '" << wordToFind << "': " << wordToFindTotalOccurances << "." << endl;
+    cout << "Total documents '" << wordToFind << "' orccurs in is " << wordToFindDocumentOccurances << "." << endl;
 
 
 
@@ -48,9 +49,6 @@ documentParser::documentParser(char * filePath, string wordToFind){
 
 
 }
-
-
-
 
 bool documentParser::isStopWord(string &word){
     int left = 0;
@@ -132,8 +130,8 @@ void documentParser::readDocumentsHTMLData(char * filePath){
 
 
         fclose(fp);
-        string shortFileName =  FileNames[i];
-        cout << "Grabbed HTML data of: " << shortFileName << endl;
+        string shortFileName =  FileNames[i].substr(0, FileNames[i].size()-5);
+        //cout << "Grabbed HTML data of: " << shortFileName << endl;
         string html = s.GetString();
         pair<string,string> fileHtml;
         fileHtml = make_pair(html, shortFileName);
@@ -143,12 +141,25 @@ void documentParser::readDocumentsHTMLData(char * filePath){
 }
 
 void documentParser::parseHTMLData(){
+    int progressBarTotal = HTMLData.size() / 10;
+    cout << "Parsing Progress [          ] 0%" << endl;
+    int percent = 0;
+    string bar = "";
+    string barSpaces = "          ";
+    int j = 9;
     for(int i = 0; i < HTMLData.size(); i++){
+        if(i%progressBarTotal == 0){
+            percent += 10;
+            bar += "=";
+            barSpaces = barSpaces.substr(0,j);
+            j--;
+            cout << "Parsing Progress [" << bar << barSpaces << "] " << percent << "%" << endl;
+        }
         string html = HTMLData[i].first;
         removeTags(html);
         char sentence[656565];
         strcpy(sentence, html.c_str());
-        //cout << html << endl;
+        //cout << html << "\n\n\n\n\n";
         char * token = strtok(sentence, " ");
 
            while(token != NULL){
@@ -161,17 +172,28 @@ void documentParser::parseHTMLData(){
 
                word = buffer.c_str();
                if(word != ""){
-
+                   if(word == wordToFind){
+                       appearsInDoc = true;
+                       wordToFindTotalOccurances++;
+                   }
                    if(!isStopWord(word)){
-                       //cout << "Before: " << word << endl;
                        stemWord(word);
-                       //cout << "After: " << word << endl;
+                       tree.addFirst(word);
+                       //cout << "Word: " << word << endl;
+                       //cout << HTMLData[i].second << endl;
+                       string ID = HTMLData[i].second;
+                       tree.addSec(word, ID);
                    }
                }
 
 
         }
-    cout << "Parsed: " << HTMLData[i].second << endl;
+           if(appearsInDoc == true){
+               wordToFindDocumentOccurances++;
+               appearsInDoc = false;
+           }
+    //cout << "Parsed: " << HTMLData[i].second << endl;
+   // tree.preOrder();
     }
 
 
@@ -193,6 +215,8 @@ void documentParser::makeStopWords(){
 
 void documentParser::removeTags(string &html){
     while(html.find("<") != html.npos){
+        //find starts at beginning so is linear everytime
+        //If I start at the end of the string it is alot faster.
         int openBracket = html.find("<");
         int closeBracket = html.find(">") + 1;
 

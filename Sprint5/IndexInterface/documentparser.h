@@ -3,6 +3,7 @@
 using namespace std;
 #include <string>
 #include <vector>
+#include "AVLTree.h"
 class documentParser
 {
 public:
@@ -23,6 +24,11 @@ private:
     vector<string>FileNames;
     vector<pair<string, string>>HTMLData;
     string wordToFind = "";
+    int wordToFindTotalOccurances = 0;
+    int wordToFindDocumentOccurances = 0;
+    bool appearsInDoc = false;
+    AVLTree<string> tree;
+
 };
 
 #endif // DOCUMENTPARSER_H
