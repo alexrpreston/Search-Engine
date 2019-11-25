@@ -2,10 +2,6 @@
 #include <AVLTree.h>
 #include <HashMap.h>
 #include "documentparser.h"
-<<<<<<< HEAD
-#include "../IndexInterface/Libraries/OleanderStemmingLibrary/include/olestem/stemming/english_stem.h"
-//#include "../../../OleanderStemmingLibrary/include/olestem/stemming/english_stem.h"
-=======
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -15,7 +11,7 @@
 #include <string.h>
 #include <dirent.h>
 #include "../IndexInterface/Libraries/OleanderStemmingLibrary/include/olestem/stemming/english_stem.h"
->>>>>>> b020c93815afc021175d789b2cfd92988bd21007
+
 using namespace std;
 
 
@@ -32,7 +28,7 @@ int main(int argc, char * const argv[]){
     avl.addFirst("a");
     avl.addFirst("peanuts");
     avl.addSec("a", "adoc");
-<<<<<<< HEAD
+
     cout << avl.getNumNodes() << endl;
 //    avl.addWord("hi");
 //    avl.addDoc("hi", "doc1");
@@ -40,23 +36,11 @@ int main(int argc, char * const argv[]){
 //    avl.addWord("a");
 //    avl.addWord("peanuts");
 //    avl.addDoc("a", "adoc");
-=======
 
     documentParser(argv[1], argv[2]);
 
-
-
->>>>>>> b020c93815afc021175d789b2cfd92988bd21007
-
-
-<<<<<<< HEAD
     return 0;
-=======
 
-
-
-
->>>>>>> b020c93815afc021175d789b2cfd92988bd21007
 }
 
 
