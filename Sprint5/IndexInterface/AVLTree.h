@@ -61,6 +61,9 @@ public:
         k1->right = parent;
         parent->height = max(height(parent->left), height(parent->right)) + 1;
         k1->height = max(height(k1->left), height(k1->right)) + 1;
+        if(parent == root){
+            root = k1;
+        }
         return k1;
     }
 
@@ -70,19 +73,22 @@ public:
         k1->left = parent;
         parent->height = max(height(parent->left), height(parent->right)) + 1;
         k1->height = max(height(k1->left), height(k1->right)) + 1;
+        if(parent == root){
+            root = k1;
+        }
         return k1;
     }
 
     Node<T> * rlRotate(Node<T> * parent){
         Node<T> * k = parent->right;
         parent->right = llRotate(k);
-        return llRotate(parent);
+        return rrRotate(parent);
     }
 
     Node<T> * lrRotate(Node<T> * parent){
         Node<T> * k = parent->left;
-        parent->left = llRotate(k);
-        return rrRotate(parent);
+        parent->left = rrRotate(k); //sets to ll case, works
+        return llRotate(parent);
 
     }
 
@@ -104,6 +110,8 @@ public:
         }
         if (node == nullptr){
             Node<T> * nNode = newNode(data);
+            nNode->left = nullptr;
+            nNode->right = nullptr;
             numNodes++;
             return(nNode);
         }
@@ -131,7 +139,7 @@ public:
 
         if (balance > 1 && data > node->left->data.first) // lr
         {
-            return lrRotate(node);
+            return lrRotate(node); //returns new pviot
         }
 
         if (balance < -1 && data < node->right->data.first)  // rl
