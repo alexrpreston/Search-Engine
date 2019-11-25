@@ -38,7 +38,7 @@ documentParser::documentParser(char * filePath, string wordToFind){
     parseHTMLData();
     cout << "Total occurances of '" << wordToFind << "': " << wordToFindTotalOccurances << "." << endl;
     cout << "Total documents '" << wordToFind << "' orccurs in is " << wordToFindDocumentOccurances << "." << endl;
-
+    cout << "Total number of nodes is " << tree.getNumNodes() << endl;
 
 
 
@@ -113,6 +113,7 @@ void documentParser::stemWord(string &unstemmedWord){
     std::wstring_convert<convert_type,wchar_t>converter;
 
     unstemmedWord = converter.to_bytes(stemmedword);
+    delete [] UnicodeTextBuffer;
 
 }
 
@@ -180,7 +181,7 @@ void documentParser::parseHTMLData(){
                        //cout << "Word: " << word << endl;
                        //cout << HTMLData[i].second << endl;
                        string ID = HTMLData[i].second;
-                       //tree.addSec(word, ID);
+                       tree.addSec(word, ID);
                    }
                }
 
