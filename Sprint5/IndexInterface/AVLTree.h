@@ -50,13 +50,11 @@ public:
         return N->height;
     }
 
-    int max(int a, int b)
-    {
+    int max(int a, int b){
         return (a > b)? a : b;
     }
 
-    Node<T> * newNode(T key)
-    {
+    Node<T> * newNode(T key){
         Node<T> * node = new Node<T>();
         node->data.first = key;
         node->left = nullptr;
@@ -103,8 +101,7 @@ public:
 
     }
 
-    int getBalance(Node<T> * Node)
-    {
+    int getBalance(Node<T> * Node){
         if (Node == nullptr)
             return 0;
         return height(Node->left) - height(Node->right);
@@ -166,8 +163,7 @@ public:
     }
 
     void preOrder(Node<T> * root){
-        if(root != nullptr)
-        {
+        if(root != nullptr){
             cout << root->data.first << endl;
             preOrder(root->left);
             preOrder(root->right);
@@ -217,6 +213,12 @@ public:
             return;
     }
 
+    void add(T data, T data2){
+        Node<T> * curr;
+        curr = addFirst(root, data);
+        addSec(data, data2, curr);
+        return;
+    }
 
 };
 

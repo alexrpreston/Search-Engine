@@ -40,13 +40,6 @@ documentParser::documentParser(char * filePath, string wordToFind){
     cout << "Total documents '" << wordToFind << "' orccurs in is " << wordToFindDocumentOccurances << "." << endl;
     cout << "Total number of nodes is " << tree.getNumNodes() << endl;
 
-
-
-
-
-
-
-
 }
 
 bool documentParser::isStopWord(string &word){
@@ -177,11 +170,12 @@ void documentParser::parseHTMLData(){
                    }
                    if(!isStopWord(word)){
                        stemWord(word);
-                       tree.addFirst(word);
+                       //tree.addFirst(word);
                        //cout << "Word: " << word << endl;
                        //cout << HTMLData[i].second << endl;
                        string ID = HTMLData[i].second;
-                       tree.addSec(word, ID);
+                       //tree.addSec(word, ID);
+                       tree.add(word, ID);
                    }
                }
 
