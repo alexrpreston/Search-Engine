@@ -44,6 +44,7 @@ documentParser::documentParser(char * filePath, string wordToFind){
     cout << "Total documents '" << wordToFind << "' orccurs in is " << wordToFindDocumentOccurances << "." << endl;
     cout << "Total number of nodes is " << tree.getNumNodes() << endl;
 
+<<<<<<< HEAD
     auto finish = std::chrono::high_resolution_clock::now();
     auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(finish-start);
     auto seconds = std::chrono::duration_cast<std::chrono::seconds>(finish-start);
@@ -54,6 +55,8 @@ documentParser::documentParser(char * filePath, string wordToFind){
 
 
 
+=======
+>>>>>>> e760def39c903f1b265e6f214df9a8ae549a3a03
 }
 
 bool documentParser::isStopWord(string &word){
@@ -186,11 +189,12 @@ void documentParser::parseHTMLData(){
                    }
                    if(!isStopWord(word)){
                        stemWord(word);
-                       tree.addFirst(word);
+                       //tree.addFirst(word);
                        //cout << "Word: " << word << endl;
                        //cout << HTMLData[i].second << endl;
                        string ID = HTMLData[i].second;
-                       tree.addSec(word, ID);
+                       //tree.addSec(word, ID);
+                       tree.add(word, ID);
                    }
                }
 
