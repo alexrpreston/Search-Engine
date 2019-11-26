@@ -40,11 +40,11 @@ documentParser::documentParser(char * filePath, string wordToFind){
     cout << "Total documents '" << wordToFind << "' orccurs in is " << wordToFindDocumentOccurances << "." << endl;
     cout << "Total number of nodes is " << tree.getNumNodes() << endl;
 
-    auto finish = std::chrono::high_resolution_clock::now();
-    auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(finish-start);
-    auto seconds = std::chrono::duration_cast<std::chrono::seconds>(finish-start);
-    std::cout << "Time in milliseconds : " <<  milliseconds.count() << "\n";
-    std::cout << "Time in seconds : " <<  seconds.count() << "\n";
+//    auto finish = std::chrono::high_resolution_clock::now();
+//    auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(finish-start);
+//    auto seconds = std::chrono::duration_cast<std::chrono::seconds>(finish-start);
+//    std::cout << "Time in milliseconds : " <<  milliseconds.count() << "\n";
+//    std::cout << "Time in seconds : " <<  seconds.count() << "\n";
 
 
 
