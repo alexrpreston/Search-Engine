@@ -18,7 +18,12 @@ using namespace std;
 
 int main(int argc, char * const argv[]){
 
-    documentParser(argv[1], argv[2]);
+    string filePath = argv[1];
+    if(filePath[filePath.length()-1] != '/'){
+            filePath = filePath + '/';
+    }
+    char * formatedFilePath = &filePath[0];
+    documentParser(formatedFilePath, argv[2]);
 
     return 0;
 
