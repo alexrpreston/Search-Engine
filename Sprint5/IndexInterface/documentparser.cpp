@@ -16,6 +16,7 @@
 #include <cstdio>
 #include <locale>
 #include <codecvt>
+#include <chrono>
 #include "../IndexInterface/Libraries/OleanderStemmingLibrary/include/olestem/stemming/english_stem.h" // un comment me later
 #include "../IndexInterface/Libraries/rapidjson/include/rapidjson/document.h"
 #include "../IndexInterface/Libraries/rapidjson/include/rapidjson/writer.h"
@@ -29,6 +30,7 @@ documentParser::documentParser(){
 }
 
 documentParser::documentParser(char * filePath, string wordToFind){
+    auto start = std::chrono::high_resolution_clock::now();
     this->wordToFind = wordToFind;
     makeStopWords();
     cout << filePath << endl;
@@ -36,12 +38,17 @@ documentParser::documentParser(char * filePath, string wordToFind){
     getFileNames(filePath);
     readDocumentsHTMLData(filePath);
     parseHTMLData();
+
+
     cout << "Total occurances of '" << wordToFind << "': " << wordToFindTotalOccurances << "." << endl;
     cout << "Total documents '" << wordToFind << "' orccurs in is " << wordToFindDocumentOccurances << "." << endl;
     cout << "Total number of nodes is " << tree.getNumNodes() << endl;
 
-
-
+    auto finish = std::chrono::high_resolution_clock::now();
+    auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(finish-start);
+    auto seconds = std::chrono::duration_cast<std::chrono::seconds>(finish-start);
+    std::cout << "Time in milliseconds : " <<  milliseconds.count() << "\n";
+    std::cout << "Time in seconds : " <<  seconds.count() << "\n";
 
 
 
@@ -142,7 +149,7 @@ void documentParser::readDocumentsHTMLData(char * filePath){
 
 void documentParser::parseHTMLData(){
     int progressBarTotal = HTMLData.size() / 10;
-    cout << "Parsing Progress [          ] 0%" << endl;
+//    cout << "Parsing Progress [          ] 0%" << endl;
     int percent = 0;
     string bar = "";
     string barSpaces = "          ";
@@ -156,7 +163,9 @@ void documentParser::parseHTMLData(){
             cout << "Parsing Progress [" << bar << barSpaces << "] " << percent << "%" << endl;
         }
         string html = HTMLData[i].first;
+        //cout << html << "\n\n\n\n\n\n\n\n\n";
         removeTags(html);
+        //cout << html;
         char sentence[656565];
         strcpy(sentence, html.c_str());
         char * token = strtok(sentence, " ");
@@ -201,11 +210,7 @@ void documentParser::parseHTMLData(){
 
 
 void documentParser::makeStopWords(){
-    //string stopWordList = "a about after all also an and any as at back be because but by can come could day do even first for from get give go have he her him his how i if in into it its just know like look make me most my new no not now of on one only or other our out over people say see she so some take than that the their them then there these they think this time to two up us use want way we well what when which who will with would year you your";
-    string stopWordList = "a able about above abst accordance according accordingly across act actually added adj affected affecting affects after afterwards again against ah all almost alone along already also although always am among amongst an and announce another any anybody anyhow anymore anyone anything anyway anyways anywhere apparently approximately are aren aren’t arise around as aside ask asking at auth available away awfully b back be became because become becomes becoming been before beforehand begin beginning beginnings begins behind being believe below beside besides between beyond biol both brief briefly but by c ca came can cannot can't cause causes certain certainly co com come comes contain containing contains could couldn’t d date did didn't different do does doesn't doing done don't down downwards due during e each ed edu effect eg eight eighty either else elsewhere end ending enough especially et et-al etc even ever every everybody everyone everything everywhere ex except f far few ff fifth first five fix followed following follows for former formerly forth found four from further furthermore g gave get gets getting give given gives giving go goes gone got gotten h had happens hardly has hasn't have haven't having he hed hence her here hereafter hereby herein heres hereupon hers herself hes hi hid him himself his hither home how howbeit however hundred i id ie if i'll im immediate immediately importance important in inc indeed index information instead into invention inward is isn't it itd it'll its itself i've j just k keep keeps kept kg km know known knows l largely last lately later latter latterly least less lest let lets like liked likely line little 'll look looking looks ltd m made mainly make makes many may maybe me mean means meantime meanwhile merely mg might million miss ml more moreover most mostly mr mrs much mug must my myself n na name namely nay nd near nearly necessarily necessary need needs neither never nevertheless new next nine ninety no nobody non none nonetheless noone nor normally nos not noted nothing now nowhere o obtain obtained obviously of off often oh ok okay old omitted on once one ones only onto or ord other others otherwise ought our ours ourselves out outside over overall owing own p page pages part particular particularly past per perhaps placed please plus poorly possible possibly potentially pp predominantly present previously primarily probably promptly proud provides put q que quickly quite qv r ran rather rd re readily really recent recently ref refs regarding regardless regards related relatively research respectively resulted resulting results right run s said same saw say saying says sec section see seeing seem seemed seeming seems seen self selves sent seven several shall she shed she'll shes should shouldn't show showed shown shown’s shows significant significantly similar similarly since six slightly so some somebody somehow someone somethan something sometime sometimes somewhat somewhere soon sorry specifically specified specify specifying still stop strongly sub substantially successfully such sufficiently suggest sup sure     t take taken taking tell tends th than thank thanks thanx that that'll thats that've the their theirs them themselves then thence there thereafter thereby thered therefore therein there'll thereof therere theres thereto thereupon there've these they they’d they'll they’re they've think this those thou though thoughh thousand throug through throughout thru thus til tip to together too took toward towards tried tries truly try trying ts twice two u un under unfortunately unless unlike unlikely until unto up upon ups us use used useful usefully usefulness uses using usually v value various 've very via viz vol vols vs w want wants was wasn’t way we wed welcome we'll went were weren’t we've what whatever what'll what’s when whence whenever where whereafter whereas whereby wherein wheres whereupon wherever whether which while whim whither who who’d whoever whole who'll whom whomever whos whose why widely willing wish with within without wont words world would wouldn’t www x y yes yet you you’d you'll your you’re yours yourself yourselves you've z zero";
-    //sort(stopWordList.begin(), stopWordList.end());
-    //cout << stopWordList << endl;
-
+    string stopWordList = "'ll 've a able about above abst accordance according accordingly across act actually added adj affected affecting affects after afterwards again against ah all almost alone along already also although always am among amongst an and announce another any anybody anyhow anymore anyone anything anyway anyways anywhere apparently approximately are aren aren’t arise around as aside ask asking at auth available away awfully b back be became because become becomes becoming been before beforehand begin beginning beginnings begins behind being believe below beside besides between beyond biol both brief briefly but by c ca came can can't cannot cause causes certain certainly co com come comes contain containing contains could couldn’t d date did didn't different do does doesn't doing don't done down downwards due during e each ed edu effect eg eight eighty either else elsewhere end ending enough especially et et-al etc even ever every everybody everyone everything everywhere ex except f far few ff fifth first five fix followed following follows for former formerly forth found four from further furthermore g gave get gets getting give given gives giving go goes gone got gotten h had happens hardly has hasn't have haven't having he hed hence her here hereafter hereby herein heres hereupon hers herself hes hi hid him himself his hither home how howbeit however hundred i i'll i've id ie if im immediate immediately importance important in inc indeed index information instead into invention inward is isn't it it'll itd its itself j just k keep keeps kept kg km know known knows l largely last lately later latter latterly least less lest let lets like liked likely line little look looking looks ltd m made mainly make makes many may maybe me mean means meantime meanwhile merely mg might million miss ml more moreover most mostly mr mrs much mug must my myself n na name namely nay nd near nearly necessarily necessary need needs neither never nevertheless new next nine ninety no nobody non none nonetheless noone nor normally nos not noted nothing now nowhere o obtain obtained obviously of off often oh ok okay old omitted on once one ones only onto or ord other others otherwise ought our ours ourselves out outside over overall owing own p page pages part particular particularly past per perhaps placed please plus poorly possible possibly potentially pp predominantly present previously primarily probably promptly proud provides put q que quickly quite qv r ran rather rd re readily really recent recently ref refs regarding regardless regards related relatively research respectively resulted resulting results right run s said same saw say saying says sec section see seeing seem seemed seeming seems seen self selves sent seven several shall she she'll shed shes should shouldn't show showed shown shown’s shows significant significantly similar similarly since six slightly so some somebody somehow someone somethan something sometime sometimes somewhat somewhere soon sorry specifically specified specify specifying still stop strongly sub substantially successfully such sufficiently suggest sup sure t take taken taking tell tends th than thank thanks thanx that that'll that've thats the their theirs them themselves then thence there there'll there've thereafter thereby thered therefore therein thereof therere theres thereto thereupon these they they'll they've they’d they’re think this those thou though thoughh thousand throug through throughout thru thus til tip to together too took toward towards tried tries truly try trying ts twice two u un under unfortunately unless unlike unlikely until unto up upon ups us use used useful usefully usefulness uses using usually v value various very via viz vol vols vs w want wants was wasn’t way we we'll we've wed welcome went were weren’t what what'll whatever what’s when whence whenever where whereafter whereas whereby wherein wheres whereupon wherever whether which while whim whither who who'll whoever whole whom whomever whos whose who’d why widely willing wish with within without wont words world would wouldn’t www x y yes yet you you'll you've your yours yourself yourselves you’d you’re z";
     string deliminator = " ";
     size_t position = 0;
     string token = "";
@@ -214,17 +219,37 @@ void documentParser::makeStopWords(){
           stopWords.push_back(token);
           stopWordList.erase(0, position + deliminator.length());
     }
+
+
 }
 
 void documentParser::removeTags(string &html){
-    while(html.find("<") != html.npos){
-        //find starts at beginning so is linear everytime
-        //If I start at the end of the string it is alot faster.
-        int openBracket = html.find("<");
-        int closeBracket = html.find(">") + 1;
-
-        if(closeBracket != html.npos){
-            html.erase(openBracket, closeBracket - openBracket);
+    //int j = html.length()-1;
+    int openBracket = 0;
+    int closeBracket = 0;
+    for(int i = html.length()-1; i > 0; i--){
+        if(html[i] == '>'){
+            closeBracket = i;
+        }
+        if(html[i] == '<'){
+            openBracket = i;
+            if(closeBracket != html.npos){
+                html.erase(openBracket, closeBracket - openBracket+1);
+            }
         }
     }
+
+
+
+//Slower Version
+//    while(html.find("<") != html.npos){
+//        //find starts at beginning so is linear everytime
+//        //If I start at the end of the string it is alot faster.
+//        int openBracket = html.find("<");
+//        int closeBracket = html.find(">") + 1;
+
+//        if(closeBracket != html.npos){
+//            html.erase(openBracket, closeBracket - openBracket);
+//        }
+//    }
 }
