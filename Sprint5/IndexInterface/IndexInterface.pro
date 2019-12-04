@@ -5,12 +5,14 @@ CONFIG -= qt
 
 SOURCES += \
         documentparser.cpp \
-        main.cpp
+        main.cpp \
+        userinterface.cpp
 
 HEADERS += \
     AVLTree.h \
     HashMap.h \
     IndexInterface.h \
-    documentparser.h
+    documentparser.h \
+    userinterface.h
 
 

@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <dirent.h>
+#include "userinterface.h"
 #include "../IndexInterface/Libraries/OleanderStemmingLibrary/include/olestem/stemming/english_stem.h"
 
 using namespace std;
@@ -23,7 +24,8 @@ int main(int argc, char * const argv[]){
             filePath = filePath + '/';
     }
     char * formatedFilePath = &filePath[0];
-    documentParser(formatedFilePath, argv[2]);
+    //documentParser(formatedFilePath, argv[2]);
+    userInterface();
 
     return 0;
 
