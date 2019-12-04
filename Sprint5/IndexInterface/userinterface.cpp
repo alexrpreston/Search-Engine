@@ -9,9 +9,6 @@ userInterface::userInterface(){
         cout << "3. Exit " << "\n";
         cout << "Enter an option: ";
         cin >> choice;
-        if(!isalnum(choice)){
-            choice = 0;
-        }
         //Implement try catch to test if the choice is not a number
         switch(choice){
             case 1:
