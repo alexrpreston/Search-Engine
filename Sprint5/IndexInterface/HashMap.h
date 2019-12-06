@@ -3,9 +3,9 @@
 
 #include <iostream>
 #include <string>
-#include<cstdio>
-#include<sstream>
-#include<algorithm>
+#include <cstdio>
+#include <sstream>
+#include <algorithm>
 #include <utility>
 #include <vector>
 #include <IndexInterface.h>

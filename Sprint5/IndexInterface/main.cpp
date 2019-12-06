@@ -11,6 +11,7 @@
 #include <string.h>
 #include <dirent.h>
 #include "userinterface.h"
+#include "queryprocessor.h"
 #include <cstdlib>
 #include "../IndexInterface/Libraries/OleanderStemmingLibrary/include/olestem/stemming/english_stem.h"
 
@@ -28,8 +29,9 @@ int main(int argc, char * const argv[]){
             filePath = filePath + '/';
     }
     char * formatedFilePath = &filePath[0];
-    //documentParser(formatedFilePath, argv[2]);
-    userInterface();
+    //
+    //userInterface();
+    queryProcessor("higher education texas");
 
     return 0;
 

@@ -11,7 +11,7 @@ userInterface::userInterface(){
     do{
         cout << "1. Maintence mode" << "\n";
         cout << "2. Interactive mode" << "\n";
-        cout << "3. Exit " << "\n";
+        cout << "3. Exit " << "\n" ;
         cout << "Enter an option: ";
         cin >> choice;
         //system("clear");
@@ -45,9 +45,10 @@ void userInterface::maintenanceMode(){
         if(choice == 1){
                 string folderPath;
                 cout << "Enter a folder path: ";
-                cin >> folderPath;  
+                cin >> folderPath;
                 char * formatedFilePath = &folderPath[0];
                 documentParser(formatedFilePath, 0);
+
                 cout << "Opinions added to corpus" << endl;
         }
         if(choice == 2){
@@ -89,9 +90,9 @@ void userInterface::interactiveMode(){
         if(choice == 2){
             string query = "";
             cout << "=== Search the Corpus ===" << "\n\n";
-            cout << "Enter Querry: ";
+            cout << "Enter Query: ";
             cin >> query;
-            //quryProcessor(query)
+            //queryProcessor(query)
         }
         if(choice == 3){
             cout << "Total number of opinions indexed: " << "\n";

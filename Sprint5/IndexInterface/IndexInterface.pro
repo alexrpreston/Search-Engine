@@ -6,6 +6,7 @@ CONFIG -= qt
 SOURCES += \
         documentparser.cpp \
         main.cpp \
+        queryprocessor.cpp \
         userinterface.cpp
 
 HEADERS += \
@@ -13,6 +14,7 @@ HEADERS += \
     HashMap.h \
     IndexInterface.h \
     documentparser.h \
+    queryprocessor.h \
     userinterface.h
 
 

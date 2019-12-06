@@ -8,6 +8,8 @@ class documentParser
 {
 public:
     documentParser();
+    documentParser(string dataType);
+
     documentParser(char * filePath, string wordToFind);
     bool isStopWord(string &word);
     void makeLowerCase(string &word);
@@ -16,6 +18,7 @@ public:
     void readDocumentsHTMLData(string filePath);
     void makeStopWords();
     void removeTags(string &html);
+    void addOpinions(char * filePath);
 private:
     string word = "";
     vector<string>stopWords;
@@ -25,7 +28,7 @@ private:
     bool appearsInDoc = false;
     AVLTree<string> tree;
     string filePath = "";
-
+    string dataType = "";
 };
 
 #endif // DOCUMENTPARSER_H
