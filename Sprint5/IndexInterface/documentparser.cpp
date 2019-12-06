@@ -161,7 +161,6 @@ void documentParser::parseHTMLData(){
                }
                token = strtok(NULL, " ");
 
-
                word = buffer.c_str();
                if(word != ""){
                    if(word == wordToFind){
@@ -179,7 +178,6 @@ void documentParser::parseHTMLData(){
                    }
                }
 
-
         }
            if(appearsInDoc == true){
                wordToFindDocumentOccurances++;
@@ -188,11 +186,8 @@ void documentParser::parseHTMLData(){
     //cout << "Parsed: " << HTMLData[i].second << endl;
     //tree.preOrder();
     }
-
-
+cout << tree.access("coffee").front().first << " : " << tree.access("coffee").front().second << endl;
 }
-
-
 
 void documentParser::makeStopWords(){
     //string stopWordList = "a about after all also an and any as at back be because but by can come could day do even first for from get give go have he her him his how i if in into it its just know like look make me most my new no not now of on one only or other our out over people say see she so some take than that the their them then there these they think this time to two up us use want way we well what when which who will with would year you your";

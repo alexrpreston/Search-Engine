@@ -10,12 +10,15 @@
 #include <IndexInterface.h>
 #include <string.h>
 #include <stdio.h>
+#include <ostream>
+#include <fstream>
 
 using namespace std;
 
 template<class T>
 struct Node{
-    pair<T,vector<T>> data; // each word has a vector of the docs that contain the word
+    //pair<T,vector<T>> data; // each word has a vector of the docs that contain the word
+    pair<T, vector<pair<T, int>>> data;
     Node * left = nullptr;
     Node * right = nullptr;
     int height = 0;
@@ -170,11 +173,33 @@ public:
         }
     }
 
-    vector<T> access(T data){
+    void pof(){
+        ofstream outFile;
+        if(!outFile.is_open()){
+            outFile.open("index.txt");
+        }
+        preOrderFile(root, outFile);
+    }
+
+    void preOrderFile(Node<T> * curr, ofstream out){
+        if(curr !=nullptr){
+            out << root->data.first;
+            if(root->data.second.size() != 0){
+                for(int i = 0; i < root->data.second.size(); i++){
+                    out << root->data.second[i].first << ":" << root->data.second[i].second;
+                }
+            }
+            out << endl;
+            preOrderFile(curr->left);
+            preOrderFile(curr->right);
+        }
+    }
+
+    vector<pair<T, int>> access(T data){
         return access(data, root);
     }
 
-    vector<T> access(T data, Node<T> * curr){ // return value can be changed for query
+    vector<pair<T, int>> access(T data, Node<T> * curr){ // return value can be changed for query
         if(strcmp(curr->data.first.c_str(), data.c_str()) < 0){ //neg if search is larger
             curr == curr->right;
             access(data, curr);
@@ -205,8 +230,25 @@ public:
             curr = curr->left;
             addSec(data, newDoc, curr);
         }
-        else if(strcmp(curr->data.first.c_str(), data.c_str()) == 0){
-            curr->data.second.push_back(newDoc);
+        else if(strcmp(curr->data.first.c_str(), data.c_str()) == 0){ // this is where tne doc counting is gonna happen
+            int temp = -1;
+            //temp = curr->data.second.find(0, 101, newDoc); //find doesnt exist
+            if(curr->data.second.size() == 0){
+                curr->data.second.push_back(make_pair(newDoc, 0));
+                return;
+            }
+            for(int i = 0; i < curr->data.second.size(); i++){
+                if(curr->data.second[i].first == newDoc){
+                    curr->data.second[i].second++;
+                    return;
+                }
+                if(i == curr->data.second.size()-1){
+                    pair<T,int> tempPair;
+                    curr->data.second.push_back(make_pair(newDoc, 0));
+                    return;
+                }
+            }
+
             return;
         }
         else
