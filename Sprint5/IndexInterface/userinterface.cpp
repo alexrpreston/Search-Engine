@@ -14,7 +14,7 @@ userInterface::userInterface(){
         cout << "3. Exit " << "\n";
         cout << "Enter an option: ";
         cin >> choice;
-        //system("clear");
+        system("clear");
         //Implement try catch to test if the choice is not a number
         switch(choice){
             case 1:
@@ -41,7 +41,7 @@ void userInterface::maintenanceMode(){
         cout << "5. Exit " << "\n";
         cout << "Enter an option: ";
         cin >> choice;
-        //system("clear");
+        system("clear");
         if(choice == 1){
                 string folderPath;
                 cout << "Enter a folder path: ";
@@ -75,7 +75,7 @@ void userInterface::interactiveMode(){
         cout << "5. Exit " << "\n";
         cout << "Enter an option: ";
         cin >> choice;
-        //system("clear");
+        system("clear");
         if(choice == 1){
             //if we don't have a persistent index, print out an error message
             int dataStrChoice = 0;
@@ -91,7 +91,7 @@ void userInterface::interactiveMode(){
             cout << "=== Search the Corpus ===" << "\n\n";
             cout << "Enter Querry: ";
             cin >> query;
-            //quryProcessor(query)
+            //quryProcessor(query);
         }
         if(choice == 3){
             cout << "Total number of opinions indexed: " << "\n";
