@@ -178,12 +178,13 @@ public:
         if(!outFile.is_open()){
             outFile.open("index.txt");
         }
+        outFile << getNumNodes() << endl;
         preOrderFile(root, outFile);
     }
 
     void preOrderFile(Node<T> * curr, ofstream out){
         if(curr !=nullptr){
-            out << root->data.first;
+            out << root->data.first << "|";
             if(root->data.second.size() != 0){
                 for(int i = 0; i < root->data.second.size(); i++){
                     out << root->data.second[i].first << ":" << root->data.second[i].second;
@@ -260,6 +261,30 @@ public:
         curr = addFirst(root, data);
         addSec(data, data2, curr);
         return;
+    }
+
+    void rf(){
+        ifstream outFile;
+        if(!outFile.is_open()){
+            outFile.open("index.txt");
+        }
+        readFile(root, outFile);
+    }
+
+    void readFile(Node<T> * curr, ifstream out){
+        int len;
+        out >> len;
+        string first;
+        for(int i = 0; i < len; i++){
+            getline(out, first, '|');
+            addFirst();
+            string newDoc;
+            getline(out, newDoc, ':');
+            string num;
+            getline(out, num);
+            int pNum = stoi(num);
+            curr->data.second.push_back(make_pair(newDoc, 0));
+        }
     }
 
 };
