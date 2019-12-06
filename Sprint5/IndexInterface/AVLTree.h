@@ -177,20 +177,28 @@ public:
         ofstream outFile;
         if(!outFile.is_open()){
             outFile.open("index.txt");
+            cout << "wow" << endl;
+            outFile << "wow" << endl;
         }
         outFile << getNumNodes() << endl;
-        preOrderFile(root, outFile);
+        preOrderFile(root);
     }
 
-    void preOrderFile(Node<T> * curr, ofstream out){
+    void preOrderFile(Node<T> * curr){
+        ofstream outFile;
+        if(!outFile.is_open()){
+            outFile.open("index.txt");
+            cout << "wow" << endl;
+            outFile << "wow" << endl;
+        }
         if(curr !=nullptr){
-            out << root->data.first << "|";
+            outFile << root->data.first << "|";
             if(root->data.second.size() != 0){
                 for(int i = 0; i < root->data.second.size(); i++){
-                    out << root->data.second[i].first << ":" << root->data.second[i].second;
+                    outFile << root->data.second[i].first << ":" << root->data.second[i].second;
                 }
             }
-            out << endl;
+            outFile << endl;
             preOrderFile(curr->left);
             preOrderFile(curr->right);
         }
@@ -202,11 +210,11 @@ public:
 
     vector<pair<T, int>> access(T data, Node<T> * curr){ // return value can be changed for query
         if(strcmp(curr->data.first.c_str(), data.c_str()) < 0){ //neg if search is larger
-            curr == curr->right;
+            curr = curr->right;
             access(data, curr);
         }
         else if(strcmp(curr->data.first.c_str(), data.c_str()) > 0){ // if search is larger
-            curr == curr->left;
+            curr = curr->left;
             access(data, curr);
         }
         else if(strcmp(curr->data.first.c_str(), data.c_str()) == 0){
@@ -286,7 +294,6 @@ public:
             curr->data.second.push_back(make_pair(newDoc, 0));
         }
     }
-
 };
 
 

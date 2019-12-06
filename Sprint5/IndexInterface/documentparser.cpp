@@ -16,7 +16,7 @@
 #include <cstdio>
 #include <locale>
 #include <codecvt>
-#include "../IndexInterface/Libraries/OleanderStemmingLibrary/include/olestem/stemming/english_stem.h" // un comment me later
+#include "../IndexInterface/Libraries/OleanderStemmingLibrary/include/olestem/stemming/english_stem.h"
 #include "../IndexInterface/Libraries/rapidjson/include/rapidjson/document.h"
 #include "../IndexInterface/Libraries/rapidjson/include/rapidjson/writer.h"
 #include "../IndexInterface/Libraries/rapidjson/include/rapidjson/stringbuffer.h"
@@ -186,7 +186,8 @@ void documentParser::parseHTMLData(){
     //cout << "Parsed: " << HTMLData[i].second << endl;
     //tree.preOrder();
     }
-cout << tree.access("coffee").front().first << " : " << tree.access("coffee").front().second << endl;
+    tree.pof();
+//cout << tree.access("coffee").front().first << " : " << tree.access("coffee").front().second << endl;
 }
 
 void documentParser::makeStopWords(){
