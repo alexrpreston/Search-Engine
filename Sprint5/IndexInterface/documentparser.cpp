@@ -29,6 +29,15 @@ documentParser::documentParser(){
     cout << "" << endl;
 }
 
+documentParser::documentParser(string dataType){
+    if(dataType == "AVL"){
+
+    }
+    else if(dataType == "HASH"){
+
+    }
+}
+
 documentParser::documentParser(char * filePath, string wordToFind){
     auto start = std::chrono::high_resolution_clock::now();
     makeLowerCase(wordToFind);
@@ -46,11 +55,10 @@ documentParser::documentParser(char * filePath, string wordToFind){
 //    std::cout << "Time in milliseconds : " <<  milliseconds.count() << "\n";
 //    std::cout << "Time in seconds : " <<  seconds.count() << "\n";
 
-
-
-
-
 }
+
+
+
 
 bool documentParser::isStopWord(string &word){
     int left = 0;
@@ -189,4 +197,9 @@ void documentParser::removeTags(string &html){
             }
         }
     }
+}
+
+void documentParser::addOpinions(char *filePath)
+{
+
 }
