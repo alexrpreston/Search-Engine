@@ -29,8 +29,12 @@ class AVLTree : public IndexInterface {
 private:
     Node<string> * root = nullptr;
     int numNodes = 0;
+    ofstream outFile;
 
 public:
+    AVLTree(){
+        outFile.open("/home/student/Desktop/index.txt");
+    }
     ~AVLTree(){
         destroy(root);
     }
@@ -177,32 +181,22 @@ public:
     }
 
     void pof(){
-        ofstream outFile;
-        if(!outFile.is_open()){
-            outFile.open("index.txt");
-            cout << "wow" << endl;
-            outFile << "wow" << endl;
-        }
         outFile << getNumNodes() << endl;
         preOrderFile(root);
     }
 
     void preOrderFile(Node<T> * curr){
-        ofstream outFile;
-        if(!outFile.is_open()){
-            outFile.open("index.txt");
-            cout << "wow" << endl;
-            outFile << "wow" << endl;
-        }
+
         if(curr !=nullptr){
-            outFile << root->data.first << "|";
-            if(root->data.second.size() != 0){
-                for(int i = 0; i < root->data.second.size(); i++){
-                    outFile << root->data.second[i].first << ":" << root->data.second[i].second;
+            preOrderFile(curr->left);
+            outFile << curr->data.first << "|";
+            if(curr->data.second.size() != 0){
+                for(int i = 0; i < curr->data.second.size(); i++){
+                    outFile << curr->data.second[i].first << ":" << curr->data.second[i].second;
+                    outFile << "-";
                 }
             }
-            outFile << endl;
-            preOrderFile(curr->left);
+            outFile << endl;                      
             preOrderFile(curr->right);
         }
     }
@@ -246,7 +240,7 @@ public:
             int temp = -1;
             //temp = curr->data.second.find(0, 101, newDoc); //find doesnt exist
             if(curr->data.second.size() == 0){
-                curr->data.second.push_back(make_pair(newDoc, 0));
+                curr->data.second.push_back(make_pair(newDoc, 1));
                 return;
             }
             for(int i = 0; i < curr->data.second.size(); i++){
@@ -256,7 +250,7 @@ public:
                 }
                 if(i == curr->data.second.size()-1){
                     pair<T,int> tempPair;
-                    curr->data.second.push_back(make_pair(newDoc, 0));
+                    curr->data.second.push_back(make_pair(newDoc, 1));
                     return;
                 }
             }
