@@ -279,16 +279,20 @@ public:
         if(!outFile.is_open()){
             outFile.open("index.txt");
         }
-        readFile(root, outFile);
+        readFile(root);
     }
 
-    void readFile(Node<T> * curr, ifstream out){
+    void readFile(Node<T> * curr){
+        ifstream out;
+        if(!out.is_open()){
+            out.open("index.txt");
+        }
         int len;
         out >> len;
         string first;
         for(int i = 0; i < len; i++){
             getline(out, first, '|');
-            addFirst();
+            addFirst(first);
             string newDoc;
             getline(out, newDoc, ':');
             string num;
