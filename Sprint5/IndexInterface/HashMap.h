@@ -14,8 +14,7 @@
 using namespace std ;
 
 template<class T>
-class HashMap
-{
+class HashMap : public IndexInterface{
     int BUCKET = 200000;    // No. of buckets
 
     // Pointer to an array containing buckets
