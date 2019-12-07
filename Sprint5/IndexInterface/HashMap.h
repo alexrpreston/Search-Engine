@@ -15,6 +15,7 @@ using namespace std ;
 
 template<class T>
 class HashMap : public IndexInterface{
+private:
     int BUCKET = 200000;    // No. of buckets
 
     // Pointer to an array containing buckets
@@ -75,6 +76,23 @@ public:
           cout << endl;
         }
     }
+
+    void rf() override{
+
+    }
+    void pof() override{
+
+    }
+    void destroy() override{
+
+    }
+    void add(string, string) override{
+
+    }
+    vector<pair<T, int>> access(T data){
+        //return access(data, root);
+    }
+
 };
 
 #endif // HASHMAP_H
