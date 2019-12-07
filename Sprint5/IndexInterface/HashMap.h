@@ -92,6 +92,9 @@ public:
     vector<pair<T, int>> access(T data){
         //return access(data, root);
     }
+    bool isEmpty() override{
+
+    }
 
 };
 

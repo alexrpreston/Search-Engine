@@ -55,7 +55,7 @@ documentParser::documentParser(char * filePath, string wordToFind){
 //    std::cout << "Time in milliseconds : " <<  milliseconds.count() << "\n";
 //    std::cout << "Time in seconds : " <<  seconds.count() << "\n";
       tree.pof();
-      cout << "hi" << endl;
+     // cout << tree.access("coffee").front().first << endl;
 }
 
 

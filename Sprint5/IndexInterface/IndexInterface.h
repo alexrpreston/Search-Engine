@@ -20,6 +20,7 @@ public:
     virtual void add(string, string) = 0;
     virtual void rf() = 0;
     virtual void pof() = 0;
+    virtual bool isEmpty() = 0;
 };
 
 

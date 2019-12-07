@@ -206,21 +206,23 @@ public:
     }
 
     vector<pair<T, int>> access(T data, Node<T> * curr){ // return value can be changed for query
-        if(strcmp(curr->data.first.c_str(), data.c_str()) < 0){ //neg if search is larger
-            curr = curr->right;
-            access(data, curr);
-        }
-        else if(strcmp(curr->data.first.c_str(), data.c_str()) > 0){ // if search is larger
-            curr = curr->left;
-            access(data, curr);
-        }
-        else if(strcmp(curr->data.first.c_str(), data.c_str()) == 0){
-            return curr->data.second;
-        }
-        else{
-            cout << "nothing" << endl;
-        }
+        if(curr != nullptr){
 
+            if(strcmp(curr->data.first.c_str(), data.c_str()) < 0){ //neg if search is larger
+                curr = curr->right;
+                access(data, curr);
+            }
+            else if(strcmp(curr->data.first.c_str(), data.c_str()) > 0){ // if search is larger
+                curr = curr->left;
+                access(data, curr);
+            }
+            else if(strcmp(curr->data.first.c_str(), data.c_str()) == 0){
+                return curr->data.second;
+            }
+            else{
+                cout << "nothing" << endl;
+            }
+        }
     }
 
     void addSec(T data, T doc){
@@ -295,6 +297,15 @@ public:
             curr->data.second.push_back(make_pair(newDoc, 0));
         }
     }
+
+    bool isEmpty(){
+        if(root == nullptr){
+            return true;
+        }
+        else
+            return false;
+    }
+
 };
 
 
