@@ -17,12 +17,7 @@
 
 using namespace std;
 
-
-
 int main(int argc, char * const argv[]){
-
-
-
 
     string filePath = argv[1];
     if(filePath[filePath.length()-1] != '/'){
