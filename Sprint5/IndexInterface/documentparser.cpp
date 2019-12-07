@@ -59,8 +59,8 @@ documentParser::documentParser(char * filePath, string wordToFind){
 
 
 void documentParser::dataTypes(){
-    //tree.pof();
-    //tree.destroy()
+    II->pof();
+    II->destroy();
     if(avlT){
         avlT == false;
     }
@@ -72,9 +72,9 @@ void documentParser::dataTypes(){
         II = &tree;
     }
     else{
-      //  II = &map; //map doesnt extend II rn
+        II = &map; //map doesnt extend II rn
     }
-    //II->readFile(); //^^
+    II->rf(); //^^
 }
 
 bool documentParser::isStopWord(string &word){
