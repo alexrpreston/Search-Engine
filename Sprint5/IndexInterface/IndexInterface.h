@@ -17,6 +17,8 @@ public:
     //virtual void readFromFile() = 0;
     //virtual
     virtual void add(string, string) = 0;
+    virtual void rf() = 0;
+    virtual void pof() = 0;
 };
 
 
