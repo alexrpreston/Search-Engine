@@ -21,7 +21,7 @@ public:
     void removeTags(string &html);
     void addOpinions(char * filePath);
     void dataTypes();
-private:
+public:
     AVLTree<string> tree;
     HashMap<string> map;
     IndexInterface * II = &tree;
@@ -34,6 +34,7 @@ private:
     bool appearsInDoc = false;
     string filePath = "";
     string dataType = "";
+
 };
 
 #endif // DOCUMENTPARSER_H

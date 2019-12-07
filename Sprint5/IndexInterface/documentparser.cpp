@@ -58,6 +58,8 @@ documentParser::documentParser(char * filePath, string wordToFind){
 }
 
 
+
+
 void documentParser::dataTypes(){
     II->pof();
     II->destroy();
