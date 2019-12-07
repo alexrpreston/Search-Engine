@@ -17,7 +17,7 @@
 #include <locale>
 #include <codecvt>
 #include <chrono>
-#include "../IndexInterface/Libraries/OleanderStemmingLibrary/include/olestem/stemming/english_stem.h" // un comment me later
+#include "../IndexInterface/Libraries/OleanderStemmingLibrary/include/olestem/stemming/english_stem.h"
 #include "../IndexInterface/Libraries/rapidjson/include/rapidjson/document.h"
 #include "../IndexInterface/Libraries/rapidjson/include/rapidjson/writer.h"
 #include "../IndexInterface/Libraries/rapidjson/include/rapidjson/stringbuffer.h"
@@ -185,7 +185,16 @@ void documentParser::readDocumentsHTMLData(string filePath){
        if(appearsInDoc == true){
            wordToFindDocumentOccurances++;
            appearsInDoc = false;
-       }
+
+        }
+           if(appearsInDoc == true){
+               wordToFindDocumentOccurances++;
+               appearsInDoc = false;
+           }
+    //cout << "Parsed: " << HTMLData[i].second << endl;
+    //tree.preOrder();
+    //tree.pof();
+//cout << tree.access("coffee").front().first << " : " << tree.access("coffee").front().second << endl;
 }
 
 void documentParser::makeStopWords(){
