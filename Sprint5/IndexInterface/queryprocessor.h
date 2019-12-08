@@ -19,12 +19,17 @@ public:
     void andQuery(string query);
     void notQuery(string query);
     void spliceQueryWords(string query);
+    void spliceNotWords(string notQueryWords);
     void removeRepeats();
-
+    void mergeAllDocuments();
+    void getNotQueryDocs();
+    void removeNotQueryDocs();
     vector<vector<pair<string, int>>> allDocuments;
-    vector<string> finalDocuments;
+    vector<pair<string, int>> finalDocuments;
+    vector<pair<string,int>> notQueryDocs;
     documentParser (formatedFilePath);
-    vector<string> splicedWords;
+    vector<string> splicedNotWords;
+    vector<string> splicedQueryWords;
     AVLTree<string> tree;
     HashMap<string> map;
     IndexInterface * II = &tree;

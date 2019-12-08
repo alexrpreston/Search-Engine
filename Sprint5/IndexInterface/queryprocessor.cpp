@@ -15,23 +15,32 @@ void queryProcessor::querySearch(string query){
     }
     else if(orQueryLocation != std::string::npos){
         query = query.substr(3,query.size()); //removes "OR" from beginning or query
-        cout << query << endl;
         orQuery(query);
     }
     else{
         singleQuery(query);
     }
+
+    mergeAllDocuments();
+    removeRepeats();
+    for(int i = 0; i < finalDocuments.size(); i++){
+        cout << finalDocuments[i].first << " - " << finalDocuments[i].second << endl;
+    }
 }
 
 
 void queryProcessor::singleQuery(string query){
-    cout << "Just one word" << endl;
-    //access(query)
-    //cout << II->access(query)[0].first << endl;
-    vector<pair<string, int>> testData;
-    II->access(query, testData);
-    for(int i = 0; i < testData.size(); i++){
-        cout << testData[i].first << endl;
+    size_t notQuery = query.find("NOT");
+    if(notQuery == std::string::npos){
+        II->access(query, finalDocuments);
+        for(int i = 0; i < finalDocuments.size(); i++){
+            cout << finalDocuments[i].first << " - " << finalDocuments[i].second << endl;
+        }
+    }
+    else{
+        string notWord = query.substr(notQuery+4, query.size()-notQuery);
+        cout << notWord << endl;
+        query = query.substr(0,notQuery-1);
     }
 }
 
@@ -40,48 +49,103 @@ void queryProcessor::orQuery(string query){
     size_t notQuery = query.find("NOT");
     if(notQuery == std::string::npos){
         spliceQueryWords(query);
-        for(int i = 0; i < splicedWords.size(); i++){
+        for(int i = 0; i < splicedQueryWords.size(); i++){
             cout << "How many time does this print" << endl;
-            cout << splicedWords[i] << endl;
-            //vector<pair<string, int>> singleWordDocumentList;
-            //II->access(splicedWords[i]., singleWordDocumentList);
-            //allDocuments.push_back(singleWordDocumentList);
+            cout << splicedQueryWords[i] << endl;
+            vector<pair<string, int>> singleWordDocumentList;
+            II->access(splicedQueryWords[i], singleWordDocumentList);
+            allDocuments.push_back(singleWordDocumentList);
         }
-//        for(int i = 0; i < allDocuments.size(); i++){
-//            for(int j = 0; j < allDocuments[i].size(); j++){
-//                cout << allDocuments[i][j].first << endl;
-//            }
-//        }
+        for(int i = 0; i < allDocuments.size(); i++){
+            for(int j = 0; j < allDocuments[i].size(); j++){
+                cout << "ALL DOCS: " << allDocuments[i][j].first << " - " << allDocuments[i][j].second << endl;
+            }
+        }
     }
 
 }
 
-void queryProcessor::andQuery(string query)
-{
+void queryProcessor::andQuery(string query){
 
 }
 
-void queryProcessor::notQuery(string query)
-{
 
-}
 
 void queryProcessor::spliceQueryWords(string query){
-    string deliminator = " ";
-    size_t position = 0;
-    string token = "";
-    while((position = query.find(deliminator)) != string::npos){
-          token = query.substr(0, position);
-          splicedWords.push_back(token);
-          query.erase(0, position + deliminator.length());
+    char sentence[655565];
+    string word = "";
+    strcpy(sentence, query.c_str());
+    char * token = strtok(sentence, " ");
+
+   while(token != NULL){
+       string buffer = "";
+       for(int i = 0; i < strlen(token); i++){
+               if(isalpha(tolower(token[i]))) buffer += char(tolower(token[i]));
+       }
+       token = strtok(NULL, " ");
+
+       word = buffer.c_str();
+       splicedQueryWords.push_back(word);
+   }
+}
+
+void queryProcessor::spliceNotWords(string notQueryWords){
+    char sentence[655565];
+    string word = "";
+    strcpy(sentence, query.c_str());
+    char * token = strtok(sentence, " ");
+
+    while(token != NULL){
+       string buffer = "";
+       for(int i = 0; i < strlen(token); i++){
+               if(isalpha(tolower(token[i]))) buffer += char(tolower(token[i]));
+       }
+       token = strtok(NULL, " ");
+
+       word = buffer.c_str();
+       splicedNotWords.push_back(word);
     }
 }
 
 void queryProcessor::removeRepeats(){
-    for(int i = 0; i < finalDocuments.size()-1; i++){
-        for(int j = 1; j < finalDocuments.size(); j++){
-            if(finalDocuments[i] == finalDocuments[j]){
-                finalDocuments.erase(finalDocuments.begin()+i);
+    finalDocuments.erase(unique(finalDocuments.begin(), finalDocuments.end()), finalDocuments.end());
+}
+
+void queryProcessor::mergeAllDocuments(){
+    for(int i = 0; i < allDocuments.size(); i++){
+        for(int j = 0; j < allDocuments[i].size(); j++){
+            int totalOccurances = 0;
+            for(int a = 0; a < allDocuments.size(); a++){
+                for(int b = 1; b < allDocuments.size(); b++){
+                    if(allDocuments[i][j].first == allDocuments[a][b].first){
+                        allDocuments[i][j].second += allDocuments[a][b].second;
+                        allDocuments[a][b].second = allDocuments[i][j].second;
+                    }
+                }
+            }
+            pair<string, int> documentAndFrequency = make_pair(allDocuments[i][j].first, allDocuments[i][j].second);
+            finalDocuments.push_back(documentAndFrequency);
+        }
+    }
+
+}
+
+void queryProcessor::getNotQueryDocs(){
+    for(int i = 0; i < splicedNotWords.size(); i++){
+        cout << splicedQueryWords[i] << endl;
+        vector<pair<string, int>> singleWordDocumentList;
+        II->access(splicedQueryWords[i], singleWordDocumentList);
+        for(int j = 0; j < singleWordDocumentList.size(); j++){
+            notQueryDocs.push_back(singleWordDocumentList[i]);
+        }
+    }
+}
+
+void queryProcessor::removeNotQueryDocs(){
+    for(int i = 0; i < finalDocuments.size(); i++){
+        for(int j = 0; j < notQueryDocs.size(); j++){
+            if(finalDocuments[i].first == notQueryDocs[j].first){
+                finalDocuments.erase(finalDocuments.begin() + i);
             }
         }
     }
