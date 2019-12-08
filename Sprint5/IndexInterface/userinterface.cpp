@@ -10,7 +10,7 @@ using namespace std;
 userInterface::userInterface(){
     documentParser parser("/home/student/Desktop/scotus-small/", II);
     queryProcessor processor(II);
-
+    //processor.querySearch("OR law marshal NOT unsupport");
     mainMenu(parser, processor);
 }
 
@@ -87,12 +87,18 @@ void userInterface::interactiveMode(documentParser &parser, queryProcessor &proc
         system("clear");
         if(choice == 1){
             //if we don't have a persistent index, print out an error message
-            int dataStrChoice = 0;
-            cout << "1. Load Persistent Index into AVL Tree." << "\n";
-            cout << "2. Load Persistent Index into Hash Table." << "\n";
-            cout << "Enter an option: ";
+            char dataStrChoice = ' ';
+            if(parser.avlT){
+                cout << "The search engine is currently running the AVL tree." << endl;
+            }
+            else{
+                cout << "The search engine is currently running the Hash map." << endl;
+            }
+            cout << "Would you like to switch (Y/N): ";
             cin >> dataStrChoice;
-            //Chooses Data type
+            if(dataStrChoice == 'Y'){
+                parser.dataTypes();
+            }
             mainMenu(parser, processor);
         }
         if(choice == 2){

@@ -5,7 +5,7 @@
 #include "vector"
 #include "HashMap.h"
 #include "AVLTree.h"
-
+#include "chrono"
 using namespace std;
 
 class queryProcessor
@@ -36,6 +36,7 @@ public:
     HashMap<string> map;
     IndexInterface * II = &tree;
     documentParser parser;
+
 
 private:
     string query = "";

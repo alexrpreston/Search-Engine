@@ -26,7 +26,6 @@
 using namespace rapidjson;
 
 documentParser::documentParser(){
-    cout << "" << endl;
 }
 
 documentParser::documentParser(char * folderPath){ //Only used once to parse the files then gets stored the index.txt
@@ -38,12 +37,6 @@ documentParser::documentParser(char * persistentIndexPath, IndexInterface * &II)
     this->II = II; //This sets the AVL tree we created in the UI to the one we read all our files into.
 
     makeStopWords();
- //   getFileNames(filePath);
-
-    cout << "Total occurances of '" << wordToFind << "': " << wordToFindTotalOccurances << "." << endl;
-    cout << "Total documents '" << wordToFind << "' orccurs in is " << wordToFindDocumentOccurances << "." << endl;
-    cout << "Total number of nodes is " << tree.getNumNodes() << endl;
-
     getFileNames(persistentIndexPath);
 
     tree.pof();

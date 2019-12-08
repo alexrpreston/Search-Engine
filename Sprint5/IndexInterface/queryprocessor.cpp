@@ -1,12 +1,21 @@
 #include "queryprocessor.h"
 #include "documentparser.h"
 #include <iostream>
+#include "chrono"
 queryProcessor::queryProcessor(IndexInterface * &II){
     this->II = II;
 }
 
 void queryProcessor::querySearch(string query){
-    //this->query = query;
+    cout << "\n";
+
+    //Resets all Vectors
+    allDocuments.clear();
+    finalDocuments.clear();
+    notQueryDocs.clear();
+    splicedNotWords.clear();
+    splicedQueryWords.clear();
+
     size_t andQueryLocation = query.find("AND");
     size_t orQueryLocation = query.find("OR");
     if(andQueryLocation != std::string::npos){
@@ -21,11 +30,7 @@ void queryProcessor::querySearch(string query){
         singleQuery(query);
     }
 
-//    mergeAllDocuments();
-//    removeRepeats();
-//    for(int i = 0; i < finalDocuments.size(); i++){
-//        cout << finalDocuments[i].first << " - " << finalDocuments[i].second << endl;
-//    }
+
 }
 
 
@@ -44,38 +49,42 @@ void queryProcessor::singleQuery(string query){
     }
     removeRepeats();
     sortFinalDocsByFrequency();
-    cout << "Relevancy Ranking:" << endl;
-    for(int i = 0; i < 15 || i < finalDocuments.size(); i++){
-        //cout << finalDocuments[i].first << " - " << finalDocuments[i].second << endl;
-        if(i+1 == 1) cout << "1st";
-        if(i+1 == 2) cout << "2nd";
-        if(i+1 == 3) cout << "3rd";
-        else if(i+1 > 3)cout << i+1 << "th";
-        cout << " most relevant opinion found."<< "      \n========================================";
-        parser.getRelevantInfo(finalDocuments[i].first);
-        cout << "========================================\n\n";
-    }
+    printDocuemnts();
+
 
 }
 
 void queryProcessor::orQuery(string query){
-    cout << "Query Type: OR " << query << endl;
+    string notWord = "";
     size_t notQuery = query.find("NOT");
     if(notQuery == std::string::npos){
         spliceQueryWords(query);
         for(int i = 0; i < splicedQueryWords.size(); i++){
-            cout << "How many time does this print" << endl;
-            cout << splicedQueryWords[i] << endl;
             vector<pair<string, int>> singleWordDocumentList;
             II->access(splicedQueryWords[i], singleWordDocumentList);
             allDocuments.push_back(singleWordDocumentList);
         }
-        for(int i = 0; i < allDocuments.size(); i++){
-            for(int j = 0; j < allDocuments[i].size(); j++){
-                cout << "ALL DOCS: " << allDocuments[i][j].first << " - " << allDocuments[i][j].second << endl;
-            }
+        mergeAllDocuments();
+        sortFinalDocsByFrequency();
+        printDocuemnts();
+    }
+    else{
+        notWord = query.substr(notQuery+4, query.size()-notQuery);
+        query = query.substr(0,notQuery-1);
+        spliceQueryWords(query);
+        for(int i = 0; i < splicedQueryWords.size(); i++){
+            vector<pair<string, int>> singleWordDocumentList;
+            II->access(splicedQueryWords[i], singleWordDocumentList);
+            allDocuments.push_back(singleWordDocumentList);
         }
     }
+
+    spliceNotWords(notWord);
+    getNotQueryDocs();
+    mergeAllDocuments();
+    removeNotQueryDocs();
+    sortFinalDocsByFrequency();
+    printDocuemnts();
 
 }
 
@@ -130,19 +139,20 @@ void queryProcessor::removeRepeats(){
 }
 
 void queryProcessor::mergeAllDocuments(){
+    bool alreadyInFinal = false;
     for(int i = 0; i < allDocuments.size(); i++){
         for(int j = 0; j < allDocuments[i].size(); j++){
-            int totalOccurances = 0;
-            for(int a = 0; a < allDocuments.size(); a++){
-                for(int b = 1; b < allDocuments.size(); b++){
-                    if(allDocuments[i][j].first == allDocuments[a][b].first){
-                        allDocuments[i][j].second += allDocuments[a][b].second;
-                        allDocuments[a][b].second = allDocuments[i][j].second;
-                    }
+            for(int k = 0; k < finalDocuments.size(); k++){
+                if(allDocuments[i][j].first == finalDocuments[k].first){
+                    finalDocuments[k].second += allDocuments[i][j].second;
+                    alreadyInFinal = true;
                 }
             }
-            pair<string, int> documentAndFrequency = make_pair(allDocuments[i][j].first, allDocuments[i][j].second);
-            finalDocuments.push_back(documentAndFrequency);
+            if(!alreadyInFinal){
+                finalDocuments.push_back(allDocuments[i][j]);
+            }
+            alreadyInFinal = false;
+
         }
     }
 
@@ -184,9 +194,15 @@ void queryProcessor::sortFinalDocsByFrequency(){
 }
 
 void queryProcessor::printDocuemnts(){
-    //For i in range to 15
-    //Print Number, then relevant info
-        //Use doc parser to to print relvant info, it takes the doc ID number as parameter
-    //if we want to print one of the docs than we use doc parser's remove html tags
-    //and print first 300 words
+
+    for(int i = 0; i < 15 && i < finalDocuments.size(); i++){
+        //cout << finalDocuments[i].first << " - " << finalDocuments[i].second << endl;
+        if(i+1 == 1) cout << "1st";
+        if(i+1 == 2) cout << "2nd";
+        if(i+1 == 3) cout << "3rd";
+        else if(i+1 > 3)cout << i+1 << "th";
+        cout << " most relevant opinion found."<< "      \n========================================";
+        parser.getRelevantInfo(finalDocuments[i].first);
+        cout << "========================================\n\n";
+    }
 }
