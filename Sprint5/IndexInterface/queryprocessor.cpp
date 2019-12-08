@@ -21,11 +21,11 @@ void queryProcessor::querySearch(string query){
         singleQuery(query);
     }
 
-    mergeAllDocuments();
-    removeRepeats();
-    for(int i = 0; i < finalDocuments.size(); i++){
-        cout << finalDocuments[i].first << " - " << finalDocuments[i].second << endl;
-    }
+//    mergeAllDocuments();
+//    removeRepeats();
+//    for(int i = 0; i < finalDocuments.size(); i++){
+//        cout << finalDocuments[i].first << " - " << finalDocuments[i].second << endl;
+//    }
 }
 
 
@@ -39,8 +39,21 @@ void queryProcessor::singleQuery(string query){
     }
     else{
         string notWord = query.substr(notQuery+4, query.size()-notQuery);
-        cout << notWord << endl;
+        //cout << notWord << endl;
         query = query.substr(0,notQuery-1);
+        II->access(query, finalDocuments);
+        for(int i = 0; i < finalDocuments.size(); i++){
+            cout << "Before removal: " << finalDocuments[i].first << endl;
+        }
+        cout << "\n\n";
+        cout << notWord << endl;
+        spliceNotWords(notWord);
+        cout << "SPLICE WORD:" << splicedNotWords[0] << endl;
+        getNotQueryDocs();
+        removeNotQueryDocs();
+        for(int i = 0; i < finalDocuments.size(); i++){
+            cout << "After removal: " << finalDocuments[i].first << endl;
+        }
     }
 }
 
@@ -92,7 +105,7 @@ void queryProcessor::spliceQueryWords(string query){
 void queryProcessor::spliceNotWords(string notQueryWords){
     char sentence[655565];
     string word = "";
-    strcpy(sentence, query.c_str());
+    strcpy(sentence, notQueryWords.c_str());
     char * token = strtok(sentence, " ");
 
     while(token != NULL){
@@ -131,12 +144,15 @@ void queryProcessor::mergeAllDocuments(){
 }
 
 void queryProcessor::getNotQueryDocs(){
+    cout << splicedNotWords[0] << endl;
+    cout << splicedNotWords.size() << endl;
     for(int i = 0; i < splicedNotWords.size(); i++){
-        cout << splicedQueryWords[i] << endl;
+        cout << "LINE 146" << splicedNotWords[i] << endl;
         vector<pair<string, int>> singleWordDocumentList;
-        II->access(splicedQueryWords[i], singleWordDocumentList);
+        II->access(splicedNotWords[i], singleWordDocumentList);
         for(int j = 0; j < singleWordDocumentList.size(); j++){
-            notQueryDocs.push_back(singleWordDocumentList[i]);
+            notQueryDocs.push_back(singleWordDocumentList[j]);
+            cout << "NOT DOC: " << singleWordDocumentList[j].first << endl;
         }
     }
 }
