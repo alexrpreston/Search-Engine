@@ -11,6 +11,7 @@
 #include <IndexInterface.h>
 #include <random>
 #include <list>
+#include <fstream>
 using namespace std ;
 
 template<class T>
@@ -19,13 +20,15 @@ private:
     int BUCKET = 200000;    // No. of buckets
     bool empty = true;
     vector<vector<pair<T,vector<pair<T,int>>>>> * table; // use holy hell this is a dumb-ass line
+    ofstream outFile;
 
 public:
     HashMap(){
         table = new vector<vector<pair<T,vector<pair<T,int>>>>>[BUCKET];
+        outFile.open("/home/student/Desktop/index.txt");
     }  // Constructor
 
-    void add(T data, T data2){
+    void add(T data, T data2){ // finsih me
         int index = hashFunction(data);
         int temp = -1;
 
@@ -89,11 +92,19 @@ public:
         }
     }
 
-    void rf() override{
+    void rf() override{ //read file
 
     }
-    void pof() override{
-
+    void pof() override{ // print out file
+        for(int i = 0; i < table->size(); i++){
+            for(int j = 0; j < table[i].size(); j++){
+                outFile << table[i][j].first << "|"; // word
+                for(int k = 0; k < table[i][j].second.size(); k++){
+                    outFile << table[i][j].second[k].first << ":" << table[i][j].second[k].second << "-";
+                }
+                outFile << endl;
+            }
+        }
     }
 
 //    void add(string, string) override{
