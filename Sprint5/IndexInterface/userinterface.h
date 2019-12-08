@@ -13,7 +13,7 @@ public:
     documentParser buffer();
     AVLTree<string> tree;
     HashMap<string> map;
-    IndexInterface * II = &tree;
+    IndexInterface * II = &tree; //Every class needs to modify this II
 };
 
 #endif // USERINTERFACE_H

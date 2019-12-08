@@ -201,21 +201,28 @@ public:
         }
     }
 
-    vector<pair<T, int>> access(T data){
-        return access(data, root);
+    void access(T data, vector<pair<T, int>> &docs){
+        return access(data, root, docs);
     }
 
-    vector<pair<T, int>> access(T data, Node<T> * curr){ // return value can be changed for query
+    void access(T data, Node<T> * curr, vector<pair<T, int>> &docs){ // return value can be changed for query
         if(strcmp(curr->data.first.c_str(), data.c_str()) < 0){ //neg if search is larger
             curr = curr->right;
-            access(data, curr);
+            access(data, curr, docs);
         }
         else if(strcmp(curr->data.first.c_str(), data.c_str()) > 0){ // if search is larger
             curr = curr->left;
-            access(data, curr);
+            access(data, curr, docs);
         }
         else if(strcmp(curr->data.first.c_str(), data.c_str()) == 0){
-            return curr->data.second;
+            docs = curr->data.second;
+//            for(int i = 0; i < tester.size(); i++){
+//                cout << tester[i].first << " - " << tester[i].second << endl;
+//            }
+//            return tester;
+            //cout << curr->data.second[0].first << endl;
+            //curr = nullptr;
+            //return tester;
         }
         else{
             cout << "nothing" << endl;

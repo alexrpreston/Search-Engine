@@ -1,8 +1,8 @@
 #include "queryprocessor.h"
 #include "documentparser.h"
 #include <iostream>
-queryProcessor::queryProcessor(IndexInterface &II){
-    this->II = &II;
+queryProcessor::queryProcessor(IndexInterface * &II){
+    this->II = II;
 }
 
 void queryProcessor::querySearch(string query){
@@ -24,9 +24,11 @@ void queryProcessor::querySearch(string query){
 void queryProcessor::singleQuery(string query){
     cout << "Just one word" << endl;
     //access(query)
-    vector<pair<string, int>> testDat = II->access(query);
-    for(int i = 0; i < testDat.size(); i++){
-        cout << testDat[i].first << endl;
+    //cout << II->access(query)[0].first << endl;
+    vector<pair<string, int>> testData;
+    II->access(query, testData);
+    for(int i = 0; i < testData.size(); i++){
+        cout << testData[i].first << endl;
     }
 }
 

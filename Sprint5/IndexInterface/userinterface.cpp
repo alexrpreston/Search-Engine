@@ -8,8 +8,8 @@ using namespace std;
 #include "HashMap.h"
 #include "stdlib.h"
 userInterface::userInterface(){
-    documentParser parser("/home/student/Desktop/scotus-small/", *II);
-    queryProcessor processor(*II);
+    documentParser parser("/home/student/Desktop/scotus-small/", II);
+    queryProcessor processor(II);
     string query = "marshal";
     cout << "=== Search the Corpus ===" << "\n\n";
     cout << "Enter Query: ";

@@ -10,7 +10,7 @@ class documentParser
 public:
     documentParser();
     documentParser(char * folderPath);
-    documentParser(char * persistentIndexPath, IndexInterface &II);
+    documentParser(char * persistentIndexPath, IndexInterface * &II);
     bool isStopWord(string &word);
     void makeLowerCase(string &word);
     void getFileNames(char * filePath);

@@ -89,7 +89,7 @@ public:
     void add(string, string) override{
 
     }
-    vector<pair<T, int>> access(T data){
+    void access(T data, vector<pair<string, int>> &docs){
         //return access(data, root);
     }
 

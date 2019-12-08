@@ -11,7 +11,7 @@ using namespace std;
 class queryProcessor
 {
 public:
-    queryProcessor(IndexInterface &II);
+    queryProcessor(IndexInterface * &II);
 
     void querySearch(string query);
     void singleQuery(string query);
