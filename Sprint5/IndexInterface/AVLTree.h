@@ -271,17 +271,13 @@ public:
     }
 
     void rf(){
-        ifstream outFile;
-        if(!outFile.is_open()){
-            outFile.open("index.txt");
-        }
         readFile(root);
     }
 
     void readFile(Node<T> * curr){
         ifstream out;
         if(!out.is_open()){
-            out.open("index.txt");
+            out.open("/home/student/Desktop/index.txt");
         }
         int len;
         out >> len;
