@@ -33,27 +33,20 @@ void queryProcessor::singleQuery(string query){
     size_t notQuery = query.find("NOT");
     if(notQuery == std::string::npos){
         II->access(query, finalDocuments);
-        for(int i = 0; i < finalDocuments.size(); i++){
-            cout << finalDocuments[i].first << " - " << finalDocuments[i].second << endl;
-        }
     }
     else{
         string notWord = query.substr(notQuery+4, query.size()-notQuery);
-        //cout << notWord << endl;
         query = query.substr(0,notQuery-1);
         II->access(query, finalDocuments);
-        for(int i = 0; i < finalDocuments.size(); i++){
-            cout << "Before removal: " << finalDocuments[i].first << endl;
-        }
-        cout << "\n\n";
-        cout << notWord << endl;
         spliceNotWords(notWord);
-        cout << "SPLICE WORD:" << splicedNotWords[0] << endl;
         getNotQueryDocs();
         removeNotQueryDocs();
-        for(int i = 0; i < finalDocuments.size(); i++){
-            cout << "After removal: " << finalDocuments[i].first << endl;
-        }
+    }
+    removeRepeats();
+    sortFinalDocsByFrequency();
+    cout << "Relevancy Ranking:" << endl;
+    for(int i = 0; i < finalDocuments.size(); i++){
+        cout << finalDocuments[i].first << " - " << finalDocuments[i].second << endl;
     }
 }
 
@@ -98,6 +91,8 @@ void queryProcessor::spliceQueryWords(string query){
        token = strtok(NULL, " ");
 
        word = buffer.c_str();
+       parser.makeLowerCase(word);
+       word = parser.stemQueryWord(word);
        splicedQueryWords.push_back(word);
    }
 }
@@ -116,6 +111,8 @@ void queryProcessor::spliceNotWords(string notQueryWords){
        token = strtok(NULL, " ");
 
        word = buffer.c_str();
+       parser.makeLowerCase(word);
+       word = parser.stemQueryWord(word);
        splicedNotWords.push_back(word);
     }
 }
@@ -144,15 +141,11 @@ void queryProcessor::mergeAllDocuments(){
 }
 
 void queryProcessor::getNotQueryDocs(){
-    cout << splicedNotWords[0] << endl;
-    cout << splicedNotWords.size() << endl;
     for(int i = 0; i < splicedNotWords.size(); i++){
-        cout << "LINE 146" << splicedNotWords[i] << endl;
         vector<pair<string, int>> singleWordDocumentList;
         II->access(splicedNotWords[i], singleWordDocumentList);
         for(int j = 0; j < singleWordDocumentList.size(); j++){
             notQueryDocs.push_back(singleWordDocumentList[j]);
-            cout << "NOT DOC: " << singleWordDocumentList[j].first << endl;
         }
     }
 }
@@ -164,5 +157,20 @@ void queryProcessor::removeNotQueryDocs(){
                 finalDocuments.erase(finalDocuments.begin() + i);
             }
         }
+    }
+}
+
+void queryProcessor::sortFinalDocsByFrequency(){
+    for(int i = 0; i < finalDocuments.size()-1; i++){
+        int minIndex = i;
+        for(int j = i+1; j < finalDocuments.size(); j++){
+            if(finalDocuments[j].second > finalDocuments[minIndex].second){
+                minIndex = j;
+
+            }
+        }
+        pair<string,int> temp =  finalDocuments[minIndex];
+        finalDocuments[minIndex] = finalDocuments[i];
+        finalDocuments[i] = temp;
     }
 }

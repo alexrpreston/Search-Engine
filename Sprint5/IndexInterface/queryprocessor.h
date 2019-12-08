@@ -24,6 +24,7 @@ public:
     void mergeAllDocuments();
     void getNotQueryDocs();
     void removeNotQueryDocs();
+    void sortFinalDocsByFrequency();
     vector<vector<pair<string, int>>> allDocuments;
     vector<pair<string, int>> finalDocuments;
     vector<pair<string,int>> notQueryDocs;
@@ -33,7 +34,7 @@ public:
     AVLTree<string> tree;
     HashMap<string> map;
     IndexInterface * II = &tree;
-
+    documentParser parser;
 private:
     string query = "";
     //IndexInterface * II = &tree;
