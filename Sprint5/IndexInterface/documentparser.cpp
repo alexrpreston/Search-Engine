@@ -82,6 +82,26 @@ string documentParser::getRelevantInfo(string filePath){
     cout << html;
 }
 
+int documentParser::getTotalDocumentsParsed() const
+{
+    return totalDocumentsParsed;
+}
+
+void documentParser::addTotalDocumentsParsed(int value)
+{
+    totalDocumentsParsed += value;
+}
+
+double documentParser::getAvergeWordsPerDocument() const
+{
+    return avergeWordsPerDocument / getTotalDocumentsParsed();
+}
+
+void documentParser::addAvergeWordsPerDocument(int value)
+{
+    avergeWordsPerDocument += value;
+}
+
 bool documentParser::isStopWord(string &word){
     int left = 0;
     int right = stopWords.size()-1;
@@ -130,8 +150,10 @@ void documentParser::getFileNames(char *filePath){
                 strcmp("..",entry->d_name) == 0)
                 continue;
             readDocumentsHTMLData(entry->d_name);
+            addTotalDocumentsParsed(1);
         }
         readDocumentsHTMLData(entry->d_name);
+        addTotalDocumentsParsed(1);
     }
     closedir(dp);
 
@@ -201,6 +223,7 @@ void documentParser::readDocumentsHTMLData(string filePath){
            if(word != ""){
                if(!isStopWord(word)){
                    stemWord(word);
+                   addAvergeWordsPerDocument(1);
                    II->add(word, shortFileName);
                }
            }

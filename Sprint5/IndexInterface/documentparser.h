@@ -35,7 +35,13 @@ public:
     bool appearsInDoc = false;
     string filePath = "";
     string dataType = "";
+    int avergeWordsPerDocument = 0;
+    int totalDocumentsParsed = 0;
 
+    double getAvergeWordsPerDocument() const;
+    void addAvergeWordsPerDocument(int value);
+    int getTotalDocumentsParsed() const;
+    void addTotalDocumentsParsed(int value);
 };
 
 #endif // DOCUMENTPARSER_H

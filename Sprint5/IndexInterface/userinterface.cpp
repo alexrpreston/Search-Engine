@@ -110,9 +110,8 @@ void userInterface::interactiveMode(documentParser &parser, queryProcessor &proc
             processor.querySearch(query);
         }
         if(choice == 3){
-            cout << "Total number of opinions indexed: " << "\n";
-            cout << "Average number of words indexed per opinion: " << "\n";
-            cout << "Average time to parse each opinion: " << " nanoseconds.";
+            cout << "Total number of opinions indexed: " << parser.getTotalDocumentsParsed() << "\n";
+            cout << "Average number of words indexed per opinion: " << parser.getAvergeWordsPerDocument() << "\n";
             cout << "Top 50 most frequent word: " << "\n";
 
 
