@@ -47,7 +47,11 @@ void queryProcessor::singleQuery(string query){
     cout << "Relevancy Ranking:" << endl;
     for(int i = 0; i < 15 || i < finalDocuments.size(); i++){
         //cout << finalDocuments[i].first << " - " << finalDocuments[i].second << endl;
-        cout << i+1 <<" most relevant opinion found."<< "      \n========================================";
+        if(i+1 == 1) cout << "1st";
+        if(i+1 == 2) cout << "2nd";
+        if(i+1 == 3) cout << "3rd";
+        else if(i+1 > 3)cout << i+1 << "th";
+        cout << " most relevant opinion found."<< "      \n========================================";
         parser.getRelevantInfo(finalDocuments[i].first);
         cout << "========================================\n\n";
     }
