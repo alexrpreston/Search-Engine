@@ -18,7 +18,6 @@ class HashMap : public IndexInterface{
 private:
     int BUCKET = 200000;    // No. of buckets
 
-    // Pointer to an array containing buckets
     vector<vector<pair<T,vector<pair<T,int>>>>> * table; // use holy hell this is a dumb-ass line
 
 public:
