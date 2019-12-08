@@ -287,11 +287,14 @@ public:
         return;
     }
 
-    void rf(){
-        readFile(root);
+    void addF(T data, T data2, int times){
+        Node<T> * curr;
+        curr = addFirst(data);
+        addSecF(data, data2, curr, times);
+        return;
     }
 
-    void readFile(Node<T> * curr){
+    void rf(){
         ifstream out;
         if(!out.is_open()){
             out.open("/home/student/Desktop/index.txt");
@@ -299,15 +302,21 @@ public:
         int len;
         out >> len;
         string first;
-        string newDoc;
+        string sec;
         string num;
+        string line;
+        int pNum;
         for(int i = 0; i < len; i++){
             getline(out, first, '|'); // gets word / first item
-            addFirst(first); // adds item to tree
-            getline(out, newDoc, ':');
-            getline(out, num);
-            int pNum = stoi(num);
-            addSecF(first, newDoc, root, pNum);
+            Node<T> * curr;
+            curr = addFirst(root, first);
+            getline(out, line);
+            while(line != ""){ // this might go forever
+                num = strtok((char*)line.c_str(), "-");
+                sec = strtok((char*)num.c_str(), ":");
+                pNum = stoi(num);
+                addSecF(first, sec, curr, pNum);
+            }
         }
     }
 

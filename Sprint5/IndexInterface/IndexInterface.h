@@ -6,7 +6,6 @@
 
 using namespace std;
 
-//template<class T>
 class IndexInterface{
 public:
     //virtual void addFirst(string) = 0;
