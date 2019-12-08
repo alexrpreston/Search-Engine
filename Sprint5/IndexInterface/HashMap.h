@@ -17,7 +17,7 @@ template<class T>
 class HashMap : public IndexInterface{
 private:
     int BUCKET = 200000;    // No. of buckets
-
+    bool empty = true;
     vector<vector<pair<T,vector<pair<T,int>>>>> * table; // use holy hell this is a dumb-ass line
 
 public:
@@ -31,12 +31,21 @@ public:
 
     }
 
+    ~HashMap(){
+        destroy();
+    }
+
+    void destroy() override{
+        empty = true;
+        delete table;
+    }
+
     void addFirst(T data){
     //    table[(hashFunction(word))].second.push_back(doc);
         int index = hashFunction(data);
         vector<pair<T,int>> nullVec;
         table[index].push_back(make_pair(data, nullVec)); // ????
-
+        empty = false;
     }
 
     void addSec(T data, T data2){ // fuck this method
@@ -56,22 +65,9 @@ public:
         }
     }
 
-    // deletes a key from hash table
-    void deleteItem(int key){
-        // get the hash index of key
+    void deleteItem(T key){ // dont think i really need this rn
         int index = hashFunction(key);
 
-        // find the key in (inex)th list
-        list <int> :: iterator i;
-        for (i = table[index].begin();
-                 i != table[index].end(); i++) {
-          if (*i == key)
-            break;
-        }
-
-        // if key is found in hash table, remove it
-        if (i != table[index].end())
-          table[index].erase(i);
     }
 
     // hash function to map values to key
@@ -81,7 +77,7 @@ public:
     }
 
     int hashFunction(int data){
-
+        //doesnt really matter for this usage
     }
 
     void displayHash(){ // for testing mostly
@@ -99,14 +95,18 @@ public:
     void pof() override{
 
     }
-    void destroy() override{
-
-    }
 
 //    void add(string, string) override{
 
 //    }
     void access(T data, vector<pair<string, int>> &docs){
+        int index = hashFunction(data);
+        for(int i = 0; i < table[index].size(); i++){ // goes through the list of collisions
+            if(table[index][i].first == data){ // finds the pair in the collision vector that has the same name
+                docs = table[index][i].second; //sets the passby to the correct vector value
+                return;
+            }
+        }
 
     }
 
@@ -114,7 +114,7 @@ public:
         //return access(data, root);
     }
     bool isEmpty() override{
-
+        return empty;
     }
 
 };
