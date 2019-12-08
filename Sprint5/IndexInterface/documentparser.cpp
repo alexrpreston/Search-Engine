@@ -54,7 +54,7 @@ documentParser::documentParser(char * filePath, string wordToFind){
 //    auto seconds = std::chrono::duration_cast<std::chrono::seconds>(finish-start);
 //    std::cout << "Time in milliseconds : " <<  milliseconds.count() << "\n";
 //    std::cout << "Time in seconds : " <<  seconds.count() << "\n";
-
+      tree.pof();
 }
 
 
@@ -131,6 +131,7 @@ void documentParser::getFileNames(char *filePath){
         readDocumentsHTMLData(entry->d_name);
     }
     closedir(dp);
+
 }
 
 void documentParser::stemWord(string &unstemmedWord){
@@ -212,7 +213,7 @@ void documentParser::readDocumentsHTMLData(string filePath){
            }
     //cout << "Parsed: " << HTMLData[i].second << endl;
     //tree.preOrder();
-    //tree.pof();
+
 //cout << tree.access("coffee").front().first << " : " << tree.access("coffee").front().second << endl;
 }
 
