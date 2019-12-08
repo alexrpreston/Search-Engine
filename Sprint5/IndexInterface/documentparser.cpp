@@ -71,6 +71,24 @@ void documentParser::dataTypes(){
     II->rf(); //^^
 }
 
+string documentParser::getRelevantInfo(string filePath){
+    string path = "/home/student/Desktop/scotus-small/";
+    string jsonEXT = ".json";
+    string name = path + filePath + jsonEXT;
+    FILE * fp = fopen(name.c_str(), "rb");
+    char readBuffer[6553666];
+    FileReadStream is(fp, readBuffer, sizeof(readBuffer));
+    Document d;
+    d.ParseStream(is);
+    Value& s = d["html_with_citations"];
+    string html = s.GetString();
+    //cout << html;
+    size_t endOfInfoIndex = html.find("Decided");
+    html = html.substr(5, endOfInfoIndex+26);
+    removeTags(html);
+    cout << html;
+}
+
 bool documentParser::isStopWord(string &word){
     int left = 0;
     int right = stopWords.size()-1;

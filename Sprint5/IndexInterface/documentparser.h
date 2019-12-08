@@ -21,6 +21,7 @@ public:
     void removeTags(string &html);
     void addOpinions(char * filePath);
     void dataTypes();
+    string getRelevantInfo(string filePath);
 public:
     AVLTree<string> tree;
     HashMap<string> map;

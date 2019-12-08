@@ -45,9 +45,13 @@ void queryProcessor::singleQuery(string query){
     removeRepeats();
     sortFinalDocsByFrequency();
     cout << "Relevancy Ranking:" << endl;
-    for(int i = 0; i < finalDocuments.size(); i++){
-        cout << finalDocuments[i].first << " - " << finalDocuments[i].second << endl;
+    for(int i = 0; i < 15 || i < finalDocuments.size(); i++){
+        //cout << finalDocuments[i].first << " - " << finalDocuments[i].second << endl;
+        cout << i+1 <<" most relevant opinion found."<< "      \n========================================";
+        parser.getRelevantInfo(finalDocuments[i].first);
+        cout << "========================================\n\n";
     }
+
 }
 
 void queryProcessor::orQuery(string query){
@@ -173,4 +177,12 @@ void queryProcessor::sortFinalDocsByFrequency(){
         finalDocuments[minIndex] = finalDocuments[i];
         finalDocuments[i] = temp;
     }
+}
+
+void queryProcessor::printDocuemnts(){
+    //For i in range to 15
+    //Print Number, then relevant info
+        //Use doc parser to to print relvant info, it takes the doc ID number as parameter
+    //if we want to print one of the docs than we use doc parser's remove html tags
+    //and print first 300 words
 }
