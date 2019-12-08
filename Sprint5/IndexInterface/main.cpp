@@ -25,9 +25,10 @@ int main(int argc, char * const argv[]){
     }
     char * formatedFilePath = &filePath[0];
     //
-    //userInterface();
-    queryProcessor("higher education texas");
-    documentParser(formatedFilePath, argv[2]);
+    userInterface();
+    //queryProcessor("higher education texas");
+
+    //documentParser(formatedFilePath, argv[2]);
     return 0;
 
 }

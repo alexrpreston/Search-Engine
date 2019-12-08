@@ -9,13 +9,13 @@ class documentParser
 {
 public:
     documentParser();
-    documentParser(string dataType);
-
-    documentParser(char * filePath, string wordToFind);
+    documentParser(char * folderPath);
+    documentParser(char * persistentIndexPath, IndexInterface &II);
     bool isStopWord(string &word);
     void makeLowerCase(string &word);
     void getFileNames(char * filePath);
     void stemWord(string &word);
+    string stemQueryWord(string word);
     void readDocumentsHTMLData(string filePath);
     void makeStopWords();
     void removeTags(string &html);
