@@ -25,6 +25,7 @@ void queryProcessor::singleQuery(string query){
     cout << "Just one word" << endl;
     //access(query)
     documentParser().II->access(query);
+
 }
 
 void queryProcessor::orQuery(){

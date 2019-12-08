@@ -150,6 +150,23 @@ void documentParser::stemWord(string &unstemmedWord){
 
 }
 
+string documentParser::stemQueryWord(string word){
+    stemming::english_stem<> StemEnglish;
+    std::wstring stemmedword(L" ");
+    std::string ANSIWord(word);
+    wchar_t* UnicodeTextBuffer = new wchar_t[ANSIWord.length()+1];
+    std::wmemset(UnicodeTextBuffer, 0, ANSIWord.length()+1);
+    std::mbstowcs(UnicodeTextBuffer, ANSIWord.c_str(), ANSIWord.length());
+    stemmedword = UnicodeTextBuffer;
+    StemEnglish(stemmedword);
+    using convert_type = std::codecvt_utf8<wchar_t>;
+    std::wstring_convert<convert_type,wchar_t>converter;
+
+    word = converter.to_bytes(stemmedword);
+    delete [] UnicodeTextBuffer;
+    return word;
+}
+
 void documentParser::readDocumentsHTMLData(string filePath){
         string name = this->filePath + filePath;
         FILE * fp = fopen(name.c_str(), "rb");

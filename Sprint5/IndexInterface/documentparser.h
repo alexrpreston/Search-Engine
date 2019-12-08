@@ -16,6 +16,7 @@ public:
     void makeLowerCase(string &word);
     void getFileNames(char * filePath);
     void stemWord(string &word);
+    string stemQueryWord(string word);
     void readDocumentsHTMLData(string filePath);
     void makeStopWords();
     void removeTags(string &html);
