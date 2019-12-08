@@ -216,19 +216,13 @@ public:
         }
         else if(strcmp(curr->data.first.c_str(), data.c_str()) == 0){
             docs = curr->data.second;
-//            for(int i = 0; i < tester.size(); i++){
-//                cout << tester[i].first << " - " << tester[i].second << endl;
-//            }
-//            return tester;
-            //cout << curr->data.second[0].first << endl;
-            //curr = nullptr;
-            //return tester;
         }
         else{
             cout << "nothing" << endl;
         }
+   }
 
-    }
+
 
     void addSec(T data, T doc){
         addSec(data, doc, root);
@@ -268,6 +262,23 @@ public:
             return;
     }
 
+    void addSecF(T data, T newDoc, Node<T> * curr, int value){
+        if(strcmp(curr->data.first.c_str(), data.c_str()) < 0){ //neg if search is larger
+            curr = curr->right;
+            addSec(data, newDoc, curr);
+        }
+        else if(strcmp(curr->data.first.c_str(), data.c_str()) > 0){ // if search is larger
+            curr = curr->left;
+            addSec(data, newDoc, curr);
+        }
+        else if(strcmp(curr->data.first.c_str(), data.c_str()) == 0){ // this is where tne doc counting is gonna happen
+                curr->data.second.push_back(make_pair(newDoc, value));
+            return;
+        }
+        else
+            return;
+    }
+
     void add(T data, T data2){
         Node<T> * curr;
         curr = addFirst(root, data);
@@ -275,33 +286,47 @@ public:
         return;
     }
 
-    void rf(){
-        ifstream outFile;
-        if(!outFile.is_open()){
-            outFile.open("index.txt");
-        }
-        readFile(root);
+    void addF(T data, T data2, int times){
+        Node<T> * curr;
+        curr = addFirst(data);
+        addSecF(data, data2, curr, times);
+        return;
     }
 
-    void readFile(Node<T> * curr){
+    void rf(){
         ifstream out;
         if(!out.is_open()){
-            out.open("index.txt");
+            out.open("/home/student/Desktop/index.txt");
         }
         int len;
         out >> len;
         string first;
+        string sec;
+        string num;
+        string line;
+        int pNum;
         for(int i = 0; i < len; i++){
-            getline(out, first, '|');
-            addFirst(first);
-            string newDoc;
-            getline(out, newDoc, ':');
-            string num;
-            getline(out, num);
-            int pNum = stoi(num);
-            curr->data.second.push_back(make_pair(newDoc, 0));
+            getline(out, first, '|'); // gets word / first item
+            Node<T> * curr;
+            curr = addFirst(root, first);
+            getline(out, line);
+            while(line != ""){ // this might go forever
+                num = strtok((char*)line.c_str(), "-");
+                sec = strtok((char*)num.c_str(), ":");
+                pNum = stoi(num);
+                addSecF(first, sec, curr, pNum);
+            }
         }
     }
+
+    bool isEmpty(){
+        if(root == nullptr){
+            return true;
+        }
+        else
+            return false;
+    }
+
 };
 
 
