@@ -11,8 +11,9 @@ using namespace std;
 class queryProcessor
 {
 public:
-    queryProcessor();
-    queryProcessor(string query);
+    queryProcessor(IndexInterface &II);
+
+    void querySearch(string query);
     void singleQuery(string query);
     void orQuery();
     void andQuery();
@@ -24,6 +25,10 @@ public:
     vector<string> finalDocuments;
     documentParser (formatedFilePath);
     vector<string> splicedWords;
+    AVLTree<string> tree;
+    HashMap<string> map;
+    IndexInterface * II = &tree;
+
 private:
     string query = "";
     //IndexInterface * II = &tree;
