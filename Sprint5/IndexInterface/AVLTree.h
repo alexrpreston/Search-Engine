@@ -220,7 +220,7 @@ public:
                 return curr->data.second;
             }
             else{
-                cout << "nothing" << endl;
+                cout << "nothing" << endl; //this should never happen
             }
         }
     }

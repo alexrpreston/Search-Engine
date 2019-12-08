@@ -24,7 +24,7 @@ queryProcessor::queryProcessor(string query){
 void queryProcessor::singleQuery(string query){
     cout << "Just one word" << endl;
     //access(query)
-    documentParser().II->access(query); // this needs to take a stemmed string or it will seg fault
+    //documentParser().II->access(query); // this needs to take a stemmed string or it will seg fault
 }
 
 void queryProcessor::orQuery(){

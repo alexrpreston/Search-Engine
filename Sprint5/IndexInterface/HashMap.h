@@ -19,30 +19,42 @@ private:
     int BUCKET = 200000;    // No. of buckets
 
     // Pointer to an array containing buckets
-    vector<pair<T,vector<T>>> * table; // use array instead of list
+    vector<vector<pair<T,vector<pair<T,int>>>>> * table; // use holy hell this is a dumb-ass line
+
 public:
     HashMap(){
-        table = new vector<pair<T,vector<T>>>[BUCKET];
-        srand(5);
+        table = new vector<vector<pair<T,vector<pair<T,int>>>>>[BUCKET];
     }  // Constructor
 
-    HashMap(int V){
-        this->BUCKET = V;
-        table = new list<pair<T,vector<T>>>[BUCKET];
-        srand(5);
-    }  // Constructor
+    void add(T data, T data2){
+        int index = hashFunction(data);
+        int temp = -1;
 
-    // inserts a key into hash table
-    void addWord(string word){
-        vector<T> tempVec;
-        pair<T,vector<T>> temp = make_pair(word, tempVec);
-        int index = hashFunction(word);
-     //    table->front().second.push_back(word); // this works
-     //   table[index].second.push_back(word);  // ???
     }
 
-    void addDoc(string doc, string word){
+    void addFirst(T data){
     //    table[(hashFunction(word))].second.push_back(doc);
+        int index = hashFunction(data);
+        vector<pair<T,int>> nullVec;
+        table[index].push_back(make_pair(data, nullVec)); // ????
+
+    }
+
+    void addSec(T data, T data2){ // fuck this method
+        int index = hashFunction(data);
+        for(int i = 0; i < table[index].size(); i++){ // goes through the list of collisions
+            if(table[index][i].first == data){ // finds the pair in the collision vector that has the same name
+                for(int j = 0; i < table[index][j].second.size(); j++){ // goes through the vecotr matched to the word
+                    if(table[index][i].second[j].first == data2){ // if the value in that vector is equal to the doc title or whatever is in there
+                        table[index][i].second[j].second++; //adds a number to the seen per doc value in the right box
+                    }
+                }
+                table[index][i].second.push_back(make_pair(data2, 1));
+            }
+        }
+        if(table[index].size() == 0){
+            table[index] = (make_pair(data2, 1));
+        }
     }
 
     // deletes a key from hash table
@@ -64,11 +76,16 @@ public:
     }
 
     // hash function to map values to key
-    int hashFunction(string x) {
-        return ((long int)x.c_str() % (rand()%BUCKET));
+    int hashFunction(string data) {
+        //int fei = static_cast<int>(data);
+        return (((long int)data.c_str()*17+4*3-85*10) %BUCKET);
     }
 
-    void displayHash(){
+    int hashFunction(int data){
+
+    }
+
+    void displayHash(){ // for testing mostly
         for (int i = 0; i < BUCKET; i++) {
           cout << i;
           for (auto x : table[i])
@@ -84,9 +101,6 @@ public:
 
     }
     void destroy() override{
-
-    }
-    void add(string, string) override{
 
     }
     vector<pair<T, int>> access(T data){
