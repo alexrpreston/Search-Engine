@@ -263,6 +263,23 @@ public:
             return;
     }
 
+    void addSecF(T data, T newDoc, Node<T> * curr, int value){
+        if(strcmp(curr->data.first.c_str(), data.c_str()) < 0){ //neg if search is larger
+            curr = curr->right;
+            addSec(data, newDoc, curr);
+        }
+        else if(strcmp(curr->data.first.c_str(), data.c_str()) > 0){ // if search is larger
+            curr = curr->left;
+            addSec(data, newDoc, curr);
+        }
+        else if(strcmp(curr->data.first.c_str(), data.c_str()) == 0){ // this is where tne doc counting is gonna happen
+                curr->data.second.push_back(make_pair(newDoc, value));
+            return;
+        }
+        else
+            return;
+    }
+
     void add(T data, T data2){
         Node<T> * curr;
         curr = addFirst(root, data);
@@ -282,15 +299,15 @@ public:
         int len;
         out >> len;
         string first;
+        string newDoc;
+        string num;
         for(int i = 0; i < len; i++){
-            getline(out, first, '|');
-            addFirst(first);
-            string newDoc;
+            getline(out, first, '|'); // gets word / first item
+            addFirst(first); // adds item to tree
             getline(out, newDoc, ':');
-            string num;
             getline(out, num);
             int pNum = stoi(num);
-            curr->data.second.push_back(make_pair(newDoc, 0));
+            addSecF(first, newDoc, root, pNum);
         }
     }
 
