@@ -6,14 +6,17 @@ queryProcessor::queryProcessor(IndexInterface * &II){
 }
 
 void queryProcessor::querySearch(string query){
-    this->query = query;
-    size_t andQuery = query.find("AND");
-    size_t orQuery = query.find("OR");
-    if(andQuery != std::string::npos){
+    //this->query = query;
+    size_t andQueryLocation = query.find("AND");
+    size_t orQueryLocation = query.find("OR");
+    if(andQueryLocation != std::string::npos){
         query = query.substr(4,query.size()); //removes "AND" from beginning or query
+        andQuery(query);
     }
-    else if(orQuery != std::string::npos){
+    else if(orQueryLocation != std::string::npos){
         query = query.substr(3,query.size()); //removes "OR" from beginning or query
+        cout << query << endl;
+        orQuery(query);
     }
     else{
         singleQuery(query);
@@ -32,26 +35,38 @@ void queryProcessor::singleQuery(string query){
     }
 }
 
-void queryProcessor::orQuery(){
+void queryProcessor::orQuery(string query){
+    cout << "Query Type: OR " << query << endl;
     size_t notQuery = query.find("NOT");
     if(notQuery == std::string::npos){
-        spliceQueryWords();
-
+        spliceQueryWords(query);
+        for(int i = 0; i < splicedWords.size(); i++){
+            cout << "How many time does this print" << endl;
+            cout << splicedWords[i] << endl;
+            //vector<pair<string, int>> singleWordDocumentList;
+            //II->access(splicedWords[i]., singleWordDocumentList);
+            //allDocuments.push_back(singleWordDocumentList);
+        }
+//        for(int i = 0; i < allDocuments.size(); i++){
+//            for(int j = 0; j < allDocuments[i].size(); j++){
+//                cout << allDocuments[i][j].first << endl;
+//            }
+//        }
     }
 
 }
 
-void queryProcessor::andQuery()
+void queryProcessor::andQuery(string query)
 {
 
 }
 
-void queryProcessor::notQuery()
+void queryProcessor::notQuery(string query)
 {
 
 }
 
-void queryProcessor::spliceQueryWords(){
+void queryProcessor::spliceQueryWords(string query){
     string deliminator = " ";
     size_t position = 0;
     string token = "";

@@ -15,13 +15,13 @@ public:
 
     void querySearch(string query);
     void singleQuery(string query);
-    void orQuery();
-    void andQuery();
-    void notQuery();
-    void spliceQueryWords();
+    void orQuery(string query);
+    void andQuery(string query);
+    void notQuery(string query);
+    void spliceQueryWords(string query);
     void removeRepeats();
 
-    vector<vector<string>> allDocuments;
+    vector<vector<pair<string, int>>> allDocuments;
     vector<string> finalDocuments;
     documentParser (formatedFilePath);
     vector<string> splicedWords;

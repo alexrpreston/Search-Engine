@@ -10,13 +10,8 @@ using namespace std;
 userInterface::userInterface(){
     documentParser parser("/home/student/Desktop/scotus-small/", II);
     queryProcessor processor(II);
-    string query = "marshal";
-    cout << "=== Search the Corpus ===" << "\n\n";
-    cout << "Enter Query: ";
-    //cin >> query;
-    parser.stemWord(query);
-    processor.singleQuery(query);
-    //mainMenu(parser, processor);
+
+    mainMenu(parser, processor);
 }
 
 void userInterface::mainMenu(documentParser &parser, queryProcessor &processor){
@@ -104,8 +99,9 @@ void userInterface::interactiveMode(documentParser &parser, queryProcessor &proc
             string query = "";
             cout << "=== Search the Corpus ===" << "\n\n";
             cout << "Enter Query: ";
-            cin >> query;
-            processor.singleQuery(query);
+            cin.ignore();
+            getline(cin, query);
+            processor.querySearch(query);
         }
         if(choice == 3){
             cout << "Total number of opinions indexed: " << "\n";
