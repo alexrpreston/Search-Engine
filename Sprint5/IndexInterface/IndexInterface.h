@@ -8,13 +8,8 @@ using namespace std;
 
 class IndexInterface{
 public:
-    //virtual void addFirst(string) = 0;
-    //virtual void addSec(string, string) = 0;
+    virtual ~IndexInterface(){}
     virtual void access(string data, vector<pair<string, int>> &docs) = 0;
-    //virtual vector<string> access(string data) = 0;
-//    virtual void write() = 0;
-    //virtual void readFromFile() = 0;
-    //virtual
     virtual void destroy() = 0;
     virtual void add(string, string) = 0;
     virtual void rf() = 0;

@@ -35,6 +35,7 @@ void queryProcessor::querySearch(string query){
 
 
 void queryProcessor::singleQuery(string query){
+//    auto start = chrono::system_clock::now();
     size_t notQuery = query.find("NOT");
     if(notQuery == std::string::npos){
         II->access(query, finalDocuments);
@@ -49,12 +50,16 @@ void queryProcessor::singleQuery(string query){
     }
     removeRepeats();
     sortFinalDocsByFrequency();
+//    auto end = chrono::system_clock::now();
+//    auto elapsed = chrono::duration_cast<chrono::microseconds>(end - start);
+//    cout << finalDocuments.size() << " results " << "(" << elapsed.count() << " microseconds" << ")" << "\n\n";
     printDocuemnts();
 
 
 }
 
 void queryProcessor::orQuery(string query){
+//    auto start = chrono::system_clock::now();
     string notWord = "";
     size_t notQuery = query.find("NOT");
     if(notQuery == std::string::npos){
@@ -66,7 +71,10 @@ void queryProcessor::orQuery(string query){
         }
         mergeAllDocuments();
         sortFinalDocsByFrequency();
-        printDocuemnts();
+        for(int i = 0; i < finalDocuments.size(); i++){
+            cout << i+1 << " " <<  finalDocuments[i].first << endl;
+        }
+        //printDocuemnts();
     }
     else{
         notWord = query.substr(notQuery+4, query.size()-notQuery);
@@ -84,11 +92,15 @@ void queryProcessor::orQuery(string query){
     mergeAllDocuments();
     removeNotQueryDocs();
     sortFinalDocsByFrequency();
+//    auto end = chrono::system_clock::now();
+//    auto elapsed = chrono::duration_cast<chrono::microseconds>(end - start);
+//    cout << finalDocuments.size() << " results " << "(" << elapsed.count() << " microseconds" << ")" << "\n\n" << flush;
     printDocuemnts();
 
 }
 
 void queryProcessor::andQuery(string query){
+//    auto start = chrono::system_clock::now();
     string notWord = "";
     size_t notQuery = query.find("NOT");
     if(notQuery == std::string::npos){
@@ -130,6 +142,9 @@ void queryProcessor::andQuery(string query){
     mergeAllDocuments();
     removeNotQueryDocs();
     sortFinalDocsByFrequency();
+//    auto end = chrono::system_clock::now();
+//    auto elapsed = chrono::duration_cast<chrono::microseconds>(end - start);
+//    cout << finalDocuments.size() << " results " << "(" << elapsed.count() << " microseconds" << ")" << "\n\n";
     printDocuemnts();
 }
 
@@ -242,9 +257,9 @@ void queryProcessor::printDocuemnts(){
         if(i+1 == 2) cout << "2nd";
         if(i+1 == 3) cout << "3rd";
         else if(i+1 > 3)cout << i+1 << "th";
-        cout << " most relevant opinion found."<< "      \n========================================";
+        cout << " most relevant opinion found."<< "      \n========================================\n";
         parser.getRelevantInfo(finalDocuments[i].first);
-        cout << "========================================\n\n";
+        cout << "\n========================================\n\n";
     }
 }
 

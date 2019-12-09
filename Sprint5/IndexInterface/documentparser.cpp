@@ -42,11 +42,16 @@ documentParser::documentParser(char * persistentIndexPath, IndexInterface * &II)
     //tree.pof();
 }
 
+documentParser::documentParser(IndexInterface *&II){
+    this->II = II; //This sets the AVL tree we created in the UI to the one we read all our files into.
+    makeStopWords();
+}
+
 
 
 
 void documentParser::dataTypes(){
-    II->pof();
+    //II->pof();
     II->destroy();
     if(avlT){
         avlT == false;
@@ -79,7 +84,7 @@ string documentParser::getRelevantInfo(string filePath){
     size_t endOfInfoIndex = html.find("Decided");
     html = html.substr(5, endOfInfoIndex+26);
     removeTags(html);
-    cout << html;
+    cout <<  html;
 }
 
 string documentParser::getFirst300Words(string filePath){
@@ -195,7 +200,7 @@ void documentParser::getFileNames(char *filePath){
         addTotalDocumentsParsed(1);
     }
     closedir(dp);
-
+    chdir("../CSE2341-F19-Alex-Isaac/Sprint5/build-IndexInterface-Desktop_Qt_5_10_0_GCC_64bit-Debug/");
 }
 
 void documentParser::stemWord(string &unstemmedWord){

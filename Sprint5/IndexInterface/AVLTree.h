@@ -33,7 +33,7 @@ private:
 
 public:
     AVLTree(){
-        outFile.open("/home/student/Desktop/index.txt");
+        //outFile.open("/home/student/Desktop/index.txt");
     }
     ~AVLTree(){
         destroy(root);
@@ -173,6 +173,9 @@ public:
     }
 
     void preOrder(Node<T> * root){
+
+        cout << "no" << endl;
+
         if(root != nullptr){
             cout << root->data.first << endl;
             preOrder(root->left);
@@ -181,8 +184,11 @@ public:
     }
 
     void pof(){
+        outFile.open("index.txt", ofstream::out | ofstream::app);
+       // outFile.open("/home/student/Desktop/index.txt", ios::out | ofstream::app);
         outFile << getNumNodes() << endl;
         preOrderFile(root);
+        outFile.close();
     }
 
     void preOrderFile(Node<T> * curr){
@@ -196,9 +202,10 @@ public:
                     outFile << "-";
                 }
             }
-            outFile << endl;                      
+            outFile << endl;
             preOrderFile(curr->right);
         }
+       // outFile.close();
     }
 
     void access(T data, vector<pair<T, int>> &docs){
@@ -318,6 +325,7 @@ public:
              }
 
         }
+        file.close();
     }
 
     bool isEmpty(){

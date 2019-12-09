@@ -122,7 +122,7 @@ public:
                 }
         }
     }
-    void pof() override{ // print out file
+    void pof(){ // print out file
         outFile << numWords << endl;
         for(int i = 0; i < 20000; i++){
             for(int j = 0; j < table[i]->size(); j++){

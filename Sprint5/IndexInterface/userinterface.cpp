@@ -8,11 +8,13 @@ using namespace std;
 #include "HashMap.h"
 #include "stdlib.h"
 userInterface::userInterface(){
-    documentParser parser("/home/student/Desktop/scotus-small/", II);
+    documentParser parser(II);
     queryProcessor processor(II);
+    //processor.II->pof();
     //processor.querySearch("hello");
     mainMenu(parser, processor);
     //parser.dataTypes();
+
 }
 
 void userInterface::mainMenu(documentParser &parser, queryProcessor &processor){
@@ -47,7 +49,9 @@ void userInterface::maintenanceMode(documentParser &parser, queryProcessor &proc
         cout << "2. Clear the Index." << "\n";
         cout << "3. Parse the corpus and populate index" << "\n";
         cout << "4. Go back to main menu." << "\n";
-        cout << "5. Exit " << "\n";
+        cout << "5. Build Index from txt file" << "\n";
+        cout << "6. Write Persistent Index" << "\n";
+        cout << "7. Exit " << "\n";
         cout << "Enter an option: ";
         cin >> choice;
         system("clear");
@@ -56,8 +60,7 @@ void userInterface::maintenanceMode(documentParser &parser, queryProcessor &proc
                 cout << "Enter a folder path: ";
                 cin >> folderPath;
                 char * formatedFilePath = &folderPath[0];
-                parser.addOpinions(formatedFilePath);
-
+                parser.getFileNames(formatedFilePath);
                 cout << "Opinions added to corpus" << endl;
         }
         if(choice == 2){
@@ -65,14 +68,24 @@ void userInterface::maintenanceMode(documentParser &parser, queryProcessor &proc
         }
         if(choice == 3){
             //IndexInterface.clear()
-            //documentParser("/home/student/Desktop/scotus-med/", 0);
+            //documentParser(, 0);
+            parser.getFileNames("/home/student/Desktop/scotus-small/");
         }
         if(choice == 4){
             mainMenu(parser, processor);
         }
+        if(choice == 5){
+            processor.II->rf();
+            mainMenu(parser, processor);
+        }
+        if(choice == 6){
+            processor.II->pof();
+            //processor.tree.pof();
+            mainMenu(parser, processor);
+        }
         
         
-    }while(choice != 5);
+    }while(choice != 7);
 }
 
 void userInterface::interactiveMode(documentParser &parser, queryProcessor &processor){
