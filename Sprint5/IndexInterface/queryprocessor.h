@@ -1,3 +1,4 @@
+
 #ifndef QUERYPROCESSOR_H
 #define QUERYPROCESSOR_H
 
@@ -28,6 +29,7 @@ public:
     void removeNotQueryDocs();
     void sortFinalDocsByFrequency();
     void printDocuemnts();
+    vector<string> folders;
     string expand(int num);
     vector<vector<pair<string, int>>> allDocuments;
     vector<pair<string, int>> finalDocuments;

@@ -23,12 +23,7 @@ int main(int argc, char * const argv[]){
 
 
 
-
-
     userInterface();
-    //queryProcessor("higher education texas");
-
-    //documentParser(formatedFilePath, argv[2]);
     return 0;
 
 }

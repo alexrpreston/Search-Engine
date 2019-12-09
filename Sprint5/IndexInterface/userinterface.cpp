@@ -72,7 +72,7 @@ void userInterface::maintenanceMode(documentParser &parser, queryProcessor &proc
         if(choice == 3){
             //IndexInterface.clear()
             //documentParser(, 0);
-            parser.getFileNames("/home/student/Desktop/scotus-med/");
+            parser.getFileNames("/home/student/Desktop/scotus-small/");
         }
         if(choice == 4){
             mainMenu(parser, processor);
@@ -139,8 +139,6 @@ void userInterface::interactiveMode(documentParser &parser, queryProcessor &proc
             cout << "Total number of opinions indexed: " << parser.getTotalDocumentsParsed() << "\n";
             cout << "Average number of words indexed per opinion: " << parser.getAvergeWordsPerDocument() << "\n";
             cout << "Top 50 most frequent word: " << "\n";
-
-
         }
         if(choice == 4){
             mainMenu(parser, processor);

@@ -70,7 +70,7 @@ void documentParser::dataTypes(){
 }
 
 string documentParser::getRelevantInfo(string filePath){
-    string path = "/home/student/Desktop/scotus-med/";
+    string path = "/home/student/Desktop/scotus-small/";
     string jsonEXT = ".json";
     string name = path + filePath + jsonEXT;
     FILE * fp = fopen(name.c_str(), "rb");
@@ -90,7 +90,7 @@ string documentParser::getRelevantInfo(string filePath){
 string documentParser::getFirst300Words(string filePath){
     int totalwords = 0;
     string expandedDoc = "";
-    string path = "/home/student/Desktop/scotus-med/";
+    string path = "/home/student/Desktop/scotus-small/";
     string jsonEXT = ".json";
     string name = path + filePath + jsonEXT;
     FILE * fp = fopen(name.c_str(), "rb");
@@ -136,7 +136,8 @@ void documentParser::addTotalDocumentsParsed(int value)
 
 double documentParser::getAvergeWordsPerDocument() const
 {
-    return avergeWordsPerDocument / getTotalDocumentsParsed();
+    double avg = avergeWordsPerDocument / getTotalDocumentsParsed();
+    return avg;
 }
 
 void documentParser::addAvergeWordsPerDocument(int value)
@@ -320,4 +321,5 @@ void documentParser::removeTags(string &html){
 void documentParser::addOpinions(char *folderPath){
     makeStopWords();
     getFileNames(folderPath);
+    folders.push_back(folderPath);
 }

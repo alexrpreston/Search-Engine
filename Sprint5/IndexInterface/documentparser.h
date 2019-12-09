@@ -26,6 +26,7 @@ public:
     string getRelevantInfo(string filePath);
     string getFirst300Words(string filePath);
 public:
+    vector<string> folders;
     AVLTree<string> tree;
     HashMap<string> map;
     IndexInterface * II = &tree;
