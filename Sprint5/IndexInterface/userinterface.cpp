@@ -14,6 +14,9 @@ userInterface::userInterface(){
     //processor.querySearch("hello");
     mainMenu(parser, processor);
     //parser.dataTypes();
+    //processor.II->rf();
+    //mainMenu(parser, processor);
+    //processor.querySearch("law");
 
 }
 
@@ -69,7 +72,7 @@ void userInterface::maintenanceMode(documentParser &parser, queryProcessor &proc
         if(choice == 3){
             //IndexInterface.clear()
             //documentParser(, 0);
-            parser.getFileNames("/home/student/Desktop/scotus-small/");
+            parser.getFileNames("/home/student/Desktop/scotus-med/");
         }
         if(choice == 4){
             mainMenu(parser, processor);

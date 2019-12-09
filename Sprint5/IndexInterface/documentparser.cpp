@@ -70,11 +70,11 @@ void documentParser::dataTypes(){
 }
 
 string documentParser::getRelevantInfo(string filePath){
-    string path = "/home/student/Desktop/scotus-small/";
+    string path = "/home/student/Desktop/scotus-med/";
     string jsonEXT = ".json";
     string name = path + filePath + jsonEXT;
     FILE * fp = fopen(name.c_str(), "rb");
-    char readBuffer[6553666];
+    char readBuffer[653666];
     FileReadStream is(fp, readBuffer, sizeof(readBuffer));
     Document d;
     d.ParseStream(is);
@@ -90,7 +90,7 @@ string documentParser::getRelevantInfo(string filePath){
 string documentParser::getFirst300Words(string filePath){
     int totalwords = 0;
     string expandedDoc = "";
-    string path = "/home/student/Desktop/scotus-small/";
+    string path = "/home/student/Desktop/scotus-med/";
     string jsonEXT = ".json";
     string name = path + filePath + jsonEXT;
     FILE * fp = fopen(name.c_str(), "rb");

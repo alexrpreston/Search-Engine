@@ -25,7 +25,7 @@ private:
     bool empty = true;
     int numWords = 0;
    // vector<vector<pair<T,vector<pair<T,int>>>>> * table; // use holy hell this is a dumb-ass line
-    vector<pair<T,vector<pair<T,int>>>> * table[20000];
+    vector<pair<T,vector<pair<T,int>>>> * table[10000];
     ofstream outFile;
 
 public:
@@ -45,7 +45,12 @@ public:
 
     void destroy() override{
         empty = true;
-        delete table;
+        //delete [] table;
+        //Alex's idea
+        for(int i = 0; i < 10000; i++){
+            table[i] = nullptr;
+            delete table[i];
+        }
     }
 
     void addFirst(T data){

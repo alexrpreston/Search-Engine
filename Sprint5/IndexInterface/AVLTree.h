@@ -184,7 +184,7 @@ public:
     }
 
     void pof(){
-        outFile.open("index.txt", ofstream::out | ofstream::app);
+        outFile.open("index.txt");
        // outFile.open("/home/student/Desktop/index.txt", ios::out | ofstream::app);
         outFile << getNumNodes() << endl;
         preOrderFile(root);
@@ -294,14 +294,15 @@ public:
 
     void addF(T data, T data2, int times){
         Node<T> * curr;
-        curr = addFirst(data);
+        curr = addFirst(root, data);
         addSecF(data, data2, curr, times);
         return;
     }
 
     void rf(){
+      //  cout << "hi" << endl;
         ifstream file;
-        file.open("/home/student/Desktop/index.txt");
+        file.open("index.txt");
         string line = "";
         getline(file, line);
         while(getline(file, line)){
@@ -311,6 +312,7 @@ public:
             char sentence[10000];
             strcpy(sentence, info.c_str());
             char * token = strtok(sentence, "-");
+
             while(token != NULL){
 
                 string IDandFreq = token;
@@ -321,7 +323,7 @@ public:
                 string ID = IDandFreq.substr(0,IDIndex); //Here is ID
                 string frequencyStr = IDandFreq.substr(IDIndex+1, IDandFreq.length()-1);
                 int frequency = stoi(frequencyStr); //Here is Freq
-
+                    addF(word, ID, frequency);
              }
 
         }
