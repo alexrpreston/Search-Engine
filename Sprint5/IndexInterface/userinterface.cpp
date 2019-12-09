@@ -12,6 +12,7 @@ userInterface::userInterface(){
     queryProcessor processor(II);
     //processor.querySearch("OR law marshal NOT unsupport");
     mainMenu(parser, processor);
+    //parser.dataTypes();
 }
 
 void userInterface::mainMenu(documentParser &parser, queryProcessor &processor){

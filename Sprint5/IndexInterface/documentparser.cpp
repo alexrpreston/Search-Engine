@@ -39,7 +39,7 @@ documentParser::documentParser(char * persistentIndexPath, IndexInterface * &II)
     makeStopWords();
     getFileNames(persistentIndexPath);
 
-    tree.pof();
+    //tree.pof();
 }
 
 
@@ -55,7 +55,7 @@ void documentParser::dataTypes(){
         avlT == true;
     }
 
-    if(avlT){
+    if(!avlT){
         II = &tree;
     }
     else{
@@ -152,6 +152,8 @@ void documentParser::getFileNames(char *filePath){
             readDocumentsHTMLData(entry->d_name);
             addTotalDocumentsParsed(1);
         }
+//        string entryName = entry->d_name;
+//        entryName = entryName.substr(0, 11);
         readDocumentsHTMLData(entry->d_name);
         addTotalDocumentsParsed(1);
     }
