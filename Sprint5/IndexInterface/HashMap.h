@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <cstdio>
+#include <stdio.h>
 #include <sstream>
 #include <algorithm>
 #include <utility>
@@ -12,6 +13,9 @@
 #include <random>
 #include <list>
 #include <fstream>
+#include <string>
+#include <sstream>
+#include <ostream>
 using namespace std ;
 
 template<class T>
@@ -47,7 +51,7 @@ public:
     //    table[(hashFunction(word))].second.push_back(doc);
         int index = hashFunction(data);
         vector<pair<T,int>> nullVec;
-        table[index].push_back(make_pair(data, nullVec)); // ????
+        table->at(index).push_back(make_pair(data, nullVec)); // ????
         empty = false;
     }
 
@@ -93,14 +97,35 @@ public:
     }
 
     void rf() override{ //read file
-
+        ifstream out;
+        if(!out.is_open()){
+            out.open("/home/student/Desktop/index.txt");
+        }
+        string first;
+        string sec;
+        string num;
+        string line;
+        int pNum;
+        int index;
+        while(outFile){
+                getline(out, first, '|'); // gets word / first item
+               // index = hashFunction(first);
+                addFirst(first);
+                getline(out, line);
+                while(line != ""){ // this might go forever
+                    num = strtok((char*)line.c_str(), "-");
+                    sec = strtok((char*)num.c_str(), ":");
+                    pNum = stoi(num);
+                    addSecF(first, sec, pNum);
+                }
+        }
     }
     void pof() override{ // print out file
         for(int i = 0; i < table->size(); i++){
-            for(int j = 0; j < table[i].size(); j++){
-                outFile << table[i][j].first << "|"; // word
-                for(int k = 0; k < table[i][j].second.size(); k++){
-                    outFile << table[i][j].second[k].first << ":" << table[i][j].second[k].second << "-";
+            for(int j = 0; j < table->at(i).size(); j++){
+                outFile << table->at(i).at(j).first << "|"; // word
+                for(int k = 0; k < table->at(i).at(j).second.size(); k++){
+                    outFile << table->at(i).at(j).second.at(k).first << ":" << table->at(i).at(j).second.at(k).second << "-";
                 }
                 outFile << endl;
             }
@@ -113,8 +138,8 @@ public:
     void access(T data, vector<pair<string, int>> &docs){
         int index = hashFunction(data);
         for(int i = 0; i < table[index].size(); i++){ // goes through the list of collisions
-            if(table[index][i].first == data){ // finds the pair in the collision vector that has the same name
-                docs = table[index][i].second; //sets the passby to the correct vector value
+            if(table->at(index).at(i).first == data){ // finds the pair in the collision vector that has the same name
+                docs = table->at(index).at(i).second; //sets the passby to the correct vector value
                 return;
             }
         }
@@ -126,6 +151,15 @@ public:
     }
     bool isEmpty() override{
         return empty;
+    }
+
+    void addSecF(T data, T data2, int num){
+        int index = hashFunction(data);
+        for(int i = 0; i < table[index].size(); i++){ // goes through the list of collisions
+            if(table->at(index).at(i).first == data){ // finds the pair in the collision vector that has the same name
+                table->at(index).at(i).second.push_back(make_pair(data2, num)); // if the doc is not in the vector add it
+            }
+        }
     }
 
 };
