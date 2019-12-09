@@ -1,5 +1,7 @@
 #ifndef QUERYPROCESSOR_H
 #define QUERYPROCESSOR_H
+
+
 #include "string"
 #include "documentparser.h"
 #include "vector"

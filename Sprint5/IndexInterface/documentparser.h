@@ -1,10 +1,11 @@
 #ifndef DOCUMENTPARSER_H
 #define DOCUMENTPARSER_H
-using namespace std;
+
 #include <string>
 #include <vector>
 #include "AVLTree.h"
 #include "HashMap.h"
+using namespace std;
 class documentParser
 {
 public:

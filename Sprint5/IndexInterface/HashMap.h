@@ -127,13 +127,8 @@ public:
         }
     }
     void pof() override{ // print out file
-<<<<<<< HEAD
-        //outFile << numWords << endl;
-        for(int i = 0; i < 200000; i++){
-=======
         outFile << numWords << endl;
         for(int i = 0; i < 20000; i++){
->>>>>>> 3a67a226329b6fb6a0d4a48d0e64f7e25a3a6abb
             for(int j = 0; j < table[i]->size(); j++){
                 outFile << table[i]->at(j).first << "|"; // word
                 for(int k = 0; k < table[i]->at(j).second.size(); k++){
