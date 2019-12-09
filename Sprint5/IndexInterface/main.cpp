@@ -25,15 +25,6 @@ int main(int argc, char * const argv[]){
 
 
 
-
-
-
-    string filePath = argv[1];
-    if(filePath[filePath.length()-1] != '/'){
-            filePath = filePath + '/';
-    }
-    char * formatedFilePath = &filePath[0];
-    //
     userInterface();
     //queryProcessor("higher education texas");
 
