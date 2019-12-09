@@ -89,7 +89,48 @@ void queryProcessor::orQuery(string query){
 }
 
 void queryProcessor::andQuery(string query){
+    string notWord = "";
+    size_t notQuery = query.find("NOT");
+    if(notQuery == std::string::npos){
+        spliceQueryWords(query);
+        for(int i = 0; i < splicedQueryWords.size(); i++){
+            vector<pair<string, int>> singleWordDocumentList;
+            II->access(splicedQueryWords[i], singleWordDocumentList);
+            allDocuments.push_back(singleWordDocumentList);
+        }
+    }
+    else{
+        notWord = query.substr(notQuery+4, query.size()-notQuery);
+        query = query.substr(0,notQuery-1);
+        spliceQueryWords(query);
+        for(int i = 0; i < splicedQueryWords.size(); i++){
+            vector<pair<string, int>> singleWordDocumentList;
+            II->access(splicedQueryWords[i], singleWordDocumentList);
+            allDocuments.push_back(singleWordDocumentList);
+        }
+    }
+    int totalOccurances = 0;
+    for(int i = 0; i < allDocuments.size(); i++){
+        for(int j = 0; j < allDocuments[i].size(); j++){
+            for(int l = i+1; l < allDocuments.size()-1; l++){
+                for(int m = j+1; m < allDocuments[i].size()-1; m++){
+                    if(allDocuments[i][j].first == allDocuments[l][m].first){
+                        totalOccurances++;
+                        if(totalOccurances == splicedQueryWords.size()){
+                            finalDocuments.push_back(allDocuments[l][m]);
+                            totalOccurances = 0;
+                        }
+                    }
+                }
+            }
 
+        }
+    }
+    getNotQueryDocs();
+    mergeAllDocuments();
+    removeNotQueryDocs();
+    sortFinalDocsByFrequency();
+    printDocuemnts();
 }
 
 
