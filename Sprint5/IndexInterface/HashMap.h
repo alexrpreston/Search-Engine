@@ -35,9 +35,8 @@ public:
     }  // Constructor
 
     void add(T data, T data2){ // finsih me
-        int index = hashFunction(data);
-        int temp = -1;
-
+        addFirst(data);
+        addSec(data, data2);
     }
 
     ~HashMap(){
@@ -142,6 +141,7 @@ public:
 //    void add(string, string) override{
 
 //    }
+
     void access(T data, vector<pair<string, int>> &docs){
         int index = hashFunction(data);
         for(int i = 0; i < table[index]->size(); i++){ // goes through the list of collisions
