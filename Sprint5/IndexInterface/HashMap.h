@@ -59,18 +59,15 @@ public:
 
     void addSec(T data, T data2){ // fuck this method
         int index = hashFunction(data);
-        for(int i = 0; i < table[index].size(); i++){ // goes through the list of collisions
-            if(table[index][i].first == data){ // finds the pair in the collision vector that has the same name
-                for(int j = 0; i < table[index][j].second.size(); j++){ // goes through the vecotr matched to the word
-                    if(table[index][i].second[j].first == data2){ // if the value in that vector is equal to the doc title or whatever is in there
-                        table[index][i].second[j].second++; //adds a number to the seen per doc value in the right box
+        for(int i = 0; i < table[index]->size(); i++){ // goes through the list of collisions
+            if(table[index]->at(i).first == data){ // finds the pair in the collision vector that has the same name
+                for(int j = 0; j < table[index]->at(i).second.size(); j++){ // goes through the vecotr matched to the word
+                    if(table[index]->at(i).second[j].first == data2){ // if the value in that vector is equal to the doc title or whatever is in there
+                        table[index]->at(i).second[j].second++; //adds a number to the seen per doc value in the right box
                     }
                 }
-                table[index][i].second.push_back(make_pair(data2, 1));
+                table[index]->at(i).second.push_back(make_pair(data2, 1));
             }
-        }
-        if(table[index].size() == 0){
-            table[index] = (make_pair(data2, 1));
         }
     }
 
