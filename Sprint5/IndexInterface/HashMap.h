@@ -21,10 +21,10 @@ using namespace std ;
 template<class T>
 class HashMap : public IndexInterface{
 private:
-    int BUCKET = 200000;    // No. of buckets
+    int BUCKET = 100000;    // No. of buckets
     bool empty = true;
    // vector<vector<pair<T,vector<pair<T,int>>>>> * table; // use holy hell this is a dumb-ass line
-    vector<pair<T,vector<pair<T,int>>>> * table[200000];
+    vector<pair<T,vector<pair<T,int>>>> * table[20000];
     ofstream outFile;
 
 public:
@@ -122,11 +122,11 @@ public:
         }
     }
     void pof() override{ // print out file
-        for(int i = 0; i < table->size(); i++){
-            for(int j = 0; j < table->at(i).size(); j++){
-                outFile << table->at(i).at(j).first << "|"; // word
-                for(int k = 0; k < table->at(i).at(j).second.size(); k++){
-                    outFile << table->at(i).at(j).second.at(k).first << ":" << table->at(i).at(j).second.at(k).second << "-";
+        for(int i = 0; i < 200000; i++){
+            for(int j = 0; j < table[i]->size(); j++){
+                outFile << table[i]->at(j).first << "|"; // word
+                for(int k = 0; k < table[i]->at(j).second.size(); k++){
+                    outFile << table[i]->at(j).second.at(k).first << ":" << table[i]->at(j).second.at(k).second << "-";
                 }
                 outFile << endl;
             }
@@ -138,9 +138,9 @@ public:
 //    }
     void access(T data, vector<pair<string, int>> &docs){
         int index = hashFunction(data);
-        for(int i = 0; i < table[index].size(); i++){ // goes through the list of collisions
-            if(table->at(index).at(i).first == data){ // finds the pair in the collision vector that has the same name
-                docs = table->at(index).at(i).second; //sets the passby to the correct vector value
+        for(int i = 0; i < table[index]->size(); i++){ // goes through the list of collisions
+            if(table[index]->at(i).first == data){ // finds the pair in the collision vector that has the same name
+                docs = table[index]->at(i).second; //sets the passby to the correct vector value
                 return;
             }
         }
@@ -156,9 +156,9 @@ public:
 
     void addSecF(T data, T data2, int num){
         int index = hashFunction(data);
-        for(int i = 0; i < table[index].size(); i++){ // goes through the list of collisions
-            if(table->at(index).at(i).first == data){ // finds the pair in the collision vector that has the same name
-                table->at(index).at(i).second.push_back(make_pair(data2, num)); // if the doc is not in the vector add it
+        for(int i = 0; i < table[index]->size(); i++){ // goes through the list of collisions
+            if(table[index]->at(i).first == data){ // finds the pair in the collision vector that has the same name
+                table[index]->at(i).second.push_back(make_pair(data2, num)); // if the doc is not in the vector add it
             }
         }
     }
