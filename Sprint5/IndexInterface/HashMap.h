@@ -23,12 +23,13 @@ class HashMap : public IndexInterface{
 private:
     int BUCKET = 200000;    // No. of buckets
     bool empty = true;
-    vector<vector<pair<T,vector<pair<T,int>>>>> * table; // use holy hell this is a dumb-ass line
+   // vector<vector<pair<T,vector<pair<T,int>>>>> * table; // use holy hell this is a dumb-ass line
+    vector<pair<T,vector<pair<T,int>>>> * table[200000];
     ofstream outFile;
 
 public:
     HashMap(){
-        table = new vector<vector<pair<T,vector<pair<T,int>>>>>[BUCKET];
+      //  table = new vector<vector<pair<T,vector<pair<T,int>>>>>[BUCKET];
         outFile.open("/home/student/Desktop/index.txt");
     }  // Constructor
 
@@ -51,7 +52,7 @@ public:
     //    table[(hashFunction(word))].second.push_back(doc);
         int index = hashFunction(data);
         vector<pair<T,int>> nullVec;
-        table->at(index).push_back(make_pair(data, nullVec)); // ????
+        table[index]->push_back(make_pair(data, nullVec)); // ????
         empty = false;
     }
 
