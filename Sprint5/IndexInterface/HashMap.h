@@ -21,16 +21,15 @@ using namespace std ;
 template<class T>
 class HashMap : public IndexInterface{
 private:
-    int BUCKET = 1;    // No. of buckets
+    int BUCKET = 20000;    // No. of buckets
     bool empty = true;
-    int numWords = 0;
-    //vector<vector<pair<T,vector<pair<T,int>>>>> * table; // use holy hell this is a dumb-ass line
-    vector<pair<T,vector<pair<T,int>>>> * table[200000];
+   // vector<vector<pair<T,vector<pair<T,int>>>>> * table; // use holy hell this is a dumb-ass line
+    vector<pair<T,vector<pair<T,int>>>> * table[20000];
     ofstream outFile;
 
 public:
     HashMap(){
-        //table = new vector<vector<pair<T,vector<pair<T,int>>>>>[BUCKET];
+      //  table = new vector<vector<pair<T,vector<pair<T,int>>>>>[BUCKET];
         outFile.open("/home/student/Desktop/index.txt");
     }  // Constructor
 
@@ -55,7 +54,7 @@ public:
         vector<pair<T,int>> nullVec;
         table[index]->push_back(make_pair(data, nullVec)); // ????
         empty = false;
-        numWords++;
+        //numWords++;
     }
 
     void addSec(T data, T data2){ // fuck this method
@@ -127,7 +126,7 @@ public:
         }
     }
     void pof() override{ // print out file
-        outFile << numWords << endl;
+        //outFile << numWords << endl;
         for(int i = 0; i < 200000; i++){
             for(int j = 0; j < table[i]->size(); j++){
                 outFile << table[i]->at(j).first << "|"; // word
