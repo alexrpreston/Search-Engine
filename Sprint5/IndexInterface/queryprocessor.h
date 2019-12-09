@@ -28,6 +28,7 @@ public:
     void removeNotQueryDocs();
     void sortFinalDocsByFrequency();
     void printDocuemnts();
+    string expand(int num);
     vector<vector<pair<string, int>>> allDocuments;
     vector<pair<string, int>> finalDocuments;
     vector<pair<string,int>> notQueryDocs;

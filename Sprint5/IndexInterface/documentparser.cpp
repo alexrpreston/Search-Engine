@@ -82,6 +82,43 @@ string documentParser::getRelevantInfo(string filePath){
     cout << html;
 }
 
+string documentParser::getFirst300Words(string filePath){
+    int totalwords = 0;
+    string expandedDoc = "";
+    string path = "/home/student/Desktop/scotus-small/";
+    string jsonEXT = ".json";
+    string name = path + filePath + jsonEXT;
+    FILE * fp = fopen(name.c_str(), "rb");
+    char readBuffer[6553666];
+    FileReadStream is(fp, readBuffer, sizeof(readBuffer));
+    Document d;
+    d.ParseStream(is);
+    Value& s = d["html_with_citations"];
+    string html = s.GetString();
+    //cout << html;
+    size_t endOfInfoIndex = html.find("Decided");
+    html = html.substr(endOfInfoIndex+26, 1500);
+    removeTags(html);
+
+    char sentence[655565];
+    strcpy(sentence, html.c_str());
+    char * token = strtok(sentence, " ");
+    while(token != NULL){
+        string buffer = "";
+        for(int i = 0; i < strlen(token); i++){
+                if(isalpha(tolower(token[i]))) buffer += char(tolower(token[i]));
+        }
+
+        token = strtok(NULL, " ");
+
+        word = buffer.c_str();
+        if(totalwords < 300) expandedDoc = expandedDoc + " " + word;
+        totalwords++;
+     }
+    expandedDoc += "..........";
+    return expandedDoc;
+}
+
 int documentParser::getTotalDocumentsParsed() const
 {
     return totalDocumentsParsed;

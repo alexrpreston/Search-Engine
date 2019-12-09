@@ -10,7 +10,7 @@ using namespace std;
 userInterface::userInterface(){
     documentParser parser("/home/student/Desktop/scotus-small/", II);
     queryProcessor processor(II);
-    //processor.querySearch("OR law marshal NOT unsupport");
+    //processor.querySearch("hello");
     mainMenu(parser, processor);
     //parser.dataTypes();
 }
@@ -104,11 +104,20 @@ void userInterface::interactiveMode(documentParser &parser, queryProcessor &proc
         }
         if(choice == 2){
             string query = "";
+            int searchResult = -1;
             cout << "=== Search the Corpus ===" << "\n\n";
             cout << "Enter Query: ";
             cin.ignore();
             getline(cin, query);
             processor.querySearch(query);
+            cout << "\n\nEnter a number of the search results \n"
+                    "you would like to expand, between " << "1 and " <<  processor.finalDocuments.size() << ":";
+            cin >> searchResult;
+            string expansion = processor.expand(searchResult-1);
+            cout <<"\n";
+            cout << expansion << endl;
+            cout <<"\n";
+
         }
         if(choice == 3){
             cout << "Total number of opinions indexed: " << parser.getTotalDocumentsParsed() << "\n";

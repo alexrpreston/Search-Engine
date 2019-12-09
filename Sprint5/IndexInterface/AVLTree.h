@@ -218,7 +218,6 @@ public:
             docs = curr->data.second;
         }
         else{
-            cout << "nothing" << endl;
         }
    }
 
@@ -294,28 +293,30 @@ public:
     }
 
     void rf(){
-        ifstream out;
-        if(!out.is_open()){
-            out.open("/home/student/Desktop/index.txt");
-        }
-        int len;
-        out >> len;
-        string first;
-        string sec;
-        string num;
-        string line;
-        int pNum;
-        for(int i = 0; i < len; i++){
-            getline(out, first, '|'); // gets word / first item
-            Node<T> * curr;
-            curr = addFirst(root, first);
-            getline(out, line);
-            while(line != ""){ // this might go forever
-                num = strtok((char*)line.c_str(), "-");
-                sec = strtok((char*)num.c_str(), ":");
-                pNum = stoi(num);
-                addSecF(first, sec, curr, pNum);
-            }
+        ifstream file;
+        file.open("/home/student/Desktop/index.txt");
+        string line = "";
+        getline(file, line);
+        while(getline(file, line)){
+            size_t wordIndex = line.find("|");
+            string word = line.substr(0,wordIndex); //Here is the word
+            string info =  line.substr(wordIndex+1, line.length()-1);
+            char sentence[10000];
+            strcpy(sentence, info.c_str());
+            char * token = strtok(sentence, "-");
+            while(token != NULL){
+
+                string IDandFreq = token;
+                token = strtok(NULL, "-");
+
+
+                size_t IDIndex = IDandFreq.find(":");
+                string ID = IDandFreq.substr(0,IDIndex); //Here is ID
+                string frequencyStr = IDandFreq.substr(IDIndex+1, IDandFreq.length()-1);
+                int frequency = stoi(frequencyStr); //Here is Freq
+
+             }
+
         }
     }
 

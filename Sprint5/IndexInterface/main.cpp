@@ -9,15 +9,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <iostream>
+#include <string>
 #include <dirent.h>
 #include "userinterface.h"
 #include "queryprocessor.h"
 #include <cstdlib>
 #include "../IndexInterface/Libraries/OleanderStemmingLibrary/include/olestem/stemming/english_stem.h"
-
+#include "fstream"
 using namespace std;
 
 int main(int argc, char * const argv[]){
+
+
+
+
+
+
+
 
     string filePath = argv[1];
     if(filePath[filePath.length()-1] != '/'){

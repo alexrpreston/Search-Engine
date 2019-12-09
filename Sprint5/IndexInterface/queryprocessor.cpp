@@ -247,3 +247,9 @@ void queryProcessor::printDocuemnts(){
         cout << "========================================\n\n";
     }
 }
+
+string queryProcessor::expand(int num){
+    string docID = finalDocuments[num].first;
+    return parser.getFirst300Words(docID);
+
+}

@@ -23,6 +23,7 @@ public:
     void addOpinions(char * filePath);
     void dataTypes();
     string getRelevantInfo(string filePath);
+    string getFirst300Words(string filePath);
 public:
     AVLTree<string> tree;
     HashMap<string> map;
@@ -30,6 +31,7 @@ public:
     bool avlT = true;
     string word = "";
     vector<string>stopWords;
+    vector<string>expandedOpinion;
     string wordToFind = "";
     int wordToFindTotalOccurances = 0;
     int wordToFindDocumentOccurances = 0;
