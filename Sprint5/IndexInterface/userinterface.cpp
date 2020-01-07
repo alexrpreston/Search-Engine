@@ -10,13 +10,7 @@ using namespace std;
 userInterface::userInterface(){
     documentParser parser(II);
     queryProcessor processor(II);
-    //processor.II->pof();
-    //processor.querySearch("hello");
     mainMenu(parser, processor);
-    //parser.dataTypes();
-    //processor.II->rf();
-    //mainMenu(parser, processor);
-    //processor.querySearch("law");
 
 }
 
@@ -29,7 +23,6 @@ void userInterface::mainMenu(documentParser &parser, queryProcessor &processor){
         cout << "Enter an option: ";
         cin >> choice;
         system("clear");
-        //Implement try catch to test if the choice is not a number
         switch(choice){
             case 1:
                 maintenanceMode(parser, processor);
@@ -63,16 +56,15 @@ void userInterface::maintenanceMode(documentParser &parser, queryProcessor &proc
                 cout << "Enter a folder path: ";
                 cin >> folderPath;
                 char * formatedFilePath = &folderPath[0];
-                parser.getFileNames(formatedFilePath);
+                parser.addOpinions(formatedFilePath);
+                processor.parser.folderPath = formatedFilePath;
                 cout << "Opinions added to corpus" << endl;
         }
         if(choice == 2){
 
         }
         if(choice == 3){
-            //IndexInterface.clear()
-            //documentParser(, 0);
-            parser.getFileNames("/home/student/Desktop/scotus-small/");
+            parser.getFileNames("/home/student/Desktop/scotus-med/");
         }
         if(choice == 4){
             mainMenu(parser, processor);
@@ -83,7 +75,6 @@ void userInterface::maintenanceMode(documentParser &parser, queryProcessor &proc
         }
         if(choice == 6){
             processor.II->pof();
-            //processor.tree.pof();
             mainMenu(parser, processor);
         }
         
@@ -103,7 +94,6 @@ void userInterface::interactiveMode(documentParser &parser, queryProcessor &proc
         cin >> choice;
         system("clear");
         if(choice == 1){
-            //if we don't have a persistent index, print out an error message
             char dataStrChoice = ' ';
             if(parser.avlT){
                 cout << "The search engine is currently running the AVL tree." << endl;
@@ -138,7 +128,6 @@ void userInterface::interactiveMode(documentParser &parser, queryProcessor &proc
         if(choice == 3){
             cout << "Total number of opinions indexed: " << parser.getTotalDocumentsParsed() << "\n";
             cout << "Average number of words indexed per opinion: " << parser.getAvergeWordsPerDocument() << "\n";
-            cout << "Top 50 most frequent word: " << "\n";
         }
         if(choice == 4){
             mainMenu(parser, processor);

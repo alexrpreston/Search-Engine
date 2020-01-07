@@ -9,7 +9,6 @@ public:
     void maintenanceMode(documentParser &parser, queryProcessor &processor);
     void interactiveMode(documentParser &parser, queryProcessor &processor);
     void mainMenu(documentParser &parser, queryProcessor &processor);
-public:
     documentParser buffer();
     AVLTree<string> tree;
     HashMap<string> map;

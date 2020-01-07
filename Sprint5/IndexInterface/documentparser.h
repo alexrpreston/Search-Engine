@@ -16,17 +16,18 @@ public:
     bool isStopWord(string &word);
     void makeLowerCase(string &word);
     void getFileNames(char * filePath);
+    void getAddedFileNames(string filePath);
     void stemWord(string &word);
     string stemQueryWord(string word);
     void readDocumentsHTMLData(string filePath);
+    void readAddedDocumentsHTMLData(string filePath);
     void makeStopWords();
     void removeTags(string &html);
-    void addOpinions(char * filePath);
+    void addOpinions(string filePath);
     void dataTypes();
     string getRelevantInfo(string filePath);
     string getFirst300Words(string filePath);
-public:
-    vector<string> folders;
+    string folderPath = "";
     AVLTree<string> tree;
     HashMap<string> map;
     IndexInterface * II = &tree;

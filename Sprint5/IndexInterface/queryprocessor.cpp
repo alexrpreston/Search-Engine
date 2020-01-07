@@ -35,7 +35,6 @@ void queryProcessor::querySearch(string query){
 
 
 void queryProcessor::singleQuery(string query){
-//    auto start = chrono::system_clock::now();
     size_t notQuery = query.find("NOT");
     if(notQuery == std::string::npos){
         II->access(query, finalDocuments);
@@ -50,18 +49,13 @@ void queryProcessor::singleQuery(string query){
     }
     removeRepeats();
     sortFinalDocsByFrequency();
-//    auto end = chrono::system_clock::now();
-//    auto elapsed = chrono::duration_cast<chrono::microseconds>(end - start);
-//    cout << finalDocuments.size() << " results " << "(" << elapsed.count() << " microseconds" << ")" << "\n\n";
     printDocuemnts();
-
-
 }
 
 void queryProcessor::orQuery(string query){
-//    auto start = chrono::system_clock::now();
     string notWord = "";
     size_t notQuery = query.find("NOT");
+    //If the query doesn't contain 'NOT'
     if(notQuery == std::string::npos){
         spliceQueryWords(query);
         for(int i = 0; i < splicedQueryWords.size(); i++){
@@ -74,8 +68,8 @@ void queryProcessor::orQuery(string query){
         for(int i = 0; i < finalDocuments.size(); i++){
             cout << i+1 << " " <<  finalDocuments[i].first << endl;
         }
-        //printDocuemnts();
     }
+    //If the query does contain 'NOT'
     else{
         notWord = query.substr(notQuery+4, query.size()-notQuery);
         query = query.substr(0,notQuery-1);
@@ -92,17 +86,14 @@ void queryProcessor::orQuery(string query){
     mergeAllDocuments();
     removeNotQueryDocs();
     sortFinalDocsByFrequency();
-//    auto end = chrono::system_clock::now();
-//    auto elapsed = chrono::duration_cast<chrono::microseconds>(end - start);
-//    cout << finalDocuments.size() << " results " << "(" << elapsed.count() << " microseconds" << ")" << "\n\n" << flush;
     printDocuemnts();
 
 }
 
 void queryProcessor::andQuery(string query){
-//    auto start = chrono::system_clock::now();
     string notWord = "";
     size_t notQuery = query.find("NOT");
+    //If the query doesn't contain 'NOT'
     if(notQuery == std::string::npos){
         spliceQueryWords(query);
         for(int i = 0; i < splicedQueryWords.size(); i++){
@@ -111,6 +102,7 @@ void queryProcessor::andQuery(string query){
             allDocuments.push_back(singleWordDocumentList);
         }
     }
+    //If the query does contain 'NOT'
     else{
         notWord = query.substr(notQuery+4, query.size()-notQuery);
         query = query.substr(0,notQuery-1);
@@ -142,9 +134,6 @@ void queryProcessor::andQuery(string query){
     mergeAllDocuments();
     removeNotQueryDocs();
     sortFinalDocsByFrequency();
-//    auto end = chrono::system_clock::now();
-//    auto elapsed = chrono::duration_cast<chrono::microseconds>(end - start);
-//    cout << finalDocuments.size() << " results " << "(" << elapsed.count() << " microseconds" << ")" << "\n\n";
     printDocuemnts();
 }
 
@@ -155,8 +144,8 @@ void queryProcessor::spliceQueryWords(string query){
     string word = "";
     strcpy(sentence, query.c_str());
     char * token = strtok(sentence, " ");
-
-   while(token != NULL){
+    //Breaks the Query apart by spaces.
+    while(token != NULL){
        string buffer = "";
        for(int i = 0; i < strlen(token); i++){
                if(isalpha(tolower(token[i]))) buffer += char(tolower(token[i]));
@@ -175,7 +164,7 @@ void queryProcessor::spliceNotWords(string notQueryWords){
     string word = "";
     strcpy(sentence, notQueryWords.c_str());
     char * token = strtok(sentence, " ");
-
+    //Splices all the words we don't want to include
     while(token != NULL){
        string buffer = "";
        for(int i = 0; i < strlen(token); i++){
@@ -191,9 +180,11 @@ void queryProcessor::spliceNotWords(string notQueryWords){
 }
 
 void queryProcessor::removeRepeats(){
+    //Removes duplicate documents ex: the OR query will return repeats.
     finalDocuments.erase(unique(finalDocuments.begin(), finalDocuments.end()), finalDocuments.end());
 }
 
+//After all repeats and Querys are processed all the document ID's go in one vector.
 void queryProcessor::mergeAllDocuments(){
     bool alreadyInFinal = false;
     for(int i = 0; i < allDocuments.size(); i++){
@@ -224,6 +215,7 @@ void queryProcessor::getNotQueryDocs(){
     }
 }
 
+//Finds any matches between ID's for NOT words and ID's for search words.
 void queryProcessor::removeNotQueryDocs(){
     for(int i = 0; i < finalDocuments.size(); i++){
         for(int j = 0; j < notQueryDocs.size(); j++){
@@ -250,9 +242,8 @@ void queryProcessor::sortFinalDocsByFrequency(){
 }
 
 void queryProcessor::printDocuemnts(){
-
+    //Formatting for output
     for(int i = 0; i < 15 && i < finalDocuments.size(); i++){
-        //cout << finalDocuments[i].first << " - " << finalDocuments[i].second << endl;
         if(i+1 == 1) cout << "1st";
         if(i+1 == 2) cout << "2nd";
         if(i+1 == 3) cout << "3rd";
@@ -263,8 +254,8 @@ void queryProcessor::printDocuemnts(){
     }
 }
 
+//Lets the user see the first 300 words of any given document in the results.
 string queryProcessor::expand(int num){
     string docID = finalDocuments[num].first;
     return parser.getFirst300Words(docID);
-
 }

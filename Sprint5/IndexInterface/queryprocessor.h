@@ -45,7 +45,6 @@ public:
 
 private:
     string query = "";
-    //IndexInterface * II = &tree;
 
 };
 
