@@ -17,11 +17,12 @@ using namespace std;
 
 template<class T>
 struct Node{
-    //pair<T,vector<T>> data; // each word has a vector of the docs that contain the word
-    pair<T, vector<pair<T, int>>> data;
-    Node * left = nullptr;
+    // the data object holds a key, a word in this case, that is paired to a vector of key pairs
+    // that holds the key, the name of a document, paired with the number of occurances of the word in that document
+    pair<T, vector<pair<T, int>>> data; 
+    Node * left = nullptr; // pointers to child nodes are initialized null
     Node * right = nullptr;
-    int height = 0;
+    int height = 0; // height is updated when added to tree
 };
 
 template<class T>
@@ -33,7 +34,6 @@ private:
 
 public:
     AVLTree(){
-        //outFile.open("/home/student/Desktop/index.txt");
     }
     ~AVLTree(){
         destroy(root);
