@@ -29,8 +29,8 @@ template<class T>
 class AVLTree : public IndexInterface {
 private:
     Node<string> * root = nullptr;
-    int numNodes = 0;
-    ofstream outFile;
+    int numNodes = 0; // keeps track of the number of nodes in the tree
+    ofstream outFile; //ofstrream object to allow the tree to be printed to file
 
 public:
     AVLTree(){
@@ -38,12 +38,12 @@ public:
     ~AVLTree(){
         destroy(root);
     }
-    void destroy(){
+    void destroy(){ //starts recursive delete function
         destroy(root);
     }
-    void destroy(Node<T> * node){
+    void destroy(Node<T> * node){ //recursive delete function, postorder
         if(node){
-            destroy(node->left);
+            destroy(node->left); 
             destroy(node->right);
             delete node;
         }
@@ -53,7 +53,7 @@ public:
         return numNodes;
     }
 
-    int height(Node<T> * N)
+    int height(Node<T> * N) // returns the height of the tree relative to the given node
     {
         if (N == nullptr)
             return 0;
@@ -64,7 +64,7 @@ public:
         return (a > b)? a : b;
     }
 
-    Node<T> * newNode(T key){
+    Node<T> * newNode(T key){ //creates a new node with the given key
         Node<T> * node = new Node<T>();
         node->data.first = key;
         node->left = nullptr;
@@ -74,7 +74,7 @@ public:
         return(node);
     }
 
-    Node<T> * llRotate(Node<T> * parent){
+    Node<T> * llRotate(Node<T> * parent){// left left rotation for balancing the tree
         Node<T> * k1 = parent->left;
         parent->left = k1->right;
         k1->right = parent;
@@ -86,7 +86,7 @@ public:
         return k1;
     }
 
-    Node<T> * rrRotate(Node<T> * parent){
+    Node<T> * rrRotate(Node<T> * parent){ // right right rotation for balancing the tree
         Node<T> * k1 = parent->right;
         parent->right = k1->left;
         k1->left = parent;
@@ -98,30 +98,30 @@ public:
         return k1;
     }
 
-    Node<T> * rlRotate(Node<T> * parent){
+    Node<T> * rlRotate(Node<T> * parent){ // right left rotation for balancing the tree
         Node<T> * k = parent->right;
         parent->right = llRotate(k);
         return rrRotate(parent);
     }
 
-    Node<T> * lrRotate(Node<T> * parent){
+    Node<T> * lrRotate(Node<T> * parent){ // left right rotation for balancing the tree
         Node<T> * k = parent->left;
         parent->left = rrRotate(k); //sets to ll case, works
         return llRotate(parent);
 
     }
 
-    int getBalance(Node<T> * Node){
+    int getBalance(Node<T> * Node){ // checks to see if the tree is balanced
         if (Node == nullptr)
             return 0;
         return height(Node->left) - height(Node->right);
     }
 
-    void addFirst(T data){
+    void addFirst(T data){ // begins the recursive add function
         addFirst(root, data);
     }
 
-    Node<T> * addFirst(Node<T> * node, T data){
+    Node<T> * addFirst(Node<T> * node, T data){ // a recursive function that adds a new key node and balances the tree if needed
         if(root == nullptr){
             Node<T> * nNode = newNode(data);
             root = nNode;
@@ -172,7 +172,7 @@ public:
         preOrder(root);
     }
 
-    void preOrder(Node<T> * root){
+    void preOrder(Node<T> * root){ // recursive preorder printing of the tree
 
         cout << "no" << endl;
 
@@ -183,7 +183,7 @@ public:
         }
     }
 
-    void pof(){
+    void pof(){ // "print out-file"
         outFile.open("index.txt");
        // outFile.open("/home/student/Desktop/index.txt", ios::out | ofstream::app);
         outFile << getNumNodes() << endl;
@@ -191,7 +191,7 @@ public:
         outFile.close();
     }
 
-    void preOrderFile(Node<T> * curr){
+    void preOrderFile(Node<T> * curr){ // prints a preorder traversal of the tree to file
 
         if(curr !=nullptr){
             preOrderFile(curr->left);
@@ -208,7 +208,7 @@ public:
        // outFile.close();
     }
 
-    void access(T data, vector<pair<T, int>> &docs){
+    void access(T data, vector<pair<T, int>> &docs){ // accesses the data in the key. used by the GUI 
         return access(data, root, docs);
     }
 
@@ -230,11 +230,11 @@ public:
 
 
 
-    void addSec(T data, T doc){
+    void addSec(T data, T doc){ // adds secondary values to the node (documents and document values)
         addSec(data, doc, root);
     }
 
-    void addSec(T data, T newDoc, Node<T> * curr){
+    void addSec(T data, T newDoc, Node<T> * curr){ //recursive
         if(strcmp(curr->data.first.c_str(), data.c_str()) < 0){ //neg if search is larger
             curr = curr->right;
             addSec(data, newDoc, curr);
@@ -299,8 +299,7 @@ public:
         return;
     }
 
-    void rf(){
-      //  cout << "hi" << endl;
+    void rf(){ // read file. takes a previously saved tree from file and builds it
         ifstream file;
         file.open("index.txt");
         string line = "";
@@ -330,7 +329,7 @@ public:
         file.close();
     }
 
-    bool isEmpty(){
+    bool isEmpty(){ // cehcks to see if the tree is empty
         if(root == nullptr){
             return true;
         }
